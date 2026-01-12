@@ -1,5 +1,3 @@
-# INCITE
-
 ### FROM ADRIEN:
 ## Adrien workspace (safe sandbox)
 This folder contains Adrien's experimental work based on Miles Couchman's `INCITE` repo.
@@ -16,6 +14,38 @@ This clone has two remotes:
 
 Check anytime:
 git remote -v
+
+## How to push my local changes to the repo
+Run these from inside the repo directory.
+
+# 1. Make sure you’re on the right branch
+    git branch
+If needed:
+    git checkout adrien
+
+# 2. Check what changed
+    git status
+
+# 3. Stage files
+Everything:
+    git add .
+Or specific files:
+    git add path/to/file
+
+# 4. Commit
+    git commit -m "Short, clear description of the change"
+(If this says “nothing to commit”, you’re already clean.)
+
+# 5. Push to GitHub
+    git push origin adrien
+
+Very quick mental model
+	•	edit files
+	•	git status
+	•	git add
+	•	git commit
+	•	git push
+That’s all I need 95% of the time.
 
 ### FROM MILES:
 ## Setting up Jupyter notebook on Andes, showing on your local computer
