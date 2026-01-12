@@ -18,7 +18,7 @@ git remote -v
 ## How to push my local changes to the repo
 Run these from inside the repo directory.
 
-# 1. Make sure you’re on the right branch
+# 1. Make sure you’re on the right branch (adrien)
     git branch
 If needed:
     git checkout adrien
@@ -47,6 +47,9 @@ Very quick mental model
 	•	git push
 That’s all I need 95% of the time.
 
+To pull upstream changes from Miles's repo on the main branch, best do it on the GitHub browser version (infrequent enough that it shouldn't be an issue)
+
+
 ### FROM MILES:
 ## Setting up Jupyter notebook on Andes, showing on your local computer
 
@@ -66,6 +69,10 @@ jupyter-lab --no-browser --ip=0.0.0.0 --port=8095
 ssh -L localhost:8095:andes##:8095 -fN mcouchman@andes-login%%.olcf.ornl.gov # replace ## with allocated andes node, %% with login node
 http://localhost:8095 #in local browser
 ```
+
+## The above is now obsolete because it's a lot fast to use the new web interface:
+https://jupyter.olcf.ornl.gov/hub/login?next=%2Fhub%2F
+Way easier to log in, does not count toward our hours, and they have good CPU/RAM
 
 ## Description of files:
 
