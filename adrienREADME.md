@@ -33,7 +33,7 @@ Or specific files:
     git add path/to/file
 
 # 4. Commit
-    git commit -m "Short, clear description of the change"
+    git commit -m " "
 (If this says “nothing to commit”, you’re already clean.)
 
 # 5. Push to GitHub

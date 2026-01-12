@@ -37,7 +37,7 @@ def generate(): # Initialize classes for each dataset
 
     R1P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.000498184, dGrad=-0.001, zAccel=1.534170e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R1P7/",name="R1P7", tStamp="28.989493", Pr=7, dRef=1, dUdz=1)
 
-    R4P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072 kinV=0.000250061, dGrad=-0.001, zAccel=1.533112e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P7/",name="R4P7", tStamp="161.636386", Pr=7, dRef=1, dUdz=1)
+    R4P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.000250061, dGrad=-0.001, zAccel=1.533112e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P7/",name="R4P7", tStamp="161.636386", Pr=7, dRef=1, dUdz=1)
 
     R6P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8800, Ny=4400, Nz=2200, kinV=0.000125138, dGrad=-0.001, zAccel=1.524920e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R6P7/",name="R6P7", tStamp="55.809401", Pr=7, dRef=1, dUdz=1)
 
@@ -48,9 +48,9 @@ def generate(): # Initialize classes for each dataset
 
     ## Pr=50
 
-     R1P50 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8000, Ny=4000, Nz=2000, kinV=0.000250061/2.0, dGrad=-0.001, zAccel=1.670898e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R1P50/",name="R1P50", tStamp="56.563117", Pr=50, dRef=1, dUdz=1)
+    R1P50 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8000, Ny=4000, Nz=2000, kinV=0.000250061/2.0, dGrad=-0.001, zAccel=1.670898e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R1P50/",name="R1P50", tStamp="56.563117", Pr=50, dRef=1, dUdz=1)
 
-     R4P50 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8192, Ny=4096, Nz=2048, kinV=0.000250061, dGrad=-0.001, zAccel=1.670898e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P50/",name="R4P50", tStamp="117.315250", Pr=50, dRef=1, dUdz=1)
+    R4P50 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8192, Ny=4096, Nz=2048, kinV=0.000250061, dGrad=-0.001, zAccel=1.670898e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P50/",name="R4P50", tStamp="117.315250", Pr=50, dRef=1, dUdz=1)
 
     R6P50 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=24000, Ny=12000, Nz=6000, kinV=0.000250061/2.0, dGrad=-0.001, zAccel=1.186733e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R6P50/",name="R6P50", tStamp="51.658601", Pr=50, dRef=1, dUdz=1)
        
