@@ -6,6 +6,7 @@ import psutil
 from pathlib import Path
 from datetime import datetime
 import matplotlib.pyplot as plt
+from matplotlib import cm, colors
 
 def load_binary(varName, p):
     filePath = p.dirPath + varName + "_" + p.tStamp
@@ -98,27 +99,59 @@ def compute_eps(p, u=None, v=None, w=None):
 
 
 def imshow_with_cbar(ax, Z, cmap, vmin, vmax, cbar_label):
-    im = ax.imshow(Z.T, origin="lower", cmap=cmap, vmin=vmin, vmax=vmax, aspect="equal")
+    im = ax.imshow(
+        Z.T,
+        origin="lower",
+        cmap=cmap,
+        vmin=vmin,
+        vmax=vmax,
+        aspect="equal",
+    )
+
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="3.5%", pad=0.08)
     cb = ax.figure.colorbar(im, cax=cax)
+
+    # Force endpoints + midpoint
+    cb.set_ticks([vmin, 0, vmax])
+
     cb.set_label(cbar_label)
+
     return im, cb
 
 
-def set_index_axis(ax, axis="x", N=1, label=None, nticks=5):
-    ticks = np.linspace(0, N, nticks, dtype=int)
+def set_index_axis(ax, axis="x", N=1, label=None, step=500, label_step=1000):
+    """
+    Ticks every `step`, labels only every `label_step`.
+
+    Example (N=3200):
+      ticks: 0,500,1000,1500,2000,2500,3000
+      labels: 0,'' ,1000,'' ,2000,'' ,3000
+    """
+    N = int(N)
+
+    ticks = list(range(0, N, step))
+
+    labels = []
+    for t in ticks:
+        if t % label_step == 0:
+            labels.append(str(t))
+        else:
+            labels.append("")
+
     if axis == "x":
         ax.set_xticks(ticks)
-        ax.set_xticklabels([f"{t}" for t in ticks])
-        if label:
+        ax.set_xticklabels(labels)
+        if label is not None:
             ax.set_xlabel(label)
     elif axis == "y":
         ax.set_yticks(ticks)
-        ax.set_yticklabels([f"{t}" for t in ticks])
-        if label:
+        ax.set_yticklabels(labels)
+        if label is not None:
             ax.set_ylabel(label)
-
+    else:
+        raise ValueError("axis must be 'x' or 'y'")
+        
 
 def memory_report(globals_dict=None, min_gb=0.05):
     if globals_dict is None:
@@ -172,7 +205,7 @@ def memory_report(globals_dict=None, min_gb=0.05):
 def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=300):
     Path(outdir).mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    fname = f"{p.name}_slice_{slice_dir}{idx}_{timestamp}.{fmt}"
+    fname = f"{p.name}_all_variables_{slice_dir}{idx}_{timestamp}.{fmt}"
     path = Path(outdir) / fname
     fig.savefig(path, dpi=dpi if fmt.lower() in ["png", "jpg", "jpeg"] else None,
                 bbox_inches="tight", facecolor="white")
@@ -220,7 +253,7 @@ def _slice2d(A, plane, idx):
     return Z, Nx_plot, Ny_plot, xlab, ylab, title_plane
 
 
-def plot_six_slices(
+def plot_slices_all_vars(
     p,
     u, v, w, b, eps, chi,
     Ek, Ep, N2,
@@ -260,25 +293,25 @@ def plot_six_slices(
         (w / np.sqrt(Ek), "seismic", -5, 5, r"$w'/E_k^{1/2}$", r"$w'$"),
         (b / np.sqrt(N2 * Ep), "viridis", -5, 5, r"$b'/(N E_p^{1/2})$", r"$b'$"),
         (np.log10(eps / eps_avg), "magma", -2, 2, r"$\log_{10}(\varepsilon/\langle\varepsilon\rangle)$", r"$\varepsilon$"),
-        (np.log10(chi / chi_avg), "hot",  -2, 2, r"$\log_{10}(\chi/\langle\chi\rangle)$", r"$\chi$"),
+        (np.log10(chi / chi_avg), "hot",  -2, 3, r"$\log_{10}(\chi/\langle\chi\rangle)$", r"$\chi$"),
     ]
 
     for i, (A, cmap, vmin, vmax, cbar_lab, short_name) in enumerate(panels):
         Z, Nx_plot, Ny_plot, xlab, ylab, title_plane = _slice2d(A, plane, idx)
 
         imshow_with_cbar(axs[i], Z, cmap, vmin, vmax, cbar_lab)
-    if plane == "xz":
-        fixed = f"iy = {idx}"
-    elif plane == "xy":
-        fixed = f"iz = {idx}"
-    else:  # "yz"
-        fixed = f"ix = {idx}"
-    
-    axs[i].set_title(f"{short_name}{title_plane} at {fixed}")
 
-    # Note: set_index_axis uses axis="x"/"y" to mean matplotlib x/y axes.
-    set_index_axis(axs[i], "x", Nx_plot, " " if i < 4 else xlab)
-    set_index_axis(axs[i], "y", Ny_plot, ylab)
+        if plane == "xz":
+            fixed = f"iy = {idx}"
+        elif plane == "xy":
+            fixed = f"iz = {idx}"
+        else:  # "yz"
+            fixed = f"ix = {idx}"
+
+        axs[i].set_title(f"{short_name}{title_plane} at {fixed}")
+
+        set_index_axis(axs[i], "x", Nx_plot, " " if i < 4 else xlab)
+        set_index_axis(axs[i], "y", Ny_plot, ylab)
 
     # Optional save using your naming convention
     if save:
@@ -306,3 +339,105 @@ def plot_six_slices(
         print(f"Saved -> {path}")
 
     return fig, axs
+
+
+def plot_slices_native_resolution(
+    p,
+    u, v, w, b, eps, chi,
+    Ek, Ep, N2,
+    eps_avg, chi_avg,
+    plane="xz",
+    idx=None,
+    outdir="figures",
+    prefix=None,
+):
+    """
+    Export u,v,w,b,eps,chi as separate native-resolution PNGs (no axes).
+    1 pixel = 1 grid point in the exported 2D slice.
+
+    Files are written as RGBA PNGs with colormaps and fixed vmin/vmax:
+      u,v,w : seismic, [-5, 5] with u/sqrt(Ek)
+      b     : viridis, [-5, 5] with b/sqrt(N2*Ep)
+      eps   : magma,  [-2, 2] with log10(eps/eps_avg)
+      chi   : hot,    [-2, 2] with log10(chi/chi_avg)
+    """
+    plane = plane.lower()
+    if idx is None:
+        idx = {"xz": p.Ny // 2, "xy": p.Nz // 2, "yz": p.Nx // 2}[plane]
+
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    # nice filename prefix
+    if prefix is None:
+        # slice_dir is the fixed axis
+        slice_dir = {"xz": "y", "xy": "z", "yz": "x"}[plane]
+        prefix = f"{p.name}_{plane}_i{slice_dir}{idx}"
+
+    # Build the six 2D slices in the same orientation you see in imshow_with_cbar:
+    # imshow_with_cbar does imshow(Z.T), so for a consistent visual, we export Z.T
+    def _Z(A):
+        Z, *_ = _slice2d(A, plane, idx)   # this is what you pass to imshow_with_cbar
+        return np.flipud(Z.T)             # matches imshow(Z.T, origin="lower")
+
+    # Fields to export: (name, array2d, cmap, vmin, vmax)
+    items = [
+        ("u",   _Z(u / np.sqrt(Ek)),                 "seismic", -5,  5),
+        ("v",   _Z(v / np.sqrt(Ek)),                 "seismic", -5,  5),
+        ("w",   _Z(w / np.sqrt(Ek)),                 "seismic", -5,  5),
+        ("b",   _Z(b / np.sqrt(N2 * Ep)),            "viridis", -5,  5),
+        ("e", _Z(np.log10(eps / eps_avg)),           "magma",   -2,  2),
+        ("c", _Z(np.log10(chi / chi_avg)),          "hot",     -2,  3),
+    ]
+
+    slice_dir = {"xz": "y", "xy": "z", "yz": "x"}[plane]
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    paths = {}
+    for name, Z2, cmap, vmin, vmax in items:
+        fname = f"{p.name}_{name}_native_res_{slice_dir}{idx}_{timestamp}.png"
+        path = outdir / fname
+        save_field_native_pixels(Z2, str(path), cmap=cmap, vmin=vmin, vmax=vmax)
+        paths[name] = str(path)
+    return paths
+
+from PIL import Image
+
+def save_field_native_pixels(
+    Z,
+    path,
+    cmap="viridis",
+    vmin=None,
+    vmax=None,
+    nan_color=(0, 0, 0, 0),  # transparent for NaNs
+):
+    """
+    Save a 2D array as a PNG with native resolution:
+    1 array element -> 1 output pixel. No interpolation.
+
+    Z must be 2D. Output is RGBA PNG.
+    """
+    Z = np.asarray(Z)
+    if Z.ndim != 2:
+        raise ValueError(f"Z must be 2D, got shape {Z.shape}")
+
+    if vmin is None:
+        vmin = np.nanmin(Z)
+    if vmax is None:
+        vmax = np.nanmax(Z)
+    if not np.isfinite(vmin) or not np.isfinite(vmax) or vmin == vmax:
+        raise ValueError(f"Bad vmin/vmax: vmin={vmin}, vmax={vmax}")
+
+    cmap_obj = cm.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    norm = colors.Normalize(vmin=vmin, vmax=vmax, clip=True)
+
+    rgba = cmap_obj(norm(Z))  # float RGBA in [0,1], shape (H,W,4)
+
+    nan_mask = ~np.isfinite(Z)
+    if np.any(nan_mask):
+        r, g, b, a = [c / 255.0 for c in nan_color]
+        rgba[nan_mask] = (r, g, b, a)
+
+    rgba8 = (rgba * 255).astype(np.uint8)
+    Image.fromarray(rgba8, mode="RGBA").save(path)
+    return path
