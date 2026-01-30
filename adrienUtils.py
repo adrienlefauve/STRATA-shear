@@ -5,8 +5,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import psutil
 from pathlib import Path
 from datetime import datetime
-from tqdm.auto import tqdm
-from IPython.display import display
+import matplotlib.pyplot as plt
 
 def load_binary(varName, p):
     filePath = p.dirPath + varName + "_" + p.tStamp
@@ -179,3 +178,131 @@ def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=3
                 bbox_inches="tight", facecolor="white")
     #print(f"Saved -> {path}")
     return path
+
+
+### NEW STUFF 30 Jan 2025
+
+def _slice2d(A, plane, idx):
+    """
+    Return a 2D slice and the axis sizes for tick labelling.
+    A is assumed to have shape (Nx, Ny, Nz) with axes (x, y, z).
+    plane in {"xz","xy","yz"}.
+    idx is the fixed index for the missing axis:
+      - plane="xz" fixes y=idx
+      - plane="xy" fixes z=idx
+      - plane="yz" fixes x=idx
+    Returns (Z, Nx_plot, Ny_plot, xlab, ylab, title_plane)
+    where Z is oriented so that horizontal axis is the first letter of plane.
+    """
+    plane = plane.lower()
+    if plane == "xz":
+        # A[:, y, :] has shape (Nx, Nz) -> we want x horizontal, z vertical => transpose for imshow_with_cbar (which does Z.T)
+        # Your imshow_with_cbar currently does imshow(Z.T), so here we return (Nx, Nz) like before.
+        Z = A[:, idx, :]        # (Nx, Nz)
+        Nx_plot, Ny_plot = Z.shape[0], Z.shape[1]
+        xlab, ylab = "x index", "z index"
+        title_plane = "(x, z)"
+    elif plane == "xy":
+        Z = A[:, :, idx]        # (Nx, Ny)
+        Nx_plot, Ny_plot = Z.shape[0], Z.shape[1]
+        xlab, ylab = "x index", "y index"
+        title_plane = "(x, y)"
+    elif plane == "yz":
+        Z = A[idx, :, :]        # (Ny, Nz)
+        # Here horizontal should be y, vertical z. But imshow_with_cbar uses Z.T,
+        # so give it (Ny, Nz) and label accordingly.
+        Nx_plot, Ny_plot = Z.shape[0], Z.shape[1]
+        xlab, ylab = "y index", "z index"
+        title_plane = "(y, z)"
+    else:
+        raise ValueError("plane must be one of {'xz','xy','yz'}")
+
+    return Z, Nx_plot, Ny_plot, xlab, ylab, title_plane
+
+
+def plot_six_slices(
+    p,
+    u, v, w, b, eps, chi,
+    Ek, Ep, N2,
+    eps_avg, chi_avg,
+    plane="xz",
+    idx=None,
+    figsize=(10, 16),
+    save=False,
+    outdir="figures",
+    fmt="jpg",
+    dpi=300,          
+):
+    """
+    Plot 6 panels: u,v,w,b,log10(eps/<eps>),log10(chi/<chi>) on a chosen plane.
+
+    Assumes fields have shape (Nx, Ny, Nz) with axes (x,y,z).
+    plane: "xz", "xy", or "yz"
+    idx: index along the missing axis (y for xz, z for xy, x for yz). Defaults to mid-plane.
+    outpath: if provided, saves the figure.
+    Returns (fig, axs).
+    """
+    plane = plane.lower()
+    if idx is None:
+        if plane == "xz":
+            idx = p.Ny // 2
+        elif plane == "xy":
+            idx = p.Nz // 2
+        elif plane == "yz":
+            idx = p.Nx // 2
+
+    fig, axs = plt.subplots(6, 1, figsize=figsize)
+    fig.subplots_adjust(hspace=0.55)
+
+    panels = [
+        (u / np.sqrt(Ek), "seismic", -5, 5, r"$u'/E_k^{1/2}$", r"$u'$"),
+        (v / np.sqrt(Ek), "seismic", -5, 5, r"$v'/E_k^{1/2}$", r"$v'$"),
+        (w / np.sqrt(Ek), "seismic", -5, 5, r"$w'/E_k^{1/2}$", r"$w'$"),
+        (b / np.sqrt(N2 * Ep), "viridis", -5, 5, r"$b'/(N E_p^{1/2})$", r"$b'$"),
+        (np.log10(eps / eps_avg), "magma", -2, 2, r"$\log_{10}(\varepsilon/\langle\varepsilon\rangle)$", r"$\varepsilon$"),
+        (np.log10(chi / chi_avg), "hot",  -2, 2, r"$\log_{10}(\chi/\langle\chi\rangle)$", r"$\chi$"),
+    ]
+
+    for i, (A, cmap, vmin, vmax, cbar_lab, short_name) in enumerate(panels):
+        Z, Nx_plot, Ny_plot, xlab, ylab, title_plane = _slice2d(A, plane, idx)
+
+        imshow_with_cbar(axs[i], Z, cmap, vmin, vmax, cbar_lab)
+    if plane == "xz":
+        fixed = f"iy = {idx}"
+    elif plane == "xy":
+        fixed = f"iz = {idx}"
+    else:  # "yz"
+        fixed = f"ix = {idx}"
+    
+    axs[i].set_title(f"{short_name}{title_plane} at {fixed}")
+
+    # Note: set_index_axis uses axis="x"/"y" to mean matplotlib x/y axes.
+    set_index_axis(axs[i], "x", Nx_plot, " " if i < 4 else xlab)
+    set_index_axis(axs[i], "y", Ny_plot, ylab)
+
+    # Optional save using your naming convention
+    if save:
+        if plane == "xz":
+            slice_dir = "y"
+            fixed_label = "iy"
+        elif plane == "xy":
+            slice_dir = "z"
+            fixed_label = "iz"
+        elif plane == "yz":
+            slice_dir = "x"
+            fixed_label = "ix"
+        else:
+            raise ValueError("plane must be one of {'xz','xy','yz'}")
+
+        path = save_slice_figure(
+            fig,
+            p,
+            slice_dir=slice_dir,
+            idx=idx,
+            outdir=outdir,
+            fmt=fmt,
+            dpi=dpi,
+        )
+        print(f"Saved -> {path}")
+
+    return fig, axs
