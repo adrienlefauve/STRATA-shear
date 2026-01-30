@@ -177,5 +177,5 @@ def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=3
     path = Path(outdir) / fname
     fig.savefig(path, dpi=dpi if fmt.lower() in ["png", "jpg", "jpeg"] else None,
                 bbox_inches="tight", facecolor="white")
-    print(f"Saved -> {path}")
+    #print(f"Saved -> {path}")
     return path
