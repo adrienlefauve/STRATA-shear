@@ -36,9 +36,9 @@ def generate(): # Initialize classes for each dataset
 
     ## Pr=7
 
-    R1P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.000498184, dGrad=-0.001, zAccel=1.534170e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R1P7/001_Final/",name="R1P7", tStamp="28.989493", Pr=7, dRef=1, dUdz=1)
+    R1P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=3072, Ny=1536, Nz=768, kinV=0.000498184, dGrad=-0.001, zAccel=1.534170e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R1P7/001_Final/",name="R1P7", tStamp="28.989493", Pr=7, dRef=1, dUdz=1)
 
-    R4P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.000250061, dGrad=-0.001, zAccel=1.533112e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P7/001_Final/",name="R4P7", tStamp="161.636386", Pr=7, dRef=1, dUdz=1)
+    R4P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=5120, Ny=2560, Nz=1280, kinV=0.000250061, dGrad=-0.001, zAccel=1.533112e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P7/001_Final/",name="R4P7", tStamp="161.636386", Pr=7, dRef=1, dUdz=1)
 
     R6P7 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=8800, Ny=4400, Nz=2200, kinV=0.000125138, dGrad=-0.001, zAccel=1.524920e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R6P7/001_Final/",name="R6P7", tStamp="55.809401", Pr=7, dRef=1, dUdz=1)
 
