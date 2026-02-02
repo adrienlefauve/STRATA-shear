@@ -27,11 +27,11 @@ def generate(): # Initialize classes for each dataset
 
     R4P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=2048, Ny=1024, Nz=512, kinV=0.000250061, dGrad=-0.001, zAccel=1.5967885147497108e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R4P1/001_Final/",name="R4P1", tStamp="270.006053", Pr=1, dRef=1, dUdz=1)
 
-    R6P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=3200, Ny=1600, Nz=800, kinV=0.000125138, dGrad=-0.001, zAccel=1.524920e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R6P1/001_Final/",name="R6P1", tStamp="96.533028", Pr=1, dRef=1, dUdz=1)
+    R6P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=3072, Ny=1536, Nz=768, kinV=0.000125138, dGrad=-0.001, zAccel=1.524920e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R6P1/001_Final/",name="R6P1", tStamp="96.533028", Pr=1, dRef=1, dUdz=1)
 
-    R8P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=7168, Ny=3584, Nz=1792, kinV=0.0000314333, dGrad=-0.001, zAccel=1.5e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R8P1/001_Final/",name="R8P1", tStamp="94.749000", Pr=1, dRef=1, dUdz=1)
+    R8P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=7168, Ny=3584, Nz=1792, kinV=0.0000314333, dGrad=-0.001, zAccel=1.5e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R8P1/001_Final/",name="R8P1", tStamp="95.780500", Pr=1, dRef=1, dUdz=1)
 
-    R10P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.0000198331, dGrad=-0.001, zAccel=1.5967885147497108e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R10P1/001_Final/",name="R10P1", tStamp="256.000000", Pr=1, dRef=1, dUdz=1)
+    R10P1 = DatParam(Lx=4*2*np.pi, Ly=2*2*np.pi, Lz=2*np.pi, Nx=12288, Ny=6144, Nz=3072, kinV=0.0000198331, dGrad=-0.001, zAccel=1.5967885147497108e+02, targKE=0.0157914, dirPath="/lustre/orion/cfd135/proj-shared/Hsst/R10P1/001_Final/",name="R10P1", tStamp="198.101596", Pr=1, dRef=1, dUdz=1)
 
 
     ## Pr=7

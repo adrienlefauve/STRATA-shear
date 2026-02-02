@@ -8,14 +8,54 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from matplotlib import cm, colors
 from typing import Tuple
+from scipy.io import netcdf_file
+from PIL import Image
+from dataclasses import dataclass
+from typing import Dict, Tuple, Optional, Iterable, Union, List
 
+# ---------------------------------------------------------------------
+# load_binary
+# ---------------------------------------------------------------------
+# Purpose:
+#   Low-level reader for raw DNS binary output written by the solver.
+#
+# What it does:
+#   - Memory-maps a single variable (u, v, w, r, etc.) from disk
+#   - Assumes Fortran-order float32 array with shape (Nx+2, Ny, Nz)
+#   - Drops the last two padded x-rows used internally by the solver
+#
+# Why it exists:
+#   This mirrors the solver’s exact output format and avoids loading
+#   the full array into memory. All higher-level routines ultimately
+#   rely on this convention, either directly or via LazyField.
+#
+# Used by:
+#   - compute_eps
+#   - compute_chi
+#   - LazyField (conceptually identical layout)
 def load_binary(varName, p):
     filePath = p.dirPath + varName + "_" + p.tStamp
     X = np.memmap(filePath, dtype="single", mode="r",
                   shape=(p.Nx+2, p.Ny, p.Nz), order="F")
-    return X[:-2, :, :]  # chop off two rows of zeros
+    return X[:-2, :, :]  # chop off two rows of zeros, which SdbK puts there to orient ourselves
 
-
+# ---------------------------------------------------------------------
+# d_periodic_4th
+# ---------------------------------------------------------------------
+# Purpose:
+#   Compute a 4th-order accurate periodic finite-difference derivative.
+#
+# What it does:
+#   - Uses periodic wrap-around via np.roll
+#   - Applies standard 4th-order central stencil
+#
+# Why it exists:
+#   Needed for accurate gradients (velocity, buoyancy) when computing
+#   dissipation (ε) and scalar variance dissipation (χ).
+#
+# Used by:
+#   - compute_eps
+#   - compute_chi
 def d_periodic_4th(f, dx, axis):
     return (
         -np.roll(f, -2, axis=axis)
@@ -24,7 +64,25 @@ def d_periodic_4th(f, dx, axis):
         + np.roll(f,  2, axis=axis)
     ) / (12.0 * dx)
 
-
+# ---------------------------------------------------------------------
+# compute_chi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Compute scalar dissipation rate χ from buoyancy gradients. 
+#   Obsolete now that Steve provides us with it computed spectrally
+#
+# What it does:
+#   - Loads density r if buoyancy b is not provided
+#   - Computes ∇b using 4th-order derivatives
+#   - Applies χ = (D / N²) |∇b|²
+#
+# Why it exists:
+#   χ is not always stored explicitly in the DNS output but is required
+#   for diagnostics and plotting alongside ε.
+#
+# Used by:
+#   - Preprocessing steps before plotting
+#   - Validation of DNS statistics
 def compute_chi(p,b=None):
     dx = p.Lx / p.Nx
     dy = p.Ly / p.Ny
@@ -60,6 +118,25 @@ def compute_chi(p,b=None):
 #     eps = nu * (2*ux**2 + 2*vy**2 + 2*wz**2 + (uy + vx)**2 + (uz + wx)**2 + (vz + wy)**2)
 #     return eps
 
+# ---------------------------------------------------------------------
+# compute_eps
+# ---------------------------------------------------------------------
+# Purpose:
+#   Compute kinetic energy dissipation rate ε from velocity gradients.
+#   Obsolete now that Steve provides us with it computed spectrally
+#
+# What it does:
+#   - Loads u, v, w if not provided
+#   - Computes all velocity gradients with 4th-order accuracy
+#   - Applies the full strain-rate tensor contraction
+#
+# Why it exists:
+#   ε is a fundamental turbulence diagnostic and is required for
+#   normalisation, log-scaling, and comparison with χ.
+#
+# Used by:
+#   - Preprocessing pipelines
+#   - Statistical summaries
 def compute_eps(p, u=None, v=None, w=None):
     dx = p.Lx / p.Nx
     dy = p.Ly / p.Ny
@@ -98,7 +175,23 @@ def compute_eps(p, u=None, v=None, w=None):
 #     eps_pseudo = nu * (ux**2 + uy**2 + uz**2 + vx**2 + vy**2 + vz**2 + wx**2 + wy**2 + wz**2)
 #     return eps_pseudo
 
-
+# ---------------------------------------------------------------------
+# imshow_with_cbar
+# ---------------------------------------------------------------------
+# Purpose:
+#   Standardised imshow + colorbar layout for all slice plots.
+#
+# What it does:
+#   - Plots Z.T with origin="lower"
+#   - Attaches a compact colorbar on the right
+#   - Forces symmetric tick placement when appropriate
+#
+# Why it exists:
+#   Ensures visual consistency across all notebooks and figures.
+#
+# Used by:
+#   - plot_slices_all_vars
+#   - plot_slices_derived_bundle
 def imshow_with_cbar(ax, Z, cmap, vmin, vmax, cbar_label):
     im = ax.imshow(
         Z.T,
@@ -120,7 +213,21 @@ def imshow_with_cbar(ax, Z, cmap, vmin, vmax, cbar_label):
 
     return im, cb
 
-
+# ---------------------------------------------------------------------
+# set_index_axis
+# ---------------------------------------------------------------------
+# Purpose:
+#   Clean axis tick labelling for very large grids.
+#
+# What it does:
+#   - Places ticks every `step`
+#   - Labels only every `label_step`
+#
+# Why it exists:
+#   Prevents unreadable axes when Nx, Ny, Nz are O(10^4).
+#
+# Used by:
+#   - All slice plotting routines
 def set_index_axis(ax, axis="x", N=1, label=None, step=500, label_step=1000):
     """
     Ticks every `step`, labels only every `label_step`.
@@ -153,7 +260,22 @@ def set_index_axis(ax, axis="x", N=1, label=None, step=500, label_step=1000):
     else:
         raise ValueError("axis must be 'x' or 'y'")
         
-
+# ---------------------------------------------------------------------
+# memory_report
+# ---------------------------------------------------------------------
+# Purpose:
+#   Inspect current notebook memory usage.
+#
+# What it does:
+#   - Lists large NumPy arrays in scope
+#   - Reports RSS, cgroup limits, and remaining headroom
+#
+# Why it exists:
+#   Critical when working near memory limits on Frontier / OLCF nodes.
+#
+# Used by:
+#   - Interactive debugging
+#   - Sanity checks after loading slices
 def memory_report(globals_dict=None, min_gb=0.05):
     if globals_dict is None:
         globals_dict = globals()
@@ -202,7 +324,21 @@ def memory_report(globals_dict=None, min_gb=0.05):
         print("(No cgroup limit detected)")
     print(f"{'Total node memory':25s}: {node_total_gb:6.2f} GB")
 
-
+# ---------------------------------------------------------------------
+# save_slice_figure
+# ---------------------------------------------------------------------
+# Purpose:
+#   Save multi-panel slice figures with a consistent naming scheme.
+#
+# What it does:
+#   - Embeds case name, slice direction, index, and timestamp
+#
+# Why it exists:
+#   Ensures figures are uniquely identifiable and reproducible.
+#
+# Used by:
+#   - plot_slices_all_vars
+#   - plot_slices_derived_bundle
 def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=300):
     Path(outdir).mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -214,8 +350,23 @@ def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=3
     return path
 
 
-### NEW STUFF 30 Jan 2025
 
+# ---------------------------------------------------------------------
+# _slice2d
+# ---------------------------------------------------------------------
+# Purpose:
+#   Extract a correctly oriented 2D slice from a 3D array.
+#
+# What it does:
+#   - Handles xz / xy / yz planes
+#   - Returns metadata for axis labels and titles
+#
+# Why it exists:
+#   Centralises slice orientation logic so all plots are consistent.
+#
+# Used by:
+#   - plot_slices_all_vars
+#   - native-resolution exporters
 def _slice2d(A, plane, idx):
     """
     Return a 2D slice and the axis sizes for tick labelling.
@@ -254,6 +405,24 @@ def _slice2d(A, plane, idx):
     return Z, Nx_plot, Ny_plot, xlab, ylab, title_plane
 
 
+# ---------------------------------------------------------------------
+# plot_slices_all_vars
+# ---------------------------------------------------------------------
+# Purpose:
+#   Produce the canonical 6-panel diagnostic plot from full 3D fields.
+#   High-level plotting from full 3D arrays
+#
+# What it does:
+#   - Extracts one plane
+#   - Normalises u,v,w,b
+#   - Log-scales ε and χ
+#
+# Why it exists:
+#   This is the reference diagnostic figure used throughout the project.
+#
+# Used by:
+#   - Early notebooks
+#   - Validation runs
 def plot_slices_all_vars(
     p,
     u, v, w, b, eps, chi,
@@ -351,7 +520,49 @@ def plot_slices_all_vars(
 
     return fig, axs
 
-
+# ---------------------------------------------------------------------
+# plot_slices_native_resolution
+# ---------------------------------------------------------------------
+# Purpose:
+#   Export each field (u, v, w, b, eps, chi) from a single 2D slice
+#   as a separate PNG image at *native grid resolution*.
+#
+# What it does:
+#   - Extracts a single 2D slice from 3D fields on a chosen plane
+#   - Applies the same normalisations as plot_slices_all_vars:
+#       * u,v,w  -> divide by sqrt(Ek)
+#       * b      -> divide by sqrt(N^2 Ep)
+#       * eps    -> log10(eps / <eps>)
+#       * chi    -> log10(chi / <chi>)
+#   - Writes one PNG per variable with:
+#       * 1 pixel = 1 grid point
+#       * no axes, no interpolation, no resampling
+#       * fixed colormap and vmin/vmax
+#
+# Why it exists:
+#   This is for *data products*, not exploratory plots:
+#     - movies and animations
+#     - ML / image-based analysis
+#     - pixel-accurate figures for papers
+#
+#   Unlike plot_slices_all_vars:
+#     - no matplotlib layout
+#     - no colorbars
+#     - no DPI dependence
+#     - output size equals DNS grid size
+#
+# Used by:
+#   - Standalone export of high-resolution slices
+#   - Batch processing of cases for visual archives
+#
+# Implementation notes:
+#   - Orientation matches imshow(Z.T, origin="lower")
+#   - Uses save_field_native_pixels internally
+#   - File naming encodes case, variable, plane, index, and timestamp
+#
+# Important:
+#   This function *materialises full-resolution 2D arrays*.
+#   Do NOT use it on very large planes unless you intend to export them.
 def plot_slices_native_resolution(
     p,
     u, v, w, b, eps, chi,
@@ -422,8 +633,39 @@ def plot_slices_native_resolution(
         paths[name] = str(path)
     return paths
 
-from PIL import Image
 
+
+# ---------------------------------------------------------------------
+# save_field_native_pixels
+# ---------------------------------------------------------------------
+# Purpose:
+#   Save a 2D numerical field as a pixel-perfect PNG image.
+#
+# What it does:
+#   - Maps a 2D NumPy array directly to RGBA pixels (1 array cell = 1 pixel)
+#   - Applies a matplotlib colormap with fixed vmin/vmax
+#   - Writes an RGBA PNG with no interpolation or rescaling
+#   - Optionally renders NaNs as transparent pixels
+#
+# Why it exists:
+#   This is used when you want *exact spatial fidelity*:
+#     - movies
+#     - machine-learning datasets
+#     - paper figures where each pixel corresponds to one grid point
+#
+#   Unlike imshow-based plotting, this function:
+#     - does NOT resample
+#     - does NOT depend on figure DPI
+#     - preserves the native DNS resolution exactly
+#
+# Used by:
+#   - plot_slices_native_resolution
+#   - export_native_resolution_from_bundle
+#   - export_native_resolution_from_bundle_multi
+#
+# Notes:
+#   The input array Z must already be oriented correctly
+#   (usually Z.T flipped vertically to match imshow(origin="lower")).
 def save_field_native_pixels(
     Z,
     path,
@@ -472,6 +714,22 @@ from dataclasses import dataclass
 from typing import Tuple, Optional, Dict
 import numpy as np
 
+# ---------------------------------------------------------------------
+# LazyField
+# ---------------------------------------------------------------------
+# Purpose:
+#   Lazy, slice-level access to massive 3D DNS fields on disk.
+#
+# What it does:
+#   - Memory-maps raw binary files
+#   - Only materialises requested 2D slices
+#
+# Why it exists:
+#   Makes analysis feasible for 10^10+ grid point simulations.
+#
+# Used by:
+#   - All NetCDF export routines
+#   - Lazy plotting pipelines
 @dataclass
 class LazyField:
     """
@@ -544,7 +802,18 @@ class LazyField:
 
         raise ValueError("plane must be one of {'xz','xy','yz'}")
 
-
+# ---------------------------------------------------------------------
+# open_lazy_field / open_lazy_fields
+# ---------------------------------------------------------------------
+# Purpose:
+#   Convenience constructors for LazyField objects.
+#
+# Why they exist:
+#   Avoid boilerplate and ensure consistent file layout assumptions.
+#
+# Used by:
+#   - All modern notebooks
+#   - Export scripts
 def open_lazy_field(varName: str, p, dtype=np.float32) -> LazyField:
     """
     Open one variable lazily using the existing file naming and layout.
@@ -558,14 +827,34 @@ def open_lazy_field(varName: str, p, dtype=np.float32) -> LazyField:
         drop_last_x=2,
     ).open()
 
-
 def open_lazy_fields(varNames, p, dtype=np.float32) -> Dict[str, LazyField]:
     """
     Convenience helper to open multiple lazy fields at once.
     """
     return {name: open_lazy_field(name, p, dtype=dtype) for name in varNames}
 
-
+# ---------------------------------------------------------------------
+# plot_slices_all_vars_lazy
+# ---------------------------------------------------------------------
+# Purpose:
+#   Memory-safe version of plot_slices_all_vars that never loads full 3D arrays.
+#
+# What it does:
+#   - Uses LazyField.slice2d to read only ONE 2D slice per variable from disk
+#   - Applies the same normalisations/logs as the full-resolution plotting:
+#       u,v,w  -> /sqrt(Ek)
+#       b      -> /sqrt(N^2 Ep)
+#       eps    -> log10(eps/<eps>)
+#       chi    -> log10(chi/<chi>)
+#   - Plots the 6-panel diagnostic figure from these small 2D arrays
+#
+# Why it exists:
+#   Frontier-scale runs make full 3D arrays impossible to hold in RAM.
+#   This keeps I/O and memory proportional to the slice size, not Nx*Ny*Nz.
+#
+# Used by:
+#   - adrienLazyVisualizeData.ipynb (or any quick diagnostic notebook)
+#   - Rapid browsing of cases/timestamps without pre-exporting NetCDF
 def plot_slices_all_vars_lazy(
     p,
     fields,                 # dict: {"u": LazyField, "v": ..., "eps": ...}
@@ -636,7 +925,23 @@ def plot_slices_all_vars_lazy(
 
     return fig, axs
 
-
+# ---------------------------------------------------------------------
+# mean3d_strided
+# ---------------------------------------------------------------------
+# Purpose:
+#   Fast approximate volume-mean of a LazyField without reading the full cube.
+#
+# What it does:
+#   - Reads a regularly subsampled 3D array from the memmap (stride in x,y,z)
+#   - Computes the mean of that sample as an approximation of the true mean
+#
+# Why it exists:
+#   Exact means require reading Nx*Ny*Nz values (too much I/O).
+#   A strided sample is usually enough for quick Ek/Ep/normalisation estimates.
+#
+# Used by:
+#   - Quick stats for normalisations when you don’t want to precompute globals
+#   - Sanity checks and interactive exploration
 def mean3d_strided(field: LazyField, stride: Tuple[int, int, int] = (2, 2, 2)) -> float:
     """
     Approx mean using regular subsampling.
@@ -652,6 +957,23 @@ def mean3d_strided(field: LazyField, stride: Tuple[int, int, int] = (2, 2, 2)) -
     sample = np.asarray(mm[:Nx:sx, :Ny:sy, :Nz:sz], dtype=np.float64)
     return float(sample.mean())
 
+# ---------------------------------------------------------------------
+# mean3d_strided_power
+# ---------------------------------------------------------------------
+# Purpose:
+#   Fast approximate mean of (field**power) using strided subsampling.
+#
+# What it does:
+#   - Reads a strided 3D sample from disk (like mean3d_strided)
+#   - Raises to `power` and averages
+#
+# Why it exists:
+#   Many diagnostics use second moments (variance/energy-like quantities).
+#   This gives an inexpensive estimate without full-volume I/O.
+#
+# Used by:
+#   - Rough Ek-like / variance-like estimates from LazyFields
+#   - Quick comparisons across cases
 def mean3d_strided_power(
     field: LazyField,
     power: int = 2,
@@ -667,11 +989,17 @@ def mean3d_strided_power(
     sample = np.asarray(mm[:Nx:sx, :Ny:sy, :Nz:sz], dtype=np.float64)
     return float((sample ** power).mean())
 
-
-from dataclasses import dataclass
-from typing import Dict, Tuple, Optional, Iterable, Union, List
-import numpy as np
-
+# ---------------------------------------------------------------------
+# VarSlices
+# ---------------------------------------------------------------------
+# Purpose:
+#   Store one variable across multiple planes.
+#
+# What it does:
+#   - Allows access like s.u.xz or s.epslog.xy
+#
+# Why it exists:
+#   Makes multi-plane plotting and exporting clean and explicit.
 class VarSlices:
     def __init__(self, name: str):
         self.name = name
@@ -691,7 +1019,18 @@ class VarSlices:
     def available(self):
         return list(self._planes.keys())
 
-
+# ---------------------------------------------------------------------
+# SliceBundle
+# ---------------------------------------------------------------------
+# Purpose:
+#   Bundle multiple variables and planes with shared metadata.
+#
+# What it does:
+#   - Stores VarSlices
+#   - Carries idx and stride information
+#
+# Why it exists:
+#   This is the main object passed between notebooks and plotting routines.
 @dataclass
 class SliceBundle:
     """
@@ -717,7 +1056,24 @@ class SliceBundle:
         first = next(iter(self.vars.values()))
         return first.available()
 
-
+# ---------------------------------------------------------------------
+# default_idx_for_plane
+# ---------------------------------------------------------------------
+# Purpose:
+#   Standard rule for "mid-plane" slicing in each coordinate plane.
+#
+# What it does:
+#   - Returns Ny//2 for xz
+#   - Returns Nz//2 for xy
+#   - Returns Nx//2 for yz
+#
+# Why it exists:
+#   Centralises the convention so every notebook picks the same default slice.
+#
+# Used by:
+#   - get_slices_multi
+#   - get_derived_slices_multi
+#   - plot/export helpers when idx is not specified
 def default_idx_for_plane(p, plane: str) -> int:
     plane = plane.lower()
     if plane == "xz":
@@ -728,7 +1084,26 @@ def default_idx_for_plane(p, plane: str) -> int:
         return p.Nx // 2
     raise ValueError("plane must be one of {'xz','xy','yz'}")
 
-
+# ---------------------------------------------------------------------
+# get_slices_multi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Read many variables and many planes into one structured container.
+#
+# What it does:
+#   - For each requested plane (xz/xy/yz) and each requested variable:
+#       reads a 2D slice from LazyField.slice2d
+#   - Stores results in a SliceBundle so you can access:
+#       s.u.xz, s.r.xy, ...
+#   - Carries per-plane idx metadata and the stride used
+#
+# Why it exists:
+#   Avoids repeated slice reads scattered across notebooks and keeps
+#   multi-plane work explicit and reproducible.
+#
+# Used by:
+#   - NetCDF export / derived-field pipelines
+#   - Any notebook that wants xz+xy+yz views without manual bookkeeping
 def get_slices_multi(
     fields,
     p,
@@ -777,6 +1152,28 @@ def get_slices_multi(
 
     return SliceBundle(vars=varslices, idx=idx_map, stride=stride)
 
+# ---------------------------------------------------------------------
+# add_derived_multi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Add the standard derived/normalised diagnostics to an existing SliceBundle.
+#
+# What it does:
+#   - Takes raw slices already stored in `slices`
+#   - Computes (for every available plane):
+#       uN, vN, wN   : velocity / sqrt(Ek)
+#       bN           : buoyancy / sqrt(N^2 Ep) using b = -g r
+#       epslog       : log10(eps/<eps>)
+#       chilog       : log10(chi/<chi>)
+#   - Optionally keeps the raw fields too (include_raw=True)
+#
+# Why it exists:
+#   Separates “I/O step” (read raw slices) from “diagnostic step”
+#   (construct the plotted quantities), making pipelines cleaner.
+#
+# Used by:
+#   - Workflows where you first load raw slices, then compute diagnostics
+#   - Multi-plane plotting/export from a single bundle
 def add_derived_multi(slices: SliceBundle, p, stats: dict, tiny: float = 1e-30,
                       include_raw: bool = True) -> SliceBundle:
     """
@@ -830,75 +1227,21 @@ def add_derived_multi(slices: SliceBundle, p, stats: dict, tiny: float = 1e-30,
 
     return SliceBundle(vars=out_vars, idx=slices.idx, stride=slices.stride)
 
-
-# def get_derived_slices_multi(
-#     fields,
-#     p,
-#     stats: dict,
-#     planes=("xz",),
-#     idx=None,
-#     stride=(1, 1, 1),
-#     tiny: float = 1e-30,
-# ) -> SliceBundle:
-#     """
-#     Build a multi-plane SliceBundle containing ONLY derived fields:
-#       uN, vN, wN, bN, epslog, chilog
-
-#     Reads raw slices as temporaries and immediately discards them.
-#     fields must include keys: u,v,w,r,ee,chi (LazyField objects)
-#     stats must include: Ek, Ep, eps_avg, chi_avg
-#     """
-#     # normalise plane input
-#     if isinstance(planes, str):
-#         planes = [planes]
-#     planes = [pl.lower() for pl in planes]
-
-#     # idx map
-#     idx_map: Dict[str, int] = {}
-#     if idx is None:
-#         for pl in planes:
-#             idx_map[pl] = default_idx_for_plane(p, pl)
-#     elif isinstance(idx, int):
-#         for pl in planes:
-#             idx_map[pl] = idx
-#     else:
-#         for pl in planes:
-#             idx_map[pl] = idx.get(pl, default_idx_for_plane(p, pl))
-
-#     Ek = stats["Ek"]
-#     Ep = stats["Ep"]
-#     eps_avg = stats["eps_avg"]
-#     chi_avg = stats["chi_avg"]
-
-#     # allocate output varslices only for derived vars
-#     out_vars: Dict[str, VarSlices] = {name: VarSlices(name) for name in
-#                                      ["uN", "vN", "wN", "bN", "epslog", "chilog"]}
-
-#     for pl in planes:
-#         ii = idx_map[pl]
-
-#         # read only what we need, as 2D arrays
-#         u2   = fields["u"].slice2d(pl, ii, stride)
-#         v2   = fields["v"].slice2d(pl, ii, stride)
-#         w2   = fields["w"].slice2d(pl, ii, stride)
-#         r2   = fields["r"].slice2d(pl, ii, stride)
-#         ee2  = fields["ee"].slice2d(pl, ii, stride)
-#         chi2 = fields["chi"].slice2d(pl, ii, stride)
-
-#         out_vars["uN"].set(pl, u2 / np.sqrt(Ek))
-#         out_vars["vN"].set(pl, v2 / np.sqrt(Ek))
-#         out_vars["wN"].set(pl, w2 / np.sqrt(Ek))
-
-#         out_vars["bN"].set(pl, r2 * (-p.zAccel) / np.sqrt(p.N2 * Ep))
-
-#         with np.errstate(divide="ignore", invalid="ignore"):
-#             out_vars["epslog"].set(pl, np.log10(np.maximum(ee2, tiny) / eps_avg))
-#             out_vars["chilog"].set(pl, np.log10(np.maximum(chi2, tiny) / chi_avg))
-
-#         # let temporaries go out of scope immediately
-
-#     return SliceBundle(vars=out_vars, idx=idx_map, stride=stride)
-
+# ---------------------------------------------------------------------
+# get_derived_slices_multi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Build derived 2D diagnostic fields directly from 3D LazyFields.
+#
+# What it does:
+#   - Reads only required slices
+#   - Computes uN, vN, wN, bN, epslog, chilog
+#
+# Why it exists:
+#   Avoids storing raw slices in memory and enables fast iteration.
+#
+# Used by:
+#   - Pre-NetCDF workflows
 def get_derived_slices_multi(
     fields,
     p,
@@ -975,7 +1318,23 @@ def get_derived_slices_multi(
 
     return SliceBundle(vars=out_vars, idx=idx_map, stride=stride)
     
-
+# ---------------------------------------------------------------------
+# plot_slices_derived_bundle
+# ---------------------------------------------------------------------
+# Purpose:
+#   Canonical 6-panel diagnostic plot, but using derived fields already computed.
+#
+# What it does:
+#   - Expects a SliceBundle containing uN,vN,wN,bN,epslog,chilog (2D arrays)
+#   - Plots the same 6 panels and uses the same tick labelling + save convention
+#
+# Why it exists:
+#   When derived fields are precomputed (via get_derived_slices_multi or add_derived_multi),
+#   plotting should not need access to the raw 3D data anymore.
+#
+# Used by:
+#   - NetCDF-based notebooks (load slice -> derive -> plot)
+#   - Any workflow where you want consistent figures from cached derived slices
 def plot_slices_derived_bundle(
     p,
     s,                      # SliceBundle with vars uN,vN,wN,bN,epslog,chilog
@@ -1050,7 +1409,22 @@ def plot_slices_derived_bundle(
 
     return fig, axs
 
-
+# ---------------------------------------------------------------------
+# plot_slices_derived_bundle_multi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Convenience wrapper to produce derived 6-panel figures for multiple planes.
+#
+# What it does:
+#   - Loops over planes (e.g. xz, xy, yz)
+#   - Calls plot_slices_derived_bundle for each
+#   - Returns a dict of (fig, axs) keyed by plane
+#
+# Why it exists:
+#   Makes “make all three planes” one call, with consistent idx selection.
+#
+# Used by:
+#   - Quick production of a full diagnostic set (xz/xy/yz) for a case
 def plot_slices_derived_bundle_multi(
     p,
     s,
@@ -1102,7 +1476,24 @@ def plot_slices_derived_bundle_multi(
 
     return figs
 
-
+# ---------------------------------------------------------------------
+# export_native_resolution_from_bundle
+# ---------------------------------------------------------------------
+# Purpose:
+#   Export derived 2D diagnostics from a SliceBundle as native-resolution PNGs.
+#
+# What it does:
+#   - Takes already-derived 2D arrays (uN,vN,wN,bN,epslog,chilog) from `s`
+#   - Converts them into export-ready orientation matching imshow(origin="lower")
+#   - Writes one PNG per variable via save_field_native_pixels
+#
+# Why it exists:
+#   Once you have derived slices cached (or loaded from NetCDF),
+#   you can export publication/ML-ready images without touching the 3D DNS files.
+#
+# Used by:
+#   - NetCDF workflows producing image assets
+#   - Batch export scripts after derived slice generation
 def export_native_resolution_from_bundle(
     p,
     s,                      # SliceBundle with uN,vN,wN,bN,epslog,chilog
@@ -1154,7 +1545,23 @@ def export_native_resolution_from_bundle(
 
     return paths
 
-
+# ---------------------------------------------------------------------
+# export_native_resolution_from_bundle_multi
+# ---------------------------------------------------------------------
+# Purpose:
+#   Export native-resolution PNGs for multiple planes from one derived SliceBundle.
+#
+# What it does:
+#   - Loops over planes (xz/xy/yz)
+#   - Calls export_native_resolution_from_bundle for each
+#   - Returns a dict: plane -> {varname: filepath}
+#
+# Why it exists:
+#   One-call “export everything” for a case when derived slices are available.
+#
+# Used by:
+#   - Batch figure generation / archiving
+#   - Creating consistent datasets across planes
 def export_native_resolution_from_bundle_multi(
     p,
     s,
@@ -1193,3 +1600,294 @@ def export_native_resolution_from_bundle_multi(
             **kwargs,
         )
     return out
+
+# ---------------------------------------------------------------------
+# coords_1d
+# ---------------------------------------------------------------------
+# Purpose:
+#   Construct 1D coordinate vectors consistent with the solver grid.
+#
+# What it does:
+#   - Returns uniform x,y,z vectors spanning [0, L) with endpoint=False
+#   - Uses Nx,Ny,Nz and Lx,Ly,Lz from p
+#
+# Why it exists:
+#   NetCDF outputs should carry physical coordinates, not only index space.
+#   This provides small, reliable coordinate arrays for exported 2D slices.
+#
+# Used by:
+#   - save_raw_plane_netcdf
+#   - Any workflow that needs physical coordinates for plotting/metadata
+def coords_1d(p):
+    # Uniform grid (assumed). If you later have staggered grids, adjust.
+    x = np.linspace(0.0, p.Lx, p.Nx, endpoint=False, dtype=np.float64)
+    y = np.linspace(0.0, p.Ly, p.Ny, endpoint=False, dtype=np.float64)
+    z = np.linspace(0.0, p.Lz, p.Nz, endpoint=False, dtype=np.float64)
+    return x, y, z
+
+# ---------------------------------------------------------------------
+# save_raw_plane_netcdf
+# ---------------------------------------------------------------------
+# Purpose:
+#   Persist raw 2D slices to disk for long-term reuse.
+#
+# What it does:
+#   - Writes u,v,w,r,ee,chi as float32
+#   - Stores fixed index (ix/iy/iz) and physical coordinate (x0/y0/z0)
+#
+# Why it exists:
+#   Decouples expensive 3D I/O from downstream plotting and analysis.
+#
+# Used by:
+#   - Export scripts
+#   - Long-running interactive sessions
+def save_raw_plane_netcdf(
+    fields,
+    p,
+    plane: str,
+    idx: int,
+    outdir,
+    stride=(1, 1, 1),
+    fname=None,
+    verbose=True,
+    stream=True,   # True = write each variable immediately (lower peak RAM)
+):
+    """
+    Save raw u,v,w,r,ee,chi on one plane to a NetCDF3 classic .nc file.
+
+    - Stores u,v,w,r,ee,chi as float32 ("f4")
+    - Stores coords x/y/z as float64 ("f8") (small cost, convenient)
+    - Stores fixed plane index (ix/iy/iz) and fixed physical coordinate (x0/y0/z0)
+      as length-1 variables over dimension ("one",) to avoid scalar write issues.
+
+    fields: dict of LazyField objects with keys ["u","v","w","r","ee","chi"]
+    p: DatParam with Lx,Ly,Lz,Nx,Ny,Nz,dirPath,name,tStamp
+    plane: "xy", "xz", or "yz"
+    idx: index along the missing axis (z for xy, y for xz, x for yz)
+    stride: (sx, sy, sz) sampling stride in x,y,z
+    outdir: output folder
+    fname: optional filename (default: f"{plane}.nc")
+    stream: if True, don't keep all 6 arrays at once
+    """
+    plane = plane.lower()
+    if plane not in {"xy", "xz", "yz"}:
+        raise ValueError("plane must be one of {'xy','xz','yz'}")
+
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    sx, sy, sz = stride
+    Nx, Ny, Nz = int(p.Nx), int(p.Ny), int(p.Nz)
+    idx = int(idx)
+
+    # --- coords (assumes you have coords_1d(p)) ---
+    x, y, z = coords_1d(p)
+
+    # --- figure out 2D grid + fixed axis info ---
+    if plane == "xy":
+        # fixed z = idx
+        if not (0 <= idx < Nz):
+            raise IndexError(f"idx={idx} out of bounds for Nz={Nz}")
+        x2 = x[::sx]
+        y2 = y[::sy]
+        dim1_name, dim2_name = "x", "y"
+        dim1, dim2 = len(x2), len(y2)
+        fixed_name = "iz"
+        fixed_coord_name = "z0"
+        fixed_coord = float(z[idx])
+
+        coord_payload = {"x": x2, "y": y2}
+
+    elif plane == "xz":
+        # fixed y = idx
+        if not (0 <= idx < Ny):
+            raise IndexError(f"idx={idx} out of bounds for Ny={Ny}")
+        x2 = x[::sx]
+        z2 = z[::sz]
+        dim1_name, dim2_name = "x", "z"
+        dim1, dim2 = len(x2), len(z2)
+        fixed_name = "iy"
+        fixed_coord_name = "y0"
+        fixed_coord = float(y[idx])
+
+        coord_payload = {"x": x2, "z": z2}
+
+    else:  # "yz"
+        # fixed x = idx
+        if not (0 <= idx < Nx):
+            raise IndexError(f"idx={idx} out of bounds for Nx={Nx}")
+        y2 = y[::sy]
+        z2 = z[::sz]
+        dim1_name, dim2_name = "y", "z"
+        dim1, dim2 = len(y2), len(z2)
+        fixed_name = "ix"
+        fixed_coord_name = "x0"
+        fixed_coord = float(x[idx])
+
+        coord_payload = {"y": y2, "z": z2}
+
+    # file name
+    if fname is None:
+        fname = f"{plane}.nc"
+    path = outdir / fname
+
+    if verbose:
+        print(f"\n[save_raw_plane_netcdf] writing {path}", flush=True)
+        print(f"  plane={plane} {fixed_name}={idx} stride={stride}", flush=True)
+        print(f"  dims: {dim1_name}={dim1}, {dim2_name}={dim2}", flush=True)
+
+    # --- write NetCDF3 ---
+    nc = netcdf_file(path, mode="w")
+    try:
+        # dimensions
+        nc.createDimension(dim1_name, dim1)
+        nc.createDimension(dim2_name, dim2)
+        nc.createDimension("one", 1)
+
+        # coordinate variables
+        for cname, cvals in coord_payload.items():
+            v = nc.createVariable(cname, "f8", (cname,))
+            v[:] = cvals
+
+        # fixed index and fixed coordinate (as length-1 vars)
+        vfixed_i = nc.createVariable(fixed_name, "i4", ("one",))
+        vfixed_i[0] = idx
+
+        vfixed_x = nc.createVariable(fixed_coord_name, "f8", ("one",))
+        vfixed_x[0] = fixed_coord
+
+        # data variables
+        varnames = ["u", "v", "w", "r", "ee", "chi"]
+        if stream:
+            # create vars first, then fill
+            for name in varnames:
+                nc.createVariable(name, "f4", (dim1_name, dim2_name))
+
+            for name in varnames:
+                if verbose:
+                    print(f"  reading+writing {name} ...", flush=True)
+                A = fields[name].slice2d(plane=plane, idx=idx, stride=stride)
+                A = np.asarray(A, dtype=np.float32)  # ensure stored as float32
+                nc.variables[name][:] = A
+                del A
+        else:
+            # load all then write (simple, but higher peak RAM)
+            data = {}
+            for name in varnames:
+                if verbose:
+                    print(f"  reading {name} ...", flush=True)
+                A = fields[name].slice2d(plane=plane, idx=idx, stride=stride)
+                data[name] = np.asarray(A, dtype=np.float32)
+            for name in varnames:
+                if verbose:
+                    print(f"  writing {name} ...", flush=True)
+                v = nc.createVariable(name, "f4", (dim1_name, dim2_name))
+                v[:] = data[name]
+            data.clear()
+
+        # global attrs
+        nc.plane = plane
+        nc.case = str(p.name)
+        nc.tStamp = str(p.tStamp)
+        nc.dirPath = str(p.dirPath)
+
+        nc.Nx, nc.Ny, nc.Nz = Nx, Ny, Nz
+        nc.Lx, nc.Ly, nc.Lz = float(p.Lx), float(p.Ly), float(p.Lz)
+        nc.stride_x, nc.stride_y, nc.stride_z = int(sx), int(sy), int(sz)
+        setattr(nc, fixed_name, int(idx))
+    finally:
+        nc.close()
+
+    if verbose:
+        print("  done.", flush=True)
+
+    return path
+
+# ---------------------------------------------------------------------
+# read_raw_plane_netcdf / _read_plane_nc
+# ---------------------------------------------------------------------
+# Purpose:
+#   Reload previously saved 2D slices.
+#
+# Why they exist:
+#   Allow restarting analysis without touching the original 3D data.
+#
+# Used by:
+#   - NetCDF-based plotting notebooks
+def read_raw_plane_netcdf(path, copy=True):
+    """
+    Read raw u,v,w,r,ee,chi from a classic NetCDF created with scipy.io.netcdf_file.
+    mmap=False avoids the close warning.
+    """
+    nc = netcdf_file(str(path), "r", mmap=False)
+    try:
+        raw = {}
+        for name in ["u","v","w","r","ee","chi"]:
+            A = nc.variables[name][:]  # ndarray
+            if copy:
+                A = np.array(A, dtype=np.float32, copy=True)
+            else:
+                A = np.asarray(A, dtype=np.float32)
+            raw[name] = A
+
+        attrs = dict(nc.__dict__)   # includes ix/iy/iz, stride_x/y/z, etc
+    finally:
+        nc.close()
+    return raw, attrs
+
+def _read_plane_nc(path):
+    """
+    Returns:
+      data: dict of 2D float32 arrays for u,v,w,r,ee,chi
+      meta: dict with plane, fixed index/value if present, and coords if present
+    """
+    nc = netcdf_file(str(path), "r", mmap=False)  # mmap=False avoids the warning / file-handle issues
+    try:
+        data = {}
+        for name in ["u", "v", "w", "r", "ee", "chi"]:
+            data[name] = np.array(nc.variables[name][:], dtype=np.float32)
+
+        meta = {"attrs": {}}
+        # global attrs (if present)
+        for k in ["plane", "case", "tStamp", "Nx", "Ny", "Nz", "Lx", "Ly", "Lz",
+                  "stride_x", "stride_y", "stride_z", "ix", "iy", "iz"]:
+            if hasattr(nc, k):
+                meta["attrs"][k] = getattr(nc, k)
+
+        # coords (if present)
+        for cname in ["x", "y", "z", "x0", "y0", "z0"]:
+            if cname in nc.variables:
+                meta[cname] = np.array(nc.variables[cname][:], dtype=np.float64)
+
+        return data, meta
+    finally:
+        nc.close()
+
+# ---------------------------------------------------------------------
+# plane_stats
+# ---------------------------------------------------------------------
+# Purpose:
+#   Estimate mean energies and dissipation from a single 2D slice.
+#
+# Why it exists:
+#   Lightweight consistency checks against target Ek, Ep.
+#
+# Used by:
+#   - Sanity checks in NetCDF workflows
+def plane_stats(raw, p):
+    """
+    Plane-mean estimates from ONE 2D slice.
+    """
+    u = raw["u"].astype(np.float64, copy=False)
+    v = raw["v"].astype(np.float64, copy=False)
+    w = raw["w"].astype(np.float64, copy=False)
+    r = raw["r"].astype(np.float64, copy=False)
+    ee  = raw["ee"].astype(np.float64, copy=False)
+    chi = raw["chi"].astype(np.float64, copy=False)
+
+    Ek = 0.5 * np.mean(u*u + v*v + w*w)
+    Ep = np.mean(r*r) * (p.zAccel**2) / (2.0 * p.N2)
+
+    eps_avg = float(np.mean(ee))
+    chi_avg = float(np.mean(chi))
+    return dict(Ek=float(Ek), Ep=float(Ep), eps_avg=eps_avg, chi_avg=chi_avg)
