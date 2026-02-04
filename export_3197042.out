@@ -1,0 +1,9 @@
+[export_slices] case=R8P1 tStamp=95.780500
+[export_slices] outdir=/lustre/orion/cfd135/proj-shared/Hsst/R8P1/001_Final/2D_slices
+[export_slices] stride=(1, 1, 1) planes=['yz']
+[export_slices] idx: xy(iz)=1092 xz(iy)=2184 yz(ix)=4368
+
+[save_raw_plane_netcdf] writing /lustre/orion/cfd135/proj-shared/Hsst/R8P1/001_Final/2D_slices/yz.nc
+  plane=yz ix=4368 stride=(1, 1, 1)
+  dims: y=4368, z=2184
+  reading+writing u ...
