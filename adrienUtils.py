@@ -1651,6 +1651,7 @@ def save_raw_plane_netcdf(
     fname=None,
     verbose=True,
     stream=True,   # True = write each variable immediately (lower peak RAM)
+    progress_cb=None,   # NEW
 ):
     """
     Save raw u,v,w,r,ee,chi on one plane to a NetCDF3 classic .nc file.
@@ -1758,18 +1759,25 @@ def save_raw_plane_netcdf(
 
         # data variables
         varnames = ["u", "v", "w", "r", "ee", "chi"]
+        
         if stream:
-            # create vars first, then fill
+            # create vars first
             for name in varnames:
                 nc.createVariable(name, "f4", (dim1_name, dim2_name))
-
-            for name in varnames:
-                if verbose:
-                    print(f"  reading+writing {name} ...", flush=True)
-                A = fields[name].slice2d(plane=plane, idx=idx, stride=stride)
-                A = np.asarray(A, dtype=np.float32)  # ensure stored as float32
-                nc.variables[name][:] = A
+        
+            n = len(varnames)
+            for i, name in enumerate(varnames, start=1):
+                A = fields[name].slice2d(
+                    plane=plane,
+                    idx=idx,
+                    stride=stride,
+                )
+                nc.variables[name][:] = np.asarray(A, dtype=np.float32)
                 del A
+        
+                if progress_cb is not None:
+                    progress_cb(var=name, i=i, n=n)
+        
         else:
             # load all then write (simple, but higher peak RAM)
             data = {}
@@ -1778,11 +1786,13 @@ def save_raw_plane_netcdf(
                     print(f"  reading {name} ...", flush=True)
                 A = fields[name].slice2d(plane=plane, idx=idx, stride=stride)
                 data[name] = np.asarray(A, dtype=np.float32)
+        
             for name in varnames:
                 if verbose:
                     print(f"  writing {name} ...", flush=True)
                 v = nc.createVariable(name, "f4", (dim1_name, dim2_name))
                 v[:] = data[name]
+        
             data.clear()
 
         # global attrs

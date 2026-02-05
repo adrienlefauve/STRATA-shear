@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J export_R6P50_slices
+#SBATCH -J export_slices
 #SBATCH -A cfd135            # your project
 #SBATCH -p batch             # standard compute partition
 #SBATCH -N 1
@@ -17,7 +17,7 @@ module load python
 export OMP_NUM_THREADS=1
 
 # --- run ---
-python adrienAutoExportSlicesNetCDF.py \
+python adrienExportSlicesNetCDFAuto.py \
   --case R8P1 \
   --planes yz \
   --stride 1 1 1 \
