@@ -1,7 +1,23 @@
 #!/usr/bin/env python3
+"""
+adrienMakeCubeMovie.py
 
-# EXAMPLE CODE
+Workflow
+--------
+1) Loops over x-indices (ix) in the ORIGINAL volume (0..Nx-1) with step --ixstride.
+2) For each ix, calls adrienPlotCube.py to render one PNG:
+      figures/3D/<case>/<case>_<var>_ixXXXXXX.png
+3) Renames/moves each PNG into a sequential frame directory:
+      figures/3D/<case>/<var>_frames/<case>_<var>_000001.png, ...
+4) Optionally runs ffmpeg to make an mp4.
 
+Notes
+-----
+- Requires adrienPlotCube.py to be functional in your environment.
+- ffmpeg is optional: pass --no-movie if you only want frames, or pass --ffmpeg /path/to/ffmpeg.
+"""
+
+# EXAMPLE CALL
 # python adrienMakeCubeMovie.py \
 #   --case R1P1 \
 #   --var r \
@@ -39,39 +55,39 @@ def main():
     frames_dir = Path(args.outdir) / args.case / f"{args.var}_frames"
     frames_dir.mkdir(parents=True, exist_ok=True)
 
-    # # Query Nx from param file via a tiny python one-liner
-    # get_Nx = [
-    #     "python", "-c",
-    #     (
-    #         "import adrienParamClassSheared as p;"
-    #         f"print(p.generate()['{args.case}'].Nx)"
-    #     ),
-    # ]
-    # Nx = int(subprocess.check_output(get_Nx).decode().strip())
+    # Query Nx from param file via a tiny python one-liner
+    get_Nx = [
+        "python", "-c",
+        (
+            "import adrienParamClassSheared as p;"
+            f"print(p.generate()['{args.case}'].Nx)"
+        ),
+    ]
+    Nx = int(subprocess.check_output(get_Nx).decode().strip())
 
-    # frame = 0
-    # for ix in range(0, Nx, args.ixstride):
-    #     frame += 1
+    frame = 0
+    for ix in range(0, Nx, args.ixstride):
+        frame += 1
 
-    #     outpng = frames_dir / f"{args.case}_{args.var}_{frame:06d}.png"
+        outpng = frames_dir / f"{args.case}_{args.var}_{frame:06d}.png"
 
-    #     cmd = [
-    #         "python", "adrienPlotCube.py",
-    #         "--case", args.case,
-    #         "--var", args.var,
-    #         "--stride", str(args.stride),
-    #         "--ix", str(ix),
-    #         "--top-frac", str(args.top_frac),
-    #         "--width", str(args.width),
-    #         "--scale", str(args.scale),
-    #     ]
-    #     if args.cbar:
-    #         cmd.append("--cbar")
+        cmd = [
+            "python", "adrienPlotCube.py",
+            "--case", args.case,
+            "--var", args.var,
+            "--stride", str(args.stride),
+            "--ix", str(ix),
+            "--top-frac", str(args.top_frac),
+            "--width", str(args.width),
+            "--scale", str(args.scale),
+        ]
+        if args.cbar:
+            cmd.append("--cbar")
 
-    #     run(cmd)
+        run(cmd)
 
-    #     produced = Path(args.outdir) / args.case / f"{args.case}_{args.var}_ix{ix:06d}.png"
-    #     produced.replace(outpng)
+        produced = Path(args.outdir) / args.case / f"{args.case}_{args.var}_ix{ix:06d}.png"
+        produced.replace(outpng)
 
     # Make movie
     movie = Path(args.outdir) / args.case / f"{args.case}_{args.var}.mp4"

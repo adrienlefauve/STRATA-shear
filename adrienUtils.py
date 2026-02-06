@@ -1652,6 +1652,7 @@ def save_raw_plane_netcdf(
     verbose=True,
     stream=True,   # True = write each variable immediately (lower peak RAM)
     progress_cb=None,   # NEW
+    varnames=None,   # NEW
 ):
     """
     Save raw u,v,w,r,ee,chi on one plane to a NetCDF3 classic .nc file.
@@ -1758,7 +1759,17 @@ def save_raw_plane_netcdf(
         vfixed_x[0] = fixed_coord
 
         # data variables
-        varnames = ["u", "v", "w", "r", "ee", "chi"]
+        # varnames = ["u", "v", "w", "r", "ee", "chi"]
+            # data variables
+        if varnames is None:
+            varnames = ["u", "v", "w", "r", "ee", "chi"]
+        else:
+            varnames = [str(v) for v in varnames]
+    
+        # optional sanity check
+        missing = [v for v in varnames if v not in fields]
+        if missing:
+            raise KeyError(f"Missing fields for variables: {missing}. Available: {list(fields.keys())}")
         
         if stream:
             # create vars first
@@ -1824,48 +1835,45 @@ def save_raw_plane_netcdf(
 #
 # Used by:
 #   - NetCDF-based plotting notebooks
-def read_raw_plane_netcdf(path, copy=True):
-    """
-    Read raw u,v,w,r,ee,chi from a classic NetCDF created with scipy.io.netcdf_file.
-    mmap=False avoids the close warning.
-    """
+def read_raw_plane_netcdf(path, copy=True, varnames=None):
     nc = netcdf_file(str(path), "r", mmap=False)
     try:
-        raw = {}
-        for name in ["u","v","w","r","ee","chi"]:
-            A = nc.variables[name][:]  # ndarray
-            if copy:
-                A = np.array(A, dtype=np.float32, copy=True)
-            else:
-                A = np.asarray(A, dtype=np.float32)
-            raw[name] = A
+        if varnames is None:
+            # read all float variables except coords + metadata
+            skip = {"x","y","z","x0","y0","z0","ix","iy","iz"}
+            varnames = [k for k in nc.variables.keys() if k not in skip]
 
-        attrs = dict(nc.__dict__)   # includes ix/iy/iz, stride_x/y/z, etc
+        raw = {}
+        for name in varnames:
+            if name not in nc.variables:
+                continue
+            A = nc.variables[name][:]
+            raw[name] = np.array(A, dtype=np.float32, copy=copy)
+
+        attrs = dict(nc.__dict__)
     finally:
         nc.close()
     return raw, attrs
 
-def _read_plane_nc(path):
-    """
-    Returns:
-      data: dict of 2D float32 arrays for u,v,w,r,ee,chi
-      meta: dict with plane, fixed index/value if present, and coords if present
-    """
-    nc = netcdf_file(str(path), "r", mmap=False)  # mmap=False avoids the warning / file-handle issues
+def _read_plane_nc(path, varnames=None):
+    nc = netcdf_file(str(path), "r", mmap=False)
     try:
+        if varnames is None:
+            skip = {"x","y","z","x0","y0","z0","ix","iy","iz","one"}
+            varnames = [k for k in nc.variables.keys() if k not in skip]
+
         data = {}
-        for name in ["u", "v", "w", "r", "ee", "chi"]:
-            data[name] = np.array(nc.variables[name][:], dtype=np.float32)
+        for name in varnames:
+            if name in nc.variables:
+                data[name] = np.array(nc.variables[name][:], dtype=np.float32)
 
         meta = {"attrs": {}}
-        # global attrs (if present)
-        for k in ["plane", "case", "tStamp", "Nx", "Ny", "Nz", "Lx", "Ly", "Lz",
-                  "stride_x", "stride_y", "stride_z", "ix", "iy", "iz"]:
+        for k in ["plane","case","tStamp","Nx","Ny","Nz","Lx","Ly","Lz",
+                  "stride_x","stride_y","stride_z","ix","iy","iz"]:
             if hasattr(nc, k):
                 meta["attrs"][k] = getattr(nc, k)
 
-        # coords (if present)
-        for cname in ["x", "y", "z", "x0", "y0", "z0"]:
+        for cname in ["x","y","z","x0","y0","z0"]:
             if cname in nc.variables:
                 meta[cname] = np.array(nc.variables[cname][:], dtype=np.float64)
 

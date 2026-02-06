@@ -1,13 +1,60 @@
 #!/usr/bin/env python3
+"""
+adrienMakeCubeMovieParallel.py
+
+High-level wrapper to generate a movie from a sequence of 3D cube snapshots.
+
+Workflow:
+  1. Query the DNS metadata to determine Nx for a given case
+  2. Generate a list of ORIGINAL x-indices:
+        ix = 0, ixstride, 2*ixstride, ...
+  3. For each ix:
+        • call adrienPlotCube.py to render ONE PNG frame
+        • rename/move the output into a sequentially numbered frame directory
+  4. Run all frame renders in parallel using joblib (one process per core)
+  5. (Optional) Assemble frames into an MP4 using ffmpeg
+
+Parallelism model:
+  • Embarrassingly parallel over x-slices
+  • Each job renders one independent PNG
+  • Designed for Slurm nodes with many cores
+  • BLAS/OMP threading must be disabled to avoid oversubscription
+
+Filesystem layout:
+  <outdir>/<case>/<var>_frames/
+      <case>_<var>_000001.png
+      <case>_<var>_000002.png
+      ...
+  <outdir>/<case>/<case>_<var>.mp4
+
+Typical usage (inside Slurm):
+  python adrienMakeCubeMovieParallel.py \
+      --case R1P7 \
+      --var r \
+      --stride 5 \
+      --ixstride 20 \
+      --fps 5 \
+      --width 1000 \
+      --njobs 16 \
+      --cbar
+
+Notes:
+  • adrienPlotCube.py must be on PATH or in the same directory
+  • ffmpeg must be available (e.g. via conda-forge)
+  • For large runs, frames should be written to SCRATCH to avoid inode quotas
+
+Design philosophy:
+  • Keep rendering logic simple and reproducible
+  • Separate “what a frame looks like” from “how many frames we make”
+  • Make it easy to regenerate movies with different stride / fps / variables
+"""
 import argparse
 import subprocess
 from pathlib import Path
 import sys
 from joblib import Parallel, delayed
 
-
-PY = sys.executable   # <<< CRITICAL FIX
-
+PY = sys.executable   
 
 def run(cmd):
     print(" ".join(cmd), flush=True)

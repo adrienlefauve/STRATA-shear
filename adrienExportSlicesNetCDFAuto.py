@@ -1,4 +1,60 @@
 #!/usr/bin/env python3
+"""
+Auto-parallel exporter for 2D DNS slices to NetCDF.
+
+This script extends the serial slice exporter by automatically distributing
+independent slice exports across multiple processes. Each slice export runs
+in its own Python process with its own lazy field handles.
+
+Why this exists
+---------------
+The base exporter is intentionally serial and serves as a correctness and
+debugging reference. This script addresses a different need: efficiently
+exporting many independent slices once the I/O path is known to be correct.
+
+Parallelisation model
+---------------------
+- Parallelism is at the *process* level, not via threads.
+- Each worker:
+    - opens the case independently
+    - lazily reads only the required plane
+    - writes one NetCDF file
+- No state is shared between workers.
+
+This design avoids:
+- GIL limitations
+- fork-unsafe shared file handles
+- memory blow-ups from loading 3D fields
+- fragile in-process parallelism (e.g. joblib)
+
+What is parallelised
+--------------------
+- Independent slice exports (different planes and/or indices).
+- Each output file is written by exactly one process.
+
+What is NOT parallelised
+------------------------
+- Reading or writing within a single NetCDF file.
+- Any operation requiring shared mutable state.
+
+HPC considerations
+------------------
+- Parallel file writes can stress the filesystem.
+- Use a modest number of processes (often 4–16 is sufficient).
+- Set environment variables such as:
+      OMP_NUM_THREADS=1
+      MKL_NUM_THREADS=1
+  to avoid thread oversubscription.
+
+Typical usage
+-------------
+Export multiple evenly spaced slices per plane:
+    python adrienExportSlicesNetCDFAutoParallel.py --case R4P7 \
+        --planes xy xz yz --nxy 5 --nxz 5 --nyz 3 --nproc 8
+
+Use this script once the serial exporter has been validated.
+"""
+
 import argparse
 from pathlib import Path
 

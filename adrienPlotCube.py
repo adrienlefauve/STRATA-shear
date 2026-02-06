@@ -1,6 +1,49 @@
 #!/usr/bin/env python3
+"""
+adrienPlotCube.py
 
-# EXAMPLE CALL python adrienPlotCube.py --case R1P1 --var r --stride 1 --ix 400 --top-frac 0.8 --width 2000 --cbar
+Render a single 3D snapshot of a DNS volume as a “Miles-style” cube:
+  • top horizontal slice (z = const)
+  • left vertical slice (x = ix)
+  • front vertical slice (y = 0 or 1)
+with fixed aspect ratio and consistent colour limits.
+
+This script:
+  1. Loads one variable from a binary DNS output (memmap, Fortran order)
+  2. Downsamples uniformly in x, y, z via --stride
+  3. Selects a vertical slice at a user-specified ORIGINAL x-index (--ix)
+     (automatically mapped to the downsampled grid)
+  4. Renders three orthogonal surfaces using Plotly
+  5. Writes a single PNG image to:
+        <outdir>/<case>/<case>_<var>_ixXXXXXX.png
+
+Key design choices:
+  • Colour limits and colormap are hard-coded per variable (VARCFG)
+    so that all frames in a movie are visually consistent.
+  • The script is stateless: one call → one frame.
+  • Intended to be called many times (possibly in parallel) by a wrapper.
+
+Typical usage:
+  python adrienPlotCube.py \
+      --case R1P7 \
+      --var r \
+      --stride 5 \
+      --ix 400 \
+      --top-frac 0.8 \
+      --width 1500 \
+      --cbar
+
+This script does NOT:
+  • loop over x
+  • assemble movies
+  • manage parallelism
+
+Those tasks are handled by adrienMakeCubeMovieParallel.py.
+"""
+
+# EXAMPLE CALL 
+# python adrienPlotCube.py --case R1P1 --var r --stride 1 --ix 400 --top-frac 0.8 --width 2000 --cbar
+
 import argparse
 from pathlib import Path
 
