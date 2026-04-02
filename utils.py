@@ -1,4 +1,5 @@
 # utils.py
+# Adrien Lefauve, 2026
 import numpy as np
 import os
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -339,17 +340,29 @@ def memory_report(globals_dict=None, min_gb=0.05):
 # Used by:
 #   - plot_slices_all_vars
 #   - plot_slices_derived_bundle
-def save_slice_figure(fig, p, slice_dir, idx, outdir="figures", fmt="png", dpi=300):
+def save_slice_figure(
+    fig, p, slice_dir, idx,
+    outdir="figures", fmt="png", dpi=300,
+    timestamp=False,   # <-- new flag
+):
     Path(outdir).mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    fname = f"{p.name}_all_variables_{slice_dir}{idx}_{timestamp}.{fmt}"
+
+    if timestamp:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        fname = f"{p.name}_all_variables_{slice_dir}{idx}_{ts}.{fmt}"
+    else:
+        fname = f"{p.name}_all_variables_{slice_dir}{idx}.{fmt}"
+
     path = Path(outdir) / fname
-    fig.savefig(path, dpi=dpi if fmt.lower() in ["png", "jpg", "jpeg"] else None,
-                bbox_inches="tight", facecolor="white")
-    #print(f"Saved -> {path}")
+
+    fig.savefig(
+        path,
+        dpi=dpi if fmt.lower() in ["png", "jpg", "jpeg"] else None,
+        bbox_inches="tight",
+        facecolor="white",
+    )
+
     return path
-
-
 
 # ---------------------------------------------------------------------
 # _slice2d
@@ -1500,6 +1513,7 @@ def export_native_resolution_from_bundle(
     plane="xz",
     idx=None,               # only for filenames; defaults to s.idx[plane]
     outdir="figures",
+    timestamp=False,   # add this
 
     u_lim=(-5, 5),
     v_lim=(-5, 5),
@@ -1521,7 +1535,6 @@ def export_native_resolution_from_bundle(
     outdir.mkdir(parents=True, exist_ok=True)
 
     slice_dir = {"xz": "y", "xy": "z", "yz": "x"}[plane]
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Match your old exporter orientation (imshow(Z.T, origin="lower"))
     def _export_ready(Z):
@@ -1538,7 +1551,12 @@ def export_native_resolution_from_bundle(
 
     paths = {}
     for name, Z2, cmap, vmin, vmax in items:
-        fname = f"{p.name}_{name}_native_res_{slice_dir}{idx}_{timestamp}.png"
+        if timestamp:
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            fname = f"{p.name}_{name}_native_res_{slice_dir}{idx}_{ts}.png"
+        else:
+            fname = f"{p.name}_{name}_native_res_{slice_dir}{idx}.png"
+
         path = outdir / fname
         save_field_native_pixels(Z2, str(path), cmap=cmap, vmin=vmin, vmax=vmax)
         paths[name] = str(path)

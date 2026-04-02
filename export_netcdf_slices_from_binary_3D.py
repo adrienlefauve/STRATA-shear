@@ -11,7 +11,7 @@ Parallelisation model:
 - each worker opens lazy fields per variable on demand and caches them
 
 Typical call (example):
-  python adrienExportSlicesNetCDFAutoParallelVarbyVar.py \
+  python export_netcdf_slices_from_binary_3D.py \
     --case R1P1 --planes xy xz \
     --vars u v w r ee chi \
     --nxy 5 --nxz 5 --nproc 30 \
@@ -21,12 +21,45 @@ Typical call (example):
 import argparse
 from pathlib import Path
 import multiprocessing as mp
+import pandas as pd
+from types import SimpleNamespace
 
-import adrienParamClassSheared as params
-import adrienUtils as utils
+import utils
 
 print("[adrienExportSlicesNetCDFParallelVarByVar] starting")
 
+CSV_PATH = Path("params.csv") # the master parameter file must sit in the directory where the code is started from
+PROJECT_ROOT = Path("/lustre/orion/cfd135/proj-shared/Hsst")
+PARAMS_DF = pd.read_csv(CSV_PATH, dtype={"tStamp": str})
+PARAMS_BY_CASE = {str(row["name"]).strip(): row for _, row in PARAMS_DF.iterrows()}
+
+
+def build_case_from_csv(case_name: str, tstamp_override=None):
+    if case_name not in PARAMS_BY_CASE:
+        raise KeyError(f"Unknown case '{case_name}'. Available: {list(PARAMS_BY_CASE.keys())}")
+
+    row = PARAMS_BY_CASE[case_name]
+    nx = int(float(row["Nx"]))
+    Lx = float(row["Lx"])
+
+    p = SimpleNamespace()
+    p.name = str(row["name"]).strip()
+
+    if tstamp_override is not None:
+        p.tStamp = f"{float(tstamp_override):.6f}"
+    else:
+        p.tStamp = str(row["tStamp"]).strip()
+
+    p.Nx = nx
+    p.Ny = nx // 2
+    p.Nz = nx // 4
+    p.Lx = Lx
+    p.Ly = Lx / 2
+    p.Lz = Lx / 4
+    p.dirPath = str(PROJECT_ROOT / p.name / "001_Final") + "/"
+
+    return p
+    
 # -------------------------------------------------
 # Worker globals (each process gets its own copy)
 # -------------------------------------------------
@@ -35,16 +68,10 @@ _G = {}
 def _worker_init(case_name: str, tstamp, outdir: str, stride, overwrite: bool, stream: bool):
     """
     Runs once per worker process.
-    Opens the case inside the worker (safe for HPC + spawn).
+    Opens the case inside the worker using params.csv.
     Lazy fields are opened per-variable on demand and cached.
     """
-    cases = params.generate()
-    if case_name not in cases:
-        raise KeyError(f"Unknown case '{case_name}'. Available: {list(cases.keys())}")
-
-    p = cases[case_name]
-    if tstamp is not None:
-        p.tStamp = tstamp
+    p = build_case_from_csv(case_name, tstamp_override=tstamp)
 
     outdir_p = Path(outdir)
     outdir_p.mkdir(parents=True, exist_ok=True)
@@ -54,8 +81,6 @@ def _worker_init(case_name: str, tstamp, outdir: str, stride, overwrite: bool, s
     _G["stride"] = tuple(stride)
     _G["overwrite"] = overwrite
     _G["stream"] = stream
-
-    # cache of lazy fields keyed by variable name
     _G["fields_by_var"] = {}
 
 
@@ -178,14 +203,8 @@ def main():
     args = parse_args()
 
     # Resolve case once in main process for metadata/idx defaults + outdir default
-    cases = params.generate()
-    if args.case not in cases:
-        raise KeyError(f"Unknown case '{args.case}'. Available: {list(cases.keys())}")
-
-    p_main = cases[args.case]
-    if args.tstamp is not None:
-        p_main.tStamp = args.tstamp
-
+    p_main = build_case_from_csv(args.case, tstamp_override=args.tstamp)
+    
     outdir = Path(args.outdir) if args.outdir else (Path(p_main.dirPath) / "2D_slices")
     outdir.mkdir(parents=True, exist_ok=True)
 
