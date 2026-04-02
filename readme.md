@@ -1,4 +1,6 @@
-# Stratified Turbulence Data Pipeline
+# Read Me 
+# Data pipeline
+# Adrien Lefauve, 2026
 
 This repository provides a complete workflow to process, extract, and visualize 3D simulation data of stratified turbulence.
 
