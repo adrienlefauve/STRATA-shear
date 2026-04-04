@@ -1,16 +1,31 @@
 #!/usr/bin/env python3
+# A. Lefauve, 2026
 """
-Load NetCDF slices for one case, build derived fields, and write the figures.
+Load previously exported NetCDF slice files for one case, reconstruct the
+derived (rescaled) plotting fields, and write summary/native-resolution figures.
 
-Example:
+Typical use:
     python load_netcdf_slices_and_plot_figures.py R1P1
 
 By default this script:
-- reads params from <code_root>/params.csv
-- looks for data under /lustre/orion/cfd135/proj-shared/Hsst
-- caches discovered slice filenames in <case>/001_Final/2D_slices/<case>_slices_cache.pkl
-- selects one slice per plane (xy, xz, yz), choosing the available index closest to the mid-plane
-- writes summary and native-resolution figures into <code_root>/figures/<case>
+- reads case parameters from <code_root>/params.csv
+- looks for slice files under:
+      <project_root>/<case>/001_Final/2D_slices
+- caches the discovered slice-file structure in:
+      <case>/001_Final/2D_slices/<case>_slices_cache.pkl
+- selects one slice per plane (xy, xz, yz), choosing the available index
+  closest to the mid-plane unless manually overridden
+- requires the six exported variables:
+      u, v, w, r, ee, chi
+- reconstructs the normalised plotting fields used by utils.py:
+      uN, vN, wN, bN, epslog, chilog
+- writes summary figures and/or native-resolution figures into:
+      <code_root>/figures/<case>
+
+Notes:
+- This script does not read the original large binary volumes; it only works
+  from already exported (relatively lightweight) NetCDF slice files.
+- It is intended as a lightweight post-processing step after slice export.
 """
 
 from __future__ import annotations

@@ -1,8 +1,7 @@
 # Read Me 
-# Data pipeline
 # Adrien Lefauve, 2026
 
-This repository provides a complete workflow to process, extract, and visualize 3D simulation data of stratified turbulence.
+This repository provides a workflow to process, extract, and visualize 3D simulation data of sheared stratified turbulence.
 
 ---
 
@@ -74,8 +73,8 @@ Script:
 ## 3. Visualization & Plotting
 
 Scripts:
-- `load_netcdf_slices_and_plot_figures.ipynb` (interactive, fine for the lighter cases)
-- `load_netcdf_slices_and_plot_figures.py` (batch version for the heavier cases, best on a compute node with memory)
+- `load_netcdf_slices_and_plot_figures.ipynb` (interactive, fine for the lighter cases not needed much memory)
+- `load_netcdf_slices_and_plot_figures.py` (batch version for the heavier cases, best on a compute node with more memory)
 - `load_netcdf_slices_and_plot_figures.slurm` to launch the .py script
 
 
@@ -133,16 +132,6 @@ Scripts:
 - `load_netcdf_slices_and_plot_figures.py`
 - `load_netcdf_slices_and_plot_figures.ipynb`
 - `load_netcdf_slices_and_plot_figures.slurm`
-
----
-
-## Summary
-
-| Step | Purpose | Output |
-|------|--------|--------|
-| 1 | Organise metadata | Excel + CSV |
-| 2 | Extract slices | NetCDF (parallel) |
-| 3 | Visualise | PNG figures |
 
 ---
 

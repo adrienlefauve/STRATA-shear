@@ -1,21 +1,32 @@
 #!/usr/bin/env python3
+# A. Lefauve, 2026
 """
 Export raw 2D slices to NetCDF, variable-by-variable (task = plane + idx + var).
 
 Each export task writes ONE variable on ONE plane at ONE index to its own NetCDF file,
-so that many cores can work independently (ideal for a full node).
+so that multiple cores can work independently (well-suited for full-node jobs).
 
-Parallelisation model:
-- process-based parallelism (multiprocessing spawn)
-- each worker opens the case once
-- each worker opens lazy fields per variable on demand and caches them
+Performance note:
+- This parallelisation works best for planes aligned with the fastest-varying
+  dimension in the underlying Fortran-ordered data (x → y → z).
+- xy and xz slices benefit from relatively contiguous memory access (xy is better).
+- yz slices are strongly non-contiguous (strided access in x), leading to much
+  poorer I/O efficiency.
 
-Typical call (example):
-  python export_netcdf_slices_from_binary_3D.py \
-    --case R1P1 --planes xy xz \
-    --vars u v w r ee chi \
-    --nxy 5 --nxz 5 --nproc 30 \
-    --stride 1 1 1 --stream --overwrite
+As a result, performance is often strongly I/O-bound rather than CPU-bound:
+- Increasing the number of processes can saturate the filesystem and reduce
+  per-process throughput, leading to the entire job stalling.
+- This effect is especially pronounced for yz slices and large cases.
+
+# Parallel performance depends on I/O: using ~1 process per variable (e.g. nproc≈6)
+# can give good speedup when all workers remain active, but may degrade if the
+# filesystem or access pattern (especially yz slices) causes contention.
+
+Recommendation:
+- For large datasets (e.g. Nx ≳ 15,000), prefer limited parallelism (e.g. using ~1 process  
+  per variable for only one plane i.e. nproc≈6, or even complete sequential execution
+  (one plane and one variable at a time with nproc=6 based on performance tests).
+- Use parallelism i.e. nproc≈30 when I/O bandwidth is not saturated (e.g. up to Nx ~ 12,000).
 """
 
 import argparse
