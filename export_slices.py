@@ -44,7 +44,7 @@ STRIDE
 
 MEMORY & TUNING
 ---------------
-  Available RAM is auto-detected from /proc/meminfo × 0.90.
+  Available RAM is auto-detected as min(/proc/meminfo, SLURM_MEM_PER_NODE) × 0.90.
 
   xy / xz: memory footprint per worker is tiny (~one 2D slice).  nproc
     defaults to min(n_vars, 6); extra RAM does not help.  Use --mem=32G.
@@ -93,15 +93,35 @@ MIN_YZ_SLAB_GB = 50   # minimum slab size to get good Lustre read-ahead
 # ---------------------------------------------------------------------------
 
 def _detect_available_ram_gb(fraction: float = 0.90) -> float:
-    """Return fraction × total RAM from /proc/meminfo (Linux only)."""
+    """Return fraction × available RAM (Linux only).
+
+    Takes the minimum of /proc/meminfo MemTotal and SLURM_MEM_PER_NODE
+    (the job's allocation limit in MB), so the estimate never exceeds
+    what SLURM will allow.  SLURM_MEM_PER_NODE=0 means unlimited — ignored.
+    """
+    node_gb = None
     try:
         with open("/proc/meminfo") as f:
             for line in f:
                 if line.startswith("MemTotal:"):
-                    kb = int(line.split()[1])
-                    return kb / 1024 ** 2 * fraction
+                    node_gb = int(line.split()[1]) / 1024 ** 2
+                    break
     except Exception:
         pass
+
+    slurm_gb = None
+    slurm_mem = os.environ.get("SLURM_MEM_PER_NODE")  # MB; 0 = unlimited
+    if slurm_mem:
+        try:
+            v = int(slurm_mem)
+            if v > 0:
+                slurm_gb = v / 1024
+        except ValueError:
+            pass
+
+    candidates = [x for x in (node_gb, slurm_gb) if x is not None]
+    if candidates:
+        return min(candidates) * fraction
     return 120.0   # safe fallback
 
 
