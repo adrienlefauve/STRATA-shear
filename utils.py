@@ -13,11 +13,8 @@ from matplotlib import cm, colors
 from typing import Tuple
 from scipy.io import netcdf_file
 from PIL import Image
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, Tuple, Optional, Iterable, Union, List
-
-# ---------------------------------------------------------------------
-# load_binary  [LEGACY — superseded by LazyField; not called by active code]
 # ---------------------------------------------------------------------
 # Purpose:
 #   Low-level reader for raw DNS binary output written by the solver.
@@ -729,7 +726,7 @@ def save_field_native_pixels(
 # Lazy loading utilities (memmap-based, slice-level I/O)
 # ============================================================
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Tuple, Optional, Dict
 import numpy as np
 

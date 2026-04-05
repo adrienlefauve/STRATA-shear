@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -J R10P7yz
+#SBATCH -J R10P7uv
 #SBATCH -A cfd135
 #SBATCH -p batch
 #SBATCH -N 1
@@ -22,10 +22,10 @@
 
 CASE=R10P7
 PLANES="yz"          # e.g. "xy xz yz" or just "yz"
-VARS="u v w r ee chi"
-NXY=0                # number of xy slices, evenly spaced in z (0 = skip)
-NXZ=0                # number of xz slices, evenly spaced in y (0 = skip)
-NYZ=5                # number of yz slices, evenly spaced in x (0 = skip)
+VARS="u v"           # e.g. "u v w r ee chi", "r chi" or just "u" 
+NXY=0                # number of xy slices, evenly spaced in z (0 = skip, 1 = middle slice)
+NXZ=0                # number of xz slices, evenly spaced in y (0 = skip, 1 = middle slice)
+NYZ=1                # number of yz slices, evenly spaced in x (0 = skip, 1 = middle slice))
 IDX_XY=""            # explicit z-index(es) for xy, e.g. IDX_XY="100 200 300". Overrides NXY.
 IDX_XZ=""            # explicit y-index(es) for xz, e.g. IDX_XZ="500 1000". Overrides NXZ.
 IDX_YZ=""            # explicit x-index(es) for yz, e.g. IDX_YZ="1000 8000 15840". Overrides NYZ.
