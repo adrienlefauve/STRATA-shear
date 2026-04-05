@@ -25,6 +25,8 @@
 
 from __future__ import annotations
 
+import time
+
 import numpy as np
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -92,6 +94,8 @@ class LazyFieldYZ:
         self,
         x_idx: int,
         stride: Tuple[int, int, int] = (1, 1, 1),
+        verbose: bool = False,
+        label: str = "",
     ) -> np.ndarray:
         """
         Return a 2D array of shape (Ny_out, Nz_out) for the yz plane at x=x_idx.
@@ -115,15 +119,32 @@ class LazyFieldYZ:
         Nz_out = len(range(0, Nz, sz))
         result = np.empty((Ny_out, Nz_out), dtype=self.dtype)
 
+        n_slabs = -(-Nz // (sz * chunk_nz))
+        _tag = f"[{label}] " if label else ""
+        t0 = time.perf_counter()
+
         iz_out = 0
-        for iz0 in range(0, Nz, sz * chunk_nz):
+        for slab_idx, iz0 in enumerate(range(0, Nz, sz * chunk_nz), 1):
             iz1  = min(iz0 + sz * chunk_nz, Nz)
+            if verbose:
+                elapsed = time.perf_counter() - t0
+                eta_str = (f"ETA {elapsed / (slab_idx - 1) * (n_slabs - slab_idx + 1):.0f}s"
+                           if slab_idx > 1 else "ETA --")
+                print(f"{_tag}slab {slab_idx}/{n_slabs}  z={iz0}..{iz1-1}  "
+                      f"elapsed {elapsed:.0f}s  {eta_str}", flush=True)
             slab = np.asarray(self.mm[:Nx_file, :Ny, iz0:iz1])   # contiguous read
             row  = slab[x_idx, ::sy, ::sz]                        # extract in RAM
             n_z  = row.shape[1]
             result[:, iz_out:iz_out + n_z] = row
             iz_out += n_z
             del slab
+
+        if verbose:
+            elapsed = time.perf_counter() - t0
+            total_gb = Nx_file * Ny * Nz * 4 / 1024 ** 3
+            rate_mb  = total_gb * 1024 / elapsed if elapsed > 0 else float("inf")
+            print(f"{_tag}read complete  {total_gb:.2f} GB in {elapsed:.0f}s  "
+                  f"({rate_mb:.0f} MB/s)", flush=True)
 
         return result
 
@@ -135,6 +156,8 @@ class LazyFieldYZ:
         self,
         x_idxs: List[int],
         stride: Tuple[int, int, int] = (1, 1, 1),
+        verbose: bool = False,
+        label: str = "",
     ) -> Dict[int, np.ndarray]:
         """
         Extract yz slices at multiple x-indices in a SINGLE sequential pass.
@@ -163,9 +186,19 @@ class LazyFieldYZ:
         Nz_out = len(range(0, Nz, sz))
         results = {xi: np.empty((Ny_out, Nz_out), dtype=self.dtype) for xi in x_idxs}
 
+        n_slabs = -(-Nz // (sz * chunk_nz))
+        _tag = f"[{label}] " if label else ""
+        t0 = time.perf_counter()
+
         iz_out = 0
-        for iz0 in range(0, Nz, sz * chunk_nz):
+        for slab_idx, iz0 in enumerate(range(0, Nz, sz * chunk_nz), 1):
             iz1  = min(iz0 + sz * chunk_nz, Nz)
+            if verbose:
+                elapsed = time.perf_counter() - t0
+                eta_str = (f"ETA {elapsed / (slab_idx - 1) * (n_slabs - slab_idx + 1):.0f}s"
+                           if slab_idx > 1 else "ETA --")
+                print(f"{_tag}slab {slab_idx}/{n_slabs}  z={iz0}..{iz1-1}  "
+                      f"elapsed {elapsed:.0f}s  {eta_str}", flush=True)
             slab = np.asarray(self.mm[:Nx_file, :Ny, iz0:iz1])   # one contiguous read
             slab_nz = slab.shape[2]
             n_z = len(range(0, slab_nz, sz))
@@ -173,6 +206,13 @@ class LazyFieldYZ:
                 results[xi][:, iz_out:iz_out + n_z] = slab[xi, ::sy, ::sz]
             iz_out += n_z
             del slab
+
+        if verbose:
+            elapsed = time.perf_counter() - t0
+            total_gb = Nx_file * Ny * Nz * 4 / 1024 ** 3
+            rate_mb  = total_gb * 1024 / elapsed if elapsed > 0 else float("inf")
+            print(f"{_tag}read complete  {total_gb:.2f} GB in {elapsed:.0f}s  "
+                  f"({rate_mb:.0f} MB/s)", flush=True)
 
         return results
 

@@ -41,6 +41,7 @@ Typical call
 """
 
 import argparse
+import time
 from pathlib import Path
 import multiprocessing as mp
 import pandas as pd
@@ -158,15 +159,26 @@ def _worker_run(var: str):
         if not pending_idxs:
             return [f"[skip-all] var={var} all {len(x_idxs)} files exist"]
 
-        print(f"[export_yz] var={var}  x_idxs={pending_idxs}  "
-              f"chunk={chunk_gb} GB  stride={stride}", flush=True)
+        file_gb     = (p.Nx + 2) * p.Ny * p.Nz * 4 / 1024 ** 3
+        bytes_per_z = (p.Nx + 2) * p.Ny * 4
+        chunk_nz    = max(1, int(chunk_gb * 1024 ** 3) // bytes_per_z)
+        n_slabs     = -(-p.Nz // chunk_nz)
+        print(f"[{var}] starting  x_idxs={pending_idxs}  file={file_gb:.2f} GB  "
+              f"chunk={chunk_gb} GB ({chunk_nz} z-planes/slab, {n_slabs} slabs)  "
+              f"stride={stride}", flush=True)
 
+        t_start = time.perf_counter()
         field = utils_yz.open_lazy_yz(var, p, yz_chunk_mem_gb=chunk_gb)
 
         # Single-pass extraction of all requested slices
-        slices = field.read_yz_multi(pending_idxs, stride=stride)
+        slices = field.read_yz_multi(pending_idxs, stride=stride,
+                                     verbose=True, label=var)
+
+        t_read = time.perf_counter()
+        print(f"[{var}] read done  {t_read - t_start:.0f}s elapsed", flush=True)
 
         written = []
+        t_prev = t_read
         for x_idx in pending_idxs:
             fname = f"{p.name}_yz_x{x_idx}_st{st_tag}_{var}.nc"
             path = _write_yz_netcdf(
@@ -178,9 +190,13 @@ def _worker_run(var: str):
                 fname    = fname,
                 overwrite = overwrite,
             )
-            print(f"[export_yz] wrote: {path}", flush=True)
+            t_now = time.perf_counter()
+            print(f"[{var}] wrote {fname}  (+{t_now - t_prev:.1f}s)", flush=True)
+            t_prev = t_now
             written.append(path)
 
+        print(f"[{var}] all done  total {time.perf_counter() - t_start:.0f}s",
+              flush=True)
         return written
 
     except Exception as e:
@@ -278,6 +294,8 @@ def main():
     print(f"[export_yz] {len(vars_)} tasks (one per variable)")
     print()
 
+    t_job = time.perf_counter()
+
     if args.nproc <= 1 or len(vars_) == 1:
         _worker_init(args.case, args.tstamp, str(outdir), stride,
                      args.overwrite, args.yz_chunk_mem_gb, x_idxs)
@@ -305,7 +323,8 @@ def main():
             print(f"[export_yz] unexpected result: {r}", flush=True)
 
     total = sum(len(r) for r in results if isinstance(r, list))
-    print(f"[export_yz] done.  ({n_ok}/{total} successful)")
+    print(f"[export_yz] done.  ({n_ok}/{total} successful)  "
+          f"total elapsed {time.perf_counter() - t_job:.0f}s")
 
 
 if __name__ == "__main__":
