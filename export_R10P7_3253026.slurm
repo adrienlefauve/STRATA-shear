@@ -54,7 +54,7 @@ echo "==========================="
 echo ""
 
 # Save a copy of this script for reproducibility
-cp "$0" "${SLURM_SUBMIT_DIR}/export_slices_${SLURM_JOB_ID}.slurm"
+cp "$0" "${SLURM_SUBMIT_DIR}/export_${CASE}_${SLURM_JOB_ID}.slurm"
 
 # Prevent hidden multithreading from NumPy/BLAS competing with our workers
 export OMP_NUM_THREADS=1
