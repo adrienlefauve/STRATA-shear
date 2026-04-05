@@ -62,6 +62,7 @@ class LazyFieldYZ:
     dtype: np.dtype = np.float32
 
     _mm: Optional[np.memmap] = field(default=None, repr=False)
+    _fh: Optional[object]    = field(default=None, repr=False)
 
     def open(self) -> "LazyFieldYZ":
         if self._mm is None:
@@ -79,6 +80,28 @@ class LazyFieldYZ:
         if self._mm is None:
             self.open()
         return self._mm
+
+    def _read_slab(self, iz0: int, iz1: int) -> np.ndarray:
+        """
+        Read z-planes [iz0, iz1) using explicit seek+read.
+
+        This bypasses np.memmap's page-fault mechanism, which is pathologically
+        slow on Lustre even for sequential access.  np.fromfile issues a single
+        bulk read syscall that the Lustre client can satisfy with proper
+        read-ahead, giving ~10-100x better throughput.
+
+        Returns array of shape (Nx_file, Ny, iz1-iz0) in Fortran order
+        (x varies fastest), matching the on-disk layout.
+        """
+        Nx_file, Ny, _ = self.shape_file
+        itemsize = np.dtype(self.dtype).itemsize
+        if self._fh is None:
+            self._fh = open(str(self.filepath), 'rb')
+        offset = iz0 * Nx_file * Ny * itemsize
+        count  = (iz1 - iz0) * Nx_file * Ny
+        self._fh.seek(offset)
+        return (np.fromfile(self._fh, dtype=self.dtype, count=count)
+                  .reshape((Nx_file, Ny, iz1 - iz0), order='F'))
 
     @property
     def shape(self) -> Tuple[int, int, int]:
@@ -132,8 +155,8 @@ class LazyFieldYZ:
                            if slab_idx > 1 else "ETA --")
                 print(f"{_tag}slab {slab_idx}/{n_slabs}  z={iz0}..{iz1-1}  "
                       f"elapsed {elapsed:.0f}s  {eta_str}", flush=True)
-            slab = np.asarray(self.mm[:Nx_file, :Ny, iz0:iz1])   # contiguous read
-            row  = slab[x_idx, ::sy, ::sz]                        # extract in RAM
+            slab = self._read_slab(iz0, iz1)             # bulk read, no page faults
+            row  = slab[x_idx, ::sy, ::sz]                # extract in RAM
             n_z  = row.shape[1]
             result[:, iz_out:iz_out + n_z] = row
             iz_out += n_z
@@ -199,7 +222,7 @@ class LazyFieldYZ:
                            if slab_idx > 1 else "ETA --")
                 print(f"{_tag}slab {slab_idx}/{n_slabs}  z={iz0}..{iz1-1}  "
                       f"elapsed {elapsed:.0f}s  {eta_str}", flush=True)
-            slab = np.asarray(self.mm[:Nx_file, :Ny, iz0:iz1])   # one contiguous read
+            slab = self._read_slab(iz0, iz1)             # bulk read, no page faults
             slab_nz = slab.shape[2]
             n_z = len(range(0, slab_nz, sz))
             for xi in x_idxs:

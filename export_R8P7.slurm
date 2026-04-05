@@ -4,8 +4,8 @@
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 6                   # one core per yz worker; I/O-bound, more cores unused
-#SBATCH --mem=240G             # Andes nodes have 256 GB; leave ~16 GB for OS
+#SBATCH -c 6                   # one core per yz worker
+#SBATCH --mem=220G
 #SBATCH -t 6:00:00
 #SBATCH -o export_R8P7_yz_%j.out
 #SBATCH -e export_R8P7_yz_%j.err
@@ -16,10 +16,10 @@
 # R8P7 grid:  Nx=23040  Ny=11520  Nz=5760
 # File size per variable: ~5.7 TB  (Fortran-order float32)
 #
-# Memory budget on Andes (256 GB nodes):
-#   6 workers x 37.4 GB slab  +  6 x 0.25 GB output  ~  225 GB  <=  240 GB  ok
+# Memory budget (220 GB allocated):
+#   6 workers x 34 GB slab  +  6 x 0.25 GB output  ~  206 GB  <=  220 GB  ok
 #   one z-plane = (Nx+2)*Ny*4 = 23042*11520*4 ~ 1.01 GB
-#   chunk_nz = floor(38 GB / 1.01 GB) = 37 z-planes per slab
+#   chunk_nz = floor(34 GB / 1.01 GB) = 33 z-planes per slab
 #
 # NSLICES=1  -> one yz slice at mid-x (test run)
 # Once confirmed, change to NSLICES=5 for the full export
@@ -28,7 +28,7 @@
 CASE=R8P7
 NSLICES=1      # change to 5 for full export once test passes
 NPROC=6
-CHUNK_GB=38
+CHUNK_GB=34
 
 # ---------------------------------------------------------------------------
 
@@ -74,22 +74,6 @@ echo ""
 
 echo ""
 echo "yz export done: $(date '+%H:%M:%S')"
-echo ""
-echo "===== JOB END ====="
-echo "$(date '+%d %b %Y %H:%M:%S')"
-echo ""
-
-/usr/bin/time -v python export_yz_heavy.py \
-    --case             "$CASE"        \
-    --nyz              "$NSLICES"     \
-    --vars             u v w r ee chi \
-    --nproc            "$NPROC_2"     \
-    --yz-chunk-mem-gb  "$CHUNK_GB"    \
-    --stride           1 1 1          \
-    --overwrite
-
-echo ""
-echo "Phase 2 done: $(date '+%H:%M:%S')"
 echo ""
 echo "===== JOB END ====="
 echo "$(date '+%d %b %Y %H:%M:%S')"
