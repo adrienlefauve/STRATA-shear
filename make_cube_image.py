@@ -98,13 +98,13 @@ def build_case(case_name: str, tstamp_override=None):
 
 VARCFG = {
     # var : (plotly_colorscale, cmin, cmax, colorbar_title)
-    "u":   ("RdBu",    -5,     5,     "u/√Ek"),
-    "v":   ("RdBu",    -5,     5,     "v/√Ek"),
-    "w":   ("RdBu",    -5,     5,     "w/√Ek"),
-    "r":   ("Viridis", -5e-4,  5e-4,  "r"),
-    "b":   ("Viridis", -5,     5,     "b/√(N²Ep)"),
-    "ee":  ("Magma",   -2,     2,     "log₁₀(ε/⟨ε⟩)"),
-    "chi": ("Hot",     -2,     3,     "log₁₀(χ/⟨χ⟩)"),
+    "u":   ("RdBu",    -5,     5,     "u' / E<sub>k</sub><sup>1/2</sup>"),
+    "v":   ("RdBu",    -5,     5,     "v' / E<sub>k</sub><sup>1/2</sup>"),
+    "w":   ("RdBu",    -5,     5,     "w' / E<sub>k</sub><sup>1/2</sup>"),
+    "r":   ("Viridis", -5e-4,  5e-4,  "ρ'"),
+    "b":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)"),
+    "ee":  ("Magma",   -2,     2,     "log<sub>10</sub>(ε / ⟨ε⟩)"),
+    "chi": ("Hot",     -2,     3,     "log<sub>10</sub>(χ / ⟨χ⟩)"),
 }
 
 
@@ -151,7 +151,9 @@ def plot_one_frame(
     fig = go.Figure()
 
     cbar_kw = dict(
-        colorbar=dict(title=ctitle, len=0.7, thickness=24, x=1.02),
+        colorbar=dict(title=dict(text=ctitle, side="right"),
+                      len=0.55, thickness=20, x=1.02,
+                      tickfont=dict(size=13)),
     ) if add_colorbar else {}
 
     # --- xy face (z = iz) — top ---
@@ -291,8 +293,8 @@ def main():
     ap.add_argument("--scale",     type=float, default=1.0)
     ap.add_argument("--var-scale", type=float, default=1.0,
                     help="Divide data by this value before plotting")
-    ap.add_argument("--cbar",      action="store_true",
-                    help="Show colorbar")
+    ap.add_argument("--no-cbar",   action="store_true",
+                    help="Hide colorbar (shown by default)")
     ap.add_argument("--tstamp",    default=None)
     args = ap.parse_args()
 
@@ -344,7 +346,7 @@ def main():
         scan=args.scan,
         cmin=cmin, cmax=cmax,
         colorscale=colorscale, ctitle=ctitle,
-        add_colorbar=args.cbar,
+        add_colorbar=not args.no_cbar,
         width=args.width, height=height,
     )
 

@@ -6,7 +6,7 @@ Parallel cube-movie maker.
   python make_cube_movie.py \\
       --case R1P7 --var r --stride 5 \\
       --scan x --scan-stride 20 \\
-      --fps 5 --width 1000 --njobs 16 --cbar
+      --fps 5 --width 1000 --njobs 16
 
 WORKFLOW
 --------
@@ -106,7 +106,7 @@ def run(cmd):
 def render_one_frame(
     case, var, stride, scan, idx,
     ix_frac, iy_frac, iz_frac,
-    width, scale, cbar, tstamp,
+    width, scale, no_cbar, tstamp,
     outdir, run_tag, frames_dir, frame_no,
 ):
     cmd = [
@@ -124,8 +124,8 @@ def render_one_frame(
         "--outdir", outdir,
         "--run-tag", run_tag,
     ]
-    if cbar:
-        cmd.append("--cbar")
+    if no_cbar:
+        cmd.append("--no-cbar")
     if tstamp is not None:
         cmd += ["--tstamp", str(tstamp)]
 
@@ -167,7 +167,8 @@ def main():
     ap.add_argument("--fps",       type=int, default=20)
     ap.add_argument("--width",     type=int, default=2000)
     ap.add_argument("--scale",     type=float, default=1.0)
-    ap.add_argument("--cbar",      action="store_true")
+    ap.add_argument("--no-cbar",   action="store_true",
+                    help="Hide colorbar (shown by default)")
     ap.add_argument("--outdir",    default="figures/3D")
     ap.add_argument("--njobs",     type=int, default=16)
     ap.add_argument("--crf",       type=int, default=18,
@@ -202,7 +203,7 @@ def main():
         delayed(render_one_frame)(
             args.case, args.var, args.stride, args.scan, idx,
             args.ix_frac, args.iy_frac, args.iz_frac,
-            args.width, args.scale, args.cbar, args.tstamp,
+            args.width, args.scale, args.no_cbar, args.tstamp,
             str(outdir), run_tag, str(frames_dir), frame_no,
         )
         for idx, frame_no in tasks

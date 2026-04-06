@@ -35,7 +35,7 @@ IZ_FRAC=0.9          # fraction of Nz for the fixed z-face (used when SCAN=x or 
 FPS=5                # frames per second in the output movie
 WIDTH=1000           # image width in pixels
 SCALE=1.0            # plotly scale factor (increase for higher-res JPGs)
-CBAR=                # non-empty = show colorbar
+NO_CBAR=             # non-empty = hide colorbar (shown by default)
 NJOBS=32             # parallel workers (match --cpus-per-task)
 NO_MOVIE=            # non-empty = skip ffmpeg, only render frames
 
@@ -76,7 +76,7 @@ python make_cube_movie.py \
     --width        "$WIDTH"       \
     --scale        "$SCALE"       \
     --njobs        "$NJOBS"       \
-    ${CBAR:+--cbar}               \
+    ${NO_CBAR:+--no-cbar}             \
     ${NO_MOVIE:+--no-movie}
 
 echo ""
