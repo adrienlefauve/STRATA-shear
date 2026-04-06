@@ -209,6 +209,9 @@ def main():
     grid = get_grid_sizes(args.case)
     N_scan = grid[args.scan]
     idx_vals = list(range(0, N_scan, args.scan_stride))
+    # z uses :iz+1 slicing, so reverse to start full and peel downward
+    if args.scan == "z":
+        idx_vals = idx_vals[::-1]
     tasks = [(idx, i + 1) for i, idx in enumerate(idx_vals)]
     print(f"case={args.case}  scan={args.scan}  N{args.scan}={N_scan}  "
           f"scan-stride={args.scan_stride}  → {len(tasks)} frames  "
