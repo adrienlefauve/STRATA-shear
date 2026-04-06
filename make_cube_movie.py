@@ -69,6 +69,7 @@ TUNING
 """
 
 import argparse
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -94,6 +95,18 @@ def get_grid_sizes(case: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+
+def _find_ffmpeg():
+    """Return path to ffmpeg, checking PATH then imageio-ffmpeg."""
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError:
+        return None
+
 
 PY = sys.executable
 
@@ -185,6 +198,12 @@ def main():
     outdir     = Path(args.outdir)
     run_tag    = f"{args.var}_scan{args.scan}_st{args.stride}"
     frames_dir = outdir / args.case / run_tag
+    # Clean previous frames to avoid stale leftover files
+    if frames_dir.exists():
+        for old in frames_dir.glob("*.jpg"):
+            old.unlink()
+        for old in frames_dir.glob("*.mp4"):
+            old.unlink()
     frames_dir.mkdir(parents=True, exist_ok=True)
 
     grid = get_grid_sizes(args.case)
@@ -213,9 +232,16 @@ def main():
         print(f"\nFrames written to:\n  {frames_dir}\n")
         return
 
+    ffmpeg = _find_ffmpeg()
+    if ffmpeg is None:
+        print("\nWARNING: ffmpeg not found. Frames are ready but no movie created.")
+        print("  Install with: pip install --user imageio-ffmpeg")
+        print(f"  Frames at: {frames_dir}\n")
+        return
+
     movie = frames_dir / f"{run_tag}.mp4"
     run([
-        "ffmpeg", "-y",
+        ffmpeg, "-y",
         "-framerate", str(args.fps),
         "-i", str(frames_dir / f"{args.case}_{args.var}_%06d.jpg"),
         "-c:v", "libx264",

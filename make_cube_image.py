@@ -89,6 +89,14 @@ def build_case(case_name: str, tstamp_override=None):
     p.Nx = nx;  p.Ny = nx // 2;  p.Nz = nx // 4
     p.Lx = Lx;  p.Ly = Lx / 2;  p.Lz = Lx / 4
     p.dirPath = str(PROJECT_ROOT / p.name / "001_Final") + "/"
+    # Physics parameters for normalisation (same as plot_slices.py)
+    p.Ri      = float(row["Ri"])
+    p.Ek      = float(row["Ek"])
+    p.Ep      = float(row["Ep"])
+    p.eps     = float(row["ek"])       # volume-averaged epsilon
+    p.chi     = float(row["ep"])       # volume-averaged chi
+    p.Gamma1  = float(row["Gamma1"])
+    p.N2      = p.Ri                   # N^2 = Ri (dimensionless)
     return p
 
 
@@ -101,7 +109,7 @@ VARCFG = {
     "u":   ("RdBu",    -5,     5,     "u' / E<sub>k</sub><sup>1/2</sup>"),
     "v":   ("RdBu",    -5,     5,     "v' / E<sub>k</sub><sup>1/2</sup>"),
     "w":   ("RdBu",    -5,     5,     "w' / E<sub>k</sub><sup>1/2</sup>"),
-    "r":   ("Viridis", -5e-4,  5e-4,  "ρ'"),
+    "r":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)"),
     "b":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)"),
     "ee":  ("Magma",   -2,     2,     "log<sub>10</sub>(ε / ⟨ε⟩)"),
     "chi": ("Hot",     -2,     3,     "log<sub>10</sub>(χ / ⟨χ⟩)"),
@@ -291,8 +299,6 @@ def main():
                          "Auto-generated if not set: <case>_<var>_st<stride>_scan<scan>")
     ap.add_argument("--width",     type=int, default=2000)
     ap.add_argument("--scale",     type=float, default=1.0)
-    ap.add_argument("--var-scale", type=float, default=1.0,
-                    help="Divide data by this value before plotting")
     ap.add_argument("--no-cbar",   action="store_true",
                     help="Hide colorbar (shown by default)")
     ap.add_argument("--tstamp",    default=None)
@@ -310,7 +316,26 @@ def main():
         raise ValueError(f"--idx must be in [0, {scan_N - 1}] for scan={args.scan}. Got {args.idx}")
 
     data = load_binary(args.var, p)
-    cube = (data[::args.stride, ::args.stride, ::args.stride]) / args.var_scale
+    S = args.stride
+    raw = data[::S, ::S, ::S].copy()  # materialise from memmap
+
+    # Per-variable normalisation (matches plot_slices.py exactly)
+    if args.var in ("u", "v", "w"):
+        cube = raw / np.sqrt(p.Ek)
+    elif args.var == "r":
+        # buoyancy: b'/(N sqrt(Ep));  zAccel = Ri/|dGrad| = 1000*Ri
+        cube = -1000.0 * p.Ri * raw / np.sqrt(p.N2 * p.Ep)
+    elif args.var in ("ee", "chi"):
+        if args.var == "ee":
+            avg = float(p.eps)
+        else:
+            avg = float(p.eps * p.Gamma1)
+        tiny = 1e-30
+        with np.errstate(divide="ignore", invalid="ignore"):
+            cube = np.log10(np.maximum(raw, tiny) / avg)
+    else:
+        cube = raw  # fallback: no normalisation
+
     Nx_ds, Ny_ds, Nz_ds = cube.shape
 
     # Map original index → downsampled index for the scan axis
