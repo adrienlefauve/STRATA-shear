@@ -196,7 +196,7 @@ def main():
     print(f"\nUsing Python interpreter:\n  {PY}\n", flush=True)
 
     outdir     = Path(args.outdir)
-    run_tag    = f"{args.var}_scan{args.scan}_st{args.stride}"
+    run_tag    = f"{args.case}_{args.var}_{args.scan}"
     frames_dir = outdir / args.case / run_tag
     # Clean previous frames to avoid stale leftover files
     if frames_dir.exists():
