@@ -18,6 +18,7 @@ PLANES
             because x varies fastest (Fortran order) and yz data is scattered
             across the whole file.  The script avoids ~130 M random seeks by
             reading contiguous z-slabs into RAM and extracting x=idx there.
+            More details and analogy in the comments in the _worker_run_yz function.
 
 SLICE SELECTION
 ---------------
@@ -231,6 +232,27 @@ def _worker_run_xyxz(task: dict):
 # ---------------------------------------------------------------------------
 # yz worker  (slab-based, one worker per variable)
 # ---------------------------------------------------------------------------
+# Why yz is hard — the library analogy:
+#
+#   Think of the 3D field as a library:
+#     - x is the line on a page (fastest-varying, contiguous on disk)
+#     - y is the page in a book 
+#     - z is the book on the shelf (slowest-varying, scattered across disk)
+#   The file on disk is organised line by line (x varies fastest in Fortran order),
+#   so reading all lines of a page or book is sequential and fast but flipping through pages and books is slower
+#
+#   An xy slice (fixed z = fixed book) asks: "read every line of every page in one book." Since all lines and pages for a book are stored together, this is a fast, contiguous read.
+#
+#   An xz slice (fixed y = fixed page) asks: "read a specific line from every page of every book." This is also efficient, as all lines for a given page are stored together across books.
+#
+#   A yz slice (fixed x = fixed line) asks: "read the same line from every page of every book." But on disk, each line is stored with all the other lines for that page and book, so to get one line you have to scan through all pages and books, which is scattered and slow if done naively.
+#   The improved method reads a big block (many pages from many books) into RAM at once, then extracts the needed lines in memory. This is much faster than fetching one line at a time, but still slower than the fully contiguous cases.
+#   Fewer, bigger blocks (slabs) = fewer trips to disk = faster. This is why fewer workers (more RAM per worker, bigger slabs) is faster for yz.
+#
+#   In the naive approach for yz, the librarian has to travel to each book on the shelf and flip through every page just to get a single line—repeating this for every book and page, which is extremely slow.
+#   With the improved method, the librarian brings a whole batch of books (a big block of data) into the reading room (RAM) at once. The magic of RAM is that, once the books are in memory, we can instantly access any line from any page in any book—no more traveling or flipping pages.
+#   However, this is still slower than xy or xz, because most of the data (books and pages) we load into RAM isn't needed—we only want one line from each. But it's much better than fetching one book at a time and flipping through every page for every line. 
+#   Note we can only this if we have enough RAM to hold a big batch of books at once, which is why fewer librarians/workers (bigger slabs) is faster for yz, because they have to share the RAM/reading room.
 
 _GYZ: dict = {}
 
