@@ -7,11 +7,12 @@ This repository provides a workflow to process, extract, and visualize 3D simula
 
 ## Overview
 
-The pipeline consists of three main stages:
+The pipeline consists of four main stages:
 
 1. **Metadata extraction and organisation**
 2. **Parallel extraction of 2D slices from 3D fields**
-3. **Automated visualization and figure generation**
+3. **Automated 2D visualization and figure generation**
+4. **3D cube movie generation**
 
 All scripts rely on shared utilities in `utils.py`.
 
@@ -39,9 +40,9 @@ From the original netcdf parameter outputs (13 simulation cases), we generate:
 
 ## 2. Slice Extraction (Parallel)
 
-Script:
-- `export_netcdf_slices_from_binary_3D.py`
-- `export_netcdf_slices_from_binary_3D.slurm`
+Scripts:
+- `export_slices.py`
+- `export_slices.slurm`
 
 ### What it does
 
@@ -70,12 +71,11 @@ Script:
 
 ---
 
-## 3. Visualization & Plotting
+## 3. 2D Slice Plotting
 
 Scripts:
-- `load_netcdf_slices_and_plot_figures.ipynb` (interactive, fine for the lighter cases not needed much memory)
-- `load_netcdf_slices_and_plot_figures.py` (batch version for the heavier cases, best on a compute node with more memory)
-- `load_netcdf_slices_and_plot_figures.slurm` to launch the .py script
+- `plot_slices.py` (batch version, best on a compute node with more memory)
+- `plot_slices.slurm` (SLURM job script)
 
 
 ### Features
@@ -119,19 +119,65 @@ Scripts:
 
 ---
 
+## 4. 3D Cube Movies (Parallel)
+
+Scripts:
+- `make_cube_image.py` (renders one frame)
+- `make_cube_movie.py` (parallel orchestrator + ffmpeg)
+- `make_cube_movie.slurm` (SLURM job script)
+
+### What it does
+
+- Renders 3D cube snapshots from the same Fortran binary files as stage 2
+- Three orthogonal faces on a half-open box (Plotly `go.Surface`) plus wireframe edges
+- Sweeps ("scans") along one axis (`x`, `y`, or `z`) to produce a movie
+
+### Normalisation
+
+Identical to the 2D slice plots:
+- `u, v, w` → divided by √Ek
+- `r` → converted to buoyancy b'/(N√Ep), using `zAccel = 1000 × Ri` (since dGrad = −0.001 for all cases)
+- `ee` → log₁₀(ε / ⟨ε⟩)
+- `chi` → log₁₀(χ / ⟨χ⟩), where ⟨χ⟩ = ⟨ε⟩ × Γ₁
+
+All normalisation parameters (`Ri`, `Ek`, `Ep`, `ek`, `ep`, `Gamma1`) are read from `params.csv`.
+
+### Parallelisation
+
+- Each frame is rendered by a separate subprocess (`make_cube_image.py`)
+- Distributed across all available cores via `joblib` (typically 32 on Andes)
+- Frames are JPGs (smaller than PNGs, no impact on MP4 quality)
+
+### ffmpeg
+
+- Stitches frames into MP4 (H.264)
+- Auto-detected: tries system `ffmpeg` first, falls back to `imageio-ffmpeg` bundled binary
+- Requires one-time install: `module load python && pip install --user plotly kaleido imageio-ffmpeg`
+
+### Output
+
+- `figures/3D/<case>/<var>_scan<axis>_st<stride>/` — JPG frames + MP4 movie
+
+
+---
+
 ## File Structure (key files)
 
 - `params.csv` → master parameter table
 - `utils.py` → shared utilities (I/O, plotting, helpers)
 
 ### Slice extraction
-- `export_netcdf_slices_from_binary_3D.py`
-- `export_netcdf_slices_from_binary_3D.slurm`
+- `export_slices.py`
+- `export_slices.slurm`
 
-### Plotting
-- `load_netcdf_slices_and_plot_figures.py`
-- `load_netcdf_slices_and_plot_figures.ipynb`
-- `load_netcdf_slices_and_plot_figures.slurm`
+### 2D slice plotting
+- `plot_slices.py`
+- `plot_slices.slurm`
+
+### 3D cube movies
+- `make_cube_image.py` → renders a single 3D cube frame (stateless, called in parallel)
+- `make_cube_movie.py` → orchestrates parallel frame rendering + ffmpeg MP4 assembly
+- `make_cube_movie.slurm` → SLURM job script for Andes
 
 ---
 
