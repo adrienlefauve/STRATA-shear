@@ -42,6 +42,7 @@ NO_MOVIE=            # non-empty = skip ffmpeg, only render frames
 # ---------------------------------------------------------------------------
 
 module load python
+# Requires: pip install --user plotly kaleido  (once, from a login node)
 
 cd "$SLURM_SUBMIT_DIR"
 

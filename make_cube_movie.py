@@ -14,7 +14,7 @@ WORKFLOW
   2. Build a list of ORIGINAL indices along the scan axis:
        0, scan-stride, 2×scan-stride, …
   3. Render every frame in parallel (joblib / loky backend).
-     Each worker spawns:  python plot_cube.py --scan <axis> --idx <i> …
+     Each worker spawns:  python make_cube_image.py --scan <axis> --idx <i> …
   4. Rename output PNGs into sequentially numbered frames.
   5. (Optional) Stitch frames into an MP4 with ffmpeg.
 
@@ -110,7 +110,7 @@ def render_one_frame(
     outdir, run_tag, frames_dir, frame_no,
 ):
     cmd = [
-        PY, str(Path(__file__).parent / "plot_cube.py"),
+        PY, str(Path(__file__).parent / "make_cube_image.py"),
         "--case", case,
         "--var", var,
         "--stride", str(stride),
@@ -131,13 +131,14 @@ def render_one_frame(
 
     run(cmd)
 
-    # plot_cube.py writes:  <outdir>/<case>/<run_tag>/<case>_<var>_i<scan><idx>.jpg
+    # make_cube_image.py writes:  <outdir>/<case>/<run_tag>/<case>_<var>_i<scan><idx>.jpg
     produced = Path(outdir) / case / run_tag / f"{case}_{var}_i{scan}{idx:06d}.jpg"
     if not produced.exists():
         raise FileNotFoundError(f"Expected output not found: {produced}")
 
     target = Path(frames_dir) / f"{case}_{var}_{frame_no:06d}.jpg"
-    target.unlink(missing_ok=True)
+    if target.exists():
+        target.unlink()
     produced.replace(target)
 
 

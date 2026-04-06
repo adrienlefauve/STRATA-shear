@@ -354,7 +354,8 @@ def main():
 
     tag = f"i{args.scan}{args.idx:06d}"
     outpath = outdir / f"{p.name}_{args.var}_{tag}.jpg"
-    outpath.unlink(missing_ok=True)
+    if outpath.exists():
+        outpath.unlink()
 
     fig.write_image(str(outpath), width=args.width, height=height, scale=args.scale)
     print(f"wrote {outpath}", flush=True)
