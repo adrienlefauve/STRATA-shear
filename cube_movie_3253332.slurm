@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -J R1P50x
+#SBATCH -J R1P50y
 #SBATCH -A cfd135
 #SBATCH -p batch
 #SBATCH -N 1
@@ -27,7 +27,7 @@
 CASE=R1P50
 VARS=(u v w r ee chi)             # variables to plot (u v w r ee chi)
 STRIDE=8             # downsample the 3D volume by this factor
-SCAN=x              # axis to sweep along: x, y, or z
+SCAN=y              # axis to sweep along: x, y, or z
 SCAN_STRIDE=8       # step between indices along the scan axis
 IX_FRAC=0.0          # fraction of Nx for the fixed x-face (used when SCAN=y or z)
 IY_FRAC=0.0          # fraction of Ny for the fixed y-face (used when SCAN=x or z)

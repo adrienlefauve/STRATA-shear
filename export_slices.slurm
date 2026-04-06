@@ -1,12 +1,12 @@
 #!/bin/bash -l
-#SBATCH -J R10P7ec
+#SBATCH -J R10P7e
 #SBATCH -A cfd135
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 2
 #SBATCH --mem=220G
-#SBATCH -t 24:00:00
+#SBATCH -t 16:00:00
 #SBATCH -o export_slices_%j.out
 #SBATCH -e export_slices_%j.err
 
@@ -22,7 +22,7 @@
 
 CASE=R10P7
 PLANES="yz"          # e.g. "xy xz yz" or just "yz"
-VARS="ee chi"           # e.g. "u v w r ee chi", "r chi" or just "u" 
+VARS="ee"           # e.g. "u v w r ee chi", "r chi" or just "u" 
 NXY=0                # number of xy slices, evenly spaced in z (0 = skip, 1 = middle slice)
 NXZ=0                # number of xz slices, evenly spaced in y (0 = skip, 1 = middle slice)
 NYZ=1                # number of yz slices, evenly spaced in x (0 = skip, 1 = middle slice))
@@ -34,7 +34,7 @@ STRIDE="1 1 1"       # (sx, sy, sz) — subsample along x, y, z in the output sl
                      # 1 1 1 = full resolution (recommended for archival).
                      # For yz planes, sx is IGNORED; only sy sz matter (e.g. "1 2 2").
 OVERWRITE=1          # non-empty = overwrite existing netcdf slice files. Leave blank to skip (default)        
-NPROC=2              # number of parallel workers. Leave blank for auto.
+NPROC=1              # number of parallel workers. Leave blank for auto.
                      # yz: auto = avail_RAM // 50 GB (e.g. 220G → 3 workers × 66 GB).
                      # Set NPROC=2 to force 2 workers × ~99 GB — fastest on Andes.
 
