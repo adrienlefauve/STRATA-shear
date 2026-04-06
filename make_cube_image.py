@@ -105,14 +105,14 @@ def build_case(case_name: str, tstamp_override=None):
 # ---------------------------------------------------------------------------
 
 VARCFG = {
-    # var : (plotly_colorscale, cmin, cmax, colorbar_title)
-    "u":   ("RdBu",    -5,     5,     "u' / E<sub>k</sub><sup>1/2</sup>"),
-    "v":   ("RdBu",    -5,     5,     "v' / E<sub>k</sub><sup>1/2</sup>"),
-    "w":   ("RdBu",    -5,     5,     "w' / E<sub>k</sub><sup>1/2</sup>"),
-    "r":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)"),
-    "b":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)"),
-    "ee":  ("Magma",   -2,     2,     "log<sub>10</sub>(ε / ⟨ε⟩)"),
-    "chi": ("Hot",     -2,     3,     "log<sub>10</sub>(χ / ⟨χ⟩)"),
+    # var : (plotly_colorscale, cmin, cmax, colorbar_title, tickvals)
+    "u":   ("RdBu",    -5,     5,     "u' / E<sub>k</sub><sup>1/2</sup>",      [-5, 0, 5]),
+    "v":   ("RdBu",    -5,     5,     "v' / E<sub>k</sub><sup>1/2</sup>",      [-5, 0, 5]),
+    "w":   ("RdBu",    -5,     5,     "w' / E<sub>k</sub><sup>1/2</sup>",      [-5, 0, 5]),
+    "r":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)",  [-5, 0, 5]),
+    "b":   ("Viridis", -5,     5,     "b' / (N E<sub>p</sub><sup>1/2</sup>)",  [-5, 0, 5]),
+    "ee":  ("Magma",   -2,     2,     "log<sub>10</sub>(ε / ⟨ε⟩)",             [-2, 0, 2]),
+    "chi": ("Hot",     -2,     3,     "log<sub>10</sub>(χ / ⟨χ⟩)",             [-2, 0, 3]),
 }
 
 
@@ -141,6 +141,7 @@ def plot_one_frame(
     ix, iy, iz,
     scan,
     cmin, cmax, colorscale, ctitle,
+    tickvals=None,
     add_colorbar=True,
     width=2500, height=1406,
 ):
@@ -161,6 +162,7 @@ def plot_one_frame(
     cbar_kw = dict(
         colorbar=dict(title=dict(text=ctitle, side="right"),
                       len=0.55, thickness=20, x=1.02,
+                      tickvals=tickvals,
                       tickfont=dict(size=13)),
     ) if add_colorbar else {}
 
@@ -308,7 +310,7 @@ def main():
 
     if args.var not in VARCFG:
         raise ValueError(f"--var {args.var} not in VARCFG. Add it there.")
-    colorscale, cmin, cmax, ctitle = VARCFG[args.var]
+    colorscale, cmin, cmax, ctitle, tickvals = VARCFG[args.var]
 
     # Validate scan index
     scan_N = {"x": p.Nx, "y": p.Ny, "z": p.Nz}[args.scan]
@@ -371,6 +373,7 @@ def main():
         scan=args.scan,
         cmin=cmin, cmax=cmax,
         colorscale=colorscale, ctitle=ctitle,
+        tickvals=tickvals,
         add_colorbar=not args.no_cbar,
         width=args.width, height=height,
     )

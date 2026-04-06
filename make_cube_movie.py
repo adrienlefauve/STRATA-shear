@@ -239,7 +239,7 @@ def main():
         print(f"  Frames at: {frames_dir}\n")
         return
 
-    movie = frames_dir / f"{run_tag}.mp4"
+    movie = outdir / args.case / f"{run_tag}.mp4"
     run([
         ffmpeg, "-y",
         "-framerate", str(args.fps),
