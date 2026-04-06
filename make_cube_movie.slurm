@@ -25,14 +25,14 @@
 # =============================================================================
 
 CASE=R1P1
-VAR=r                # variable to plot (u v w r ee chi)
+VARS=(r)             # variables to plot (u v w r ee chi)
 STRIDE=2             # downsample the 3D volume by this factor
 SCAN=x               # axis to sweep along: x, y, or z
-SCAN_STRIDE=20       # step between indices along the scan axis
+SCAN_STRIDE=5       # step between indices along the scan axis
 IX_FRAC=0.0          # fraction of Nx for the fixed x-face (used when SCAN=y or z)
 IY_FRAC=0.0          # fraction of Ny for the fixed y-face (used when SCAN=x or z)
-IZ_FRAC=0.9          # fraction of Nz for the fixed z-face (used when SCAN=x or y)
-FPS=5                # frames per second in the output movie
+IZ_FRAC=0.85         # fraction of Nz for the fixed z-face (used when SCAN=x or y)
+FPS=10                # frames per second in the output movie
 WIDTH=1000           # image width in pixels
 SCALE=1.0            # plotly scale factor (increase for higher-res JPGs)
 NO_CBAR=             # non-empty = hide colorbar (shown by default)
@@ -49,7 +49,7 @@ cd "$SLURM_SUBMIT_DIR"
 
 echo "======== JOB START ========"
 echo "Case:   $CASE"
-echo "Var:    $VAR"
+echo "Vars:   ${VARS[*]}"
 echo "Scan:   $SCAN (stride $SCAN_STRIDE)"
 echo "Node:   $(hostname)"
 echo "JobID:  $SLURM_JOB_ID"
@@ -63,6 +63,12 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
+
+for VAR in "${VARS[@]}"; do
+
+echo ""
+echo "-------- VAR=$VAR --------"
+echo ""
 
 python make_cube_movie.py \
     --case         "$CASE"        \
@@ -79,6 +85,8 @@ python make_cube_movie.py \
     --njobs        "$NJOBS"       \
     ${NO_CBAR:+--no-cbar}             \
     ${NO_MOVIE:+--no-movie}
+
+done
 
 echo ""
 echo "=========== JOB END ==========="
