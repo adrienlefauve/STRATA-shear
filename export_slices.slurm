@@ -1,12 +1,12 @@
 #!/bin/bash -l
-#SBATCH -J R10P7e
+#SBATCH -J R10P7c
 #SBATCH -A cfd135
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 2
 #SBATCH --mem=220G
-#SBATCH -t 16:00:00
+#SBATCH -t 15:00:00
 #SBATCH -o export_slices_%j.out
 #SBATCH -e export_slices_%j.err
 
@@ -22,7 +22,7 @@
 
 CASE=R10P7
 PLANES="yz"          # e.g. "xy xz yz" or just "yz"
-VARS="ee"           # e.g. "u v w r ee chi", "r chi" or just "u" 
+VARS="chi"           # e.g. "u v w r ee chi", "r chi" or just "u" 
 NXY=0                # number of xy slices, evenly spaced in z (0 = skip, 1 = middle slice)
 NXZ=0                # number of xz slices, evenly spaced in y (0 = skip, 1 = middle slice)
 NYZ=1                # number of yz slices, evenly spaced in x (0 = skip, 1 = middle slice))
