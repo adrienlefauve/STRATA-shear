@@ -93,7 +93,7 @@ MIN_YZ_SLAB_GB = 50   # minimum slab size to get good Lustre read-ahead
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _detect_available_ram_gb(fraction: float = 0.85) -> float:
+def _detect_available_ram_gb(fraction: float = 0.9) -> float:
     """Return fraction × available RAM (Linux only).
 
     Takes the minimum of /proc/meminfo MemTotal and SLURM_MEM_PER_NODE
@@ -384,7 +384,7 @@ def main():
     # -----------------------------------------------------------------------
     # Auto RAM detection
     # -----------------------------------------------------------------------
-    avail_gb = _detect_available_ram_gb(fraction=0.85)
+    avail_gb = _detect_available_ram_gb(fraction=0.9)
 
     # yz: minimise nproc to maximise slab size (better Lustre throughput)
     n_yz_vars = len(vars_)
