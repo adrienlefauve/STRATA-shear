@@ -34,7 +34,7 @@ STRIDE="1 1 1"       # (sx, sy, sz) — subsample along x, y, z in the output sl
                      # 1 1 1 = full resolution (recommended for archival).
                      # For yz planes, sx is IGNORED; only sy sz matter (e.g. "1 2 2").
 OVERWRITE=1          # non-empty = overwrite existing netcdf slice files. Leave blank to skip (default)        
-NPROC=1              # number of parallel workers. Leave blank for auto.
+NPROC=2              # number of parallel workers. Leave blank for auto.
                      # yz: auto = avail_RAM // 50 GB (e.g. 220G → 3 workers × 66 GB).
                      # Set NPROC=2 to force 2 workers × ~99 GB — fastest on Andes.
 
