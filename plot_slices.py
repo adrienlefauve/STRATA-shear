@@ -229,13 +229,17 @@ def select_slice_paths(p, files_by_plane, idx_xy=None, idx_xz=None, idx_yz=None)
         if not files_by_plane.get(pl):
             continue
 
-        if preferred_idx[pl] is not None:
-            idx = choose_index(files_by_plane[pl], preferred=preferred_idx[pl])
-        else:
-            available = sorted(files_by_plane[pl].keys())
-            idx = min(available, key=lambda i: abs(i - target_idx[pl]))
-            if any(v not in files_by_plane[pl][idx] for v in REQUIRED_VARS):
-                idx = choose_index(files_by_plane[pl], preferred=idx)
+        try:
+            if preferred_idx[pl] is not None:
+                idx = choose_index(files_by_plane[pl], preferred=preferred_idx[pl])
+            else:
+                available = sorted(files_by_plane[pl].keys())
+                idx = min(available, key=lambda i: abs(i - target_idx[pl]))
+                if any(v not in files_by_plane[pl][idx] for v in REQUIRED_VARS):
+                    idx = choose_index(files_by_plane[pl], preferred=idx)
+        except RuntimeError as e:
+            print(f"[skip] {pl}: {e}")
+            continue
 
         selected_idx[pl] = idx
         paths[pl] = files_by_plane[pl][idx]
