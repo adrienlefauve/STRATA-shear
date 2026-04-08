@@ -177,6 +177,9 @@ def discover_var_slice_files(slice_dir: Path, case_name: str):
         m = patt.match(path.name)
         if not m:
             continue
+        if path.stat().st_size == 0:
+            print(f"[skip] {path.name}: 0-byte file (still being written?)")
+            continue
         pl, idx, _sx, _sy, var = m.groups()
         idx = int(idx)
         files_by_plane.setdefault(pl, {}).setdefault(idx, {})[var] = path
