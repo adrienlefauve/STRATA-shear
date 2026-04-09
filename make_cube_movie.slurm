@@ -4,9 +4,9 @@
 #SBATCH -p batch
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH --cpus-per-task=32
-#SBATCH --mem=64G
-#SBATCH -t 1:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=128G
+#SBATCH -t 6:00:00
 #SBATCH -o cube_movie_%j.out
 #SBATCH -e cube_movie_%j.err
 
@@ -25,19 +25,19 @@
 # =============================================================================
 
 CASE=R6P50
-VARS=(u v w r ee chi)             # variables to plot (u v w r ee chi)
+VARS=(chi) # variables to plot (u v w r ee chi)
 STRIDE=24            # downsample the 3D volume by this factor
-SCAN=z        # axis to sweep along: x, y, or z
+SCAN=z                # axis to sweep along: x, y, or z
 SCAN_STRIDE=24      # step between indices along the scan axis
-IX_FRAC=0.0          # fraction of Nx for the fixed x-face (used when SCAN=y or z)
-IY_FRAC=0.0          # fraction of Ny for the fixed y-face (used when SCAN=x or z)
-IZ_FRAC=0.85         # fraction of Nz for the fixed z-face (used when SCAN=x or y)
+IX_FRAC=0.0           # fraction of Nx for the fixed x-face (used when SCAN=y or z)
+IY_FRAC=0.0           # fraction of Ny for the fixed y-face (used when SCAN=x or z)
+IZ_FRAC=0.85          # fraction of Nz for the fixed z-face (used when SCAN=x or y)
 FPS=20                # frames per second in the output movie
-WIDTH=1000           # image width in pixels
-SCALE=1.0            # plotly scale factor (increase for higher-res JPGs)
-NO_CBAR=             # non-empty = hide colorbar (shown by default)
-NJOBS=32             # parallel workers (match --cpus-per-task)
-NO_MOVIE=            # non-empty = skip ffmpeg, only render frames
+WIDTH=1000            # image width in pixels
+SCALE=1.0             # plotly scale factor (increase for higher-res JPGs)
+NO_CBAR=              # non-empty = hide colorbar (shown by default)
+NJOBS=8              # parallel workers (match --cpus-per-task)
+NO_MOVIE=             # non-empty = skip ffmpeg, only render frames
 
 # ---------------------------------------------------------------------------
 

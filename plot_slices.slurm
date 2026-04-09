@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 1          # sequential script — only 1 CPU needed
-#SBATCH -t 2:00:00
+#SBATCH -t 4:00:00
 #SBATCH --mem=32G     # can stay low (a few GB) as it only reads one lightweight NetCDF slice at a time, not the full binary volumes
 #SBATCH -o plot_slices_%j.out
 #SBATCH -e plot_slices_%j.err

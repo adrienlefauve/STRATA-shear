@@ -5,7 +5,7 @@ Load previously exported NetCDF slice files for one case, reconstruct the
 derived (rescaled) plotting fields, and write summary/native-resolution figures.
 
 Typical use:
-    python load_netcdf_slices_and_plot_figures.py R1P1
+    python plot_slices.py R1P1
 
 By default this script:
 - reads case parameters from <code_root>/params.csv
