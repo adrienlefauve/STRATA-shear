@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Volume Viewer</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0d0d0d;
+            color: #ddd;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Top toolbar ── */
+        #toolbar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 12px 22px;
+            background: #1a1a1a;
+            border-bottom: 1px solid #2e2e2e;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        #toolbar h1 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #bbb;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .ctrl {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ctrl label {
+            font-size: 15px;
+            color: #888;
+            white-space: nowrap;
+        }
+
+        select {
+            background: #252525;
+            color: #ddd;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            padding: 7px 32px 7px 12px;
+            font-size: 15px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 9px center;
+            cursor: pointer;
+            min-width: 100px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        #status {
+            margin-left: auto;
+            font-size: 11px;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        .btn-toggle {
+            background: none;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            color: #888;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 7px 14px;
+            white-space: nowrap;
+        }
+
+        .btn-toggle:hover {
+            color: #fff;
+            border-color: #666;
+        }
+
+        /* ── Video area ── */
+        #video-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #video-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        video {
+            max-width: 100%;
+            max-height: 100%;
+            outline: none;
+        }
+
+        #placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* ── Custom playback bar ── */
+        #controls {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 22px;
+            height: 72px;
+            background: #141414;
+            border-top: 1px solid #2e2e2e;
+        }
+
+        #btn-play {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 32px;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        #btn-play:hover {
+            color: #fff;
+        }
+
+        #btn-loop,
+        #btn-slower,
+        #btn-faster,
+        #speed-display {
+            background: none;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            color: #888;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 7px 14px;
+            white-space: nowrap;
+        }
+
+        #btn-loop.active {
+            color: #4af;
+            border-color: #4af;
+        }
+
+        #speed-display {
+            cursor: default;
+            min-width: 42px;
+            text-align: center;
+            color: #aaa;
+            border-color: #2a2a2a;
+        }
+
+        #btn-slower:hover,
+        #btn-faster:hover {
+            color: #fff;
+            border-color: #666;
+        }
+
+        #time-display {
+            font-size: 17px;
+            color: #888;
+            white-space: nowrap;
+            min-width: 110px;
+        }
+
+        #scrubber {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            cursor: pointer;
+        }
+
+        #scrubber::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4af;
+            cursor: pointer;
+        }
+
+        #scrubber::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4af;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toolbar">
+        <h1>DNS Volume Viewer</h1>
+
+        <div class="ctrl">
+            <label for="sel-case">Case</label>
+            <select id="sel-case"></select>
+        </div>
+
+        <div class="ctrl">
+            <label for="sel-var">Variable</label>
+            <select id="sel-var"></select>
+        </div>
+
+        <div class="ctrl">
+            <label for="sel-axis">Scan axis</label>
+            <select id="sel-axis"></select>
+        </div>
+
+        <button id="btn-to-slices" class="btn-toggle">◀ View Slices</button>
+        <span id="status">Loading…</span>
+    </div>
+
+    <div id="video-wrap">
+        <div id="video-container">
+            <video id="player" autoplay loop muted playsinline></video>
+        </div>
+        <div id="placeholder">Select a case, variable, and axis above</div>
+        <div id="controls">
+            <button id="btn-play" title="Play / Pause">⏸</button>
+            <span id="time-display">0:00 / 0:00</span>
+            <input id="scrubber" type="range" min="0" max="1000" value="0" step="1">
+            <button id="btn-slower" title="Slow down">−</button>
+            <span id="speed-display">1×</span>
+            <button id="btn-faster" title="Speed up">+</button>
+            <button id="btn-loop" class="active" title="Toggle loop">⟳ loop</button>
+        </div>
+    </div>
+
+    <script>
+        // ---------------------------------------------------------------------------
+        // CONFIG — set BASE_URL to the public URL root where MP4s are hosted.
+        // Files are expected at: BASE_URL/<case>/<case>_<variable>_<axis>.mp4
+        // Leave as "" when the viewer and movies are co-located (local server).
+        // Example: const BASE_URL = "https://pub-abc123.r2.dev/movies";
+        // ---------------------------------------------------------------------------
+        const BASE_URL = "https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/volumes";
+
+        // Human-readable variable labels (extend as needed)
+        const VAR_ORDER = ["u", "v", "w", "r", "ee", "chi"];
+        const VAR_LABELS = {
+            u: "u — streamwise velocity",
+            v: "v — spanwise velocity",
+            w: "w — vertical velocity",
+            r: "r — density",
+            ee: "ε — TKE dissipation",
+            chi: "χ — scalar dissipation",
+        };
+
+        function varLabel(v) { return VAR_LABELS[v] || v; }
+
+        // Natural sort: R1 < R4 < R10
+        function naturalSort(arr) {
+            return [...new Set(arr)].sort((a, b) =>
+                a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
+            );
+        }
+
+        // ---------------------------------------------------------------------------
+        // State
+        // ---------------------------------------------------------------------------
+        let manifest = null;          // { cases, variables, axes, movies }
+        let movieSet = new Set();     // "case|variable|axis" → true (fast lookup)
+
+        // ---------------------------------------------------------------------------
+        // Boot
+        // ---------------------------------------------------------------------------
+        fetch("movie_manifest.json")
+            .then(r => { if (!r.ok) throw new Error(r.statusText); return r.json(); })
+            .then(data => {
+                manifest = data;
+                manifest.movies.forEach(m => movieSet.add(`${m.case}|${m.variable}|${m.axis}`));
+                buildDropdowns();
+                applyURLParams();
+                document.getElementById("status").textContent =
+                    `${manifest.movies.length} movies`;
+            })
+            .catch(e => {
+                document.getElementById("status").textContent = "Error loading movie_manifest.json";
+                console.error(e);
+            });
+
+        // ---------------------------------------------------------------------------
+        // Build dropdowns
+        // ---------------------------------------------------------------------------
+        function buildDropdowns() {
+            populateSelect("sel-case", naturalSort(manifest.cases), v => v);
+            const orderedVars = VAR_ORDER.filter(v => manifest.variables.includes(v));
+            populateSelect("sel-var", orderedVars, varLabel);
+            populateSelect("sel-axis", naturalSort(manifest.axes), v => v);
+
+            document.getElementById("sel-case").addEventListener("change", updateVideo);
+            document.getElementById("sel-var").addEventListener("change", updateVideo);
+            document.getElementById("sel-axis").addEventListener("change", updateVideo);
+        }
+
+        function populateSelect(id, values, labelFn) {
+            const sel = document.getElementById(id);
+            sel.innerHTML = "";
+            values.forEach(v => {
+                const opt = document.createElement("option");
+                opt.value = v;
+                opt.textContent = labelFn(v);
+                sel.appendChild(opt);
+            });
+        }
+
+        // ---------------------------------------------------------------------------
+        // Load video when selection changes
+        // ---------------------------------------------------------------------------
+        function updateVideo() {
+            if (!manifest) return;
+
+            const caseVal = document.getElementById("sel-case").value;
+            const varVal = document.getElementById("sel-var").value;
+            const axis = document.getElementById("sel-axis").value;
+
+            const key = `${caseVal}|${varVal}|${axis}`;
+            const player = document.getElementById("player");
+            const placeholder = document.getElementById("placeholder");
+
+            if (!movieSet.has(key)) {
+                player.style.display = "none";
+                placeholder.style.display = "flex";
+                placeholder.textContent = `No movie available for ${caseVal} / ${varLabel(varVal)} / ${axis}`;
+                return;
+            }
+
+            const filename = `${caseVal}_${varVal}_${axis}.mp4`;
+            const url = BASE_URL
+                ? `${BASE_URL.replace(/\/$/, "")}/${caseVal}/${filename}`
+                : `${caseVal}/${filename}`;
+
+            placeholder.style.display = "none";
+            player.style.display = "block";
+            player.src = url;
+            player.load();
+            player.play().catch(() => { });
+        }
+
+        // ---------------------------------------------------------------------------
+        // Custom playback controls
+        // ---------------------------------------------------------------------------
+        const player = document.getElementById("player");
+        const scrubber = document.getElementById("scrubber");
+        const btnPlay = document.getElementById("btn-play");
+        const btnLoop = document.getElementById("btn-loop");
+        const timeDisp = document.getElementById("time-display");
+
+        function fmtTime(s) {
+            if (!isFinite(s)) return "0:00";
+            const m = Math.floor(s / 60);
+            const sec = String(Math.floor(s % 60)).padStart(2, "0");
+            return `${m}:${sec}`;
+        }
+
+        player.addEventListener("timeupdate", () => {
+            if (!player.duration) return;
+            const pct = (player.currentTime / player.duration) * 100;
+            scrubber.value = Math.round(pct * 10);
+            scrubber.style.background = `linear-gradient(to right, #4af ${pct}%, #333 ${pct}%)`;
+            timeDisp.textContent = `${fmtTime(player.currentTime)} / ${fmtTime(player.duration)}`;
+        });
+
+        player.addEventListener("play", () => { btnPlay.textContent = "⏸"; });
+        player.addEventListener("pause", () => { btnPlay.textContent = "▶"; });
+
+        scrubber.addEventListener("input", () => {
+            if (player.duration) {
+                const pct = scrubber.value / 10;
+                player.currentTime = (pct / 100) * player.duration;
+                scrubber.style.background = `linear-gradient(to right, #4af ${pct}%, #333 ${pct}%)`;
+            }
+        });
+
+        btnPlay.addEventListener("click", () => {
+            player.paused ? player.play() : player.pause();
+        });
+
+        btnLoop.addEventListener("click", () => {
+            player.loop = !player.loop;
+            btnLoop.classList.toggle("active", player.loop);
+        });
+
+        // Speed control
+        const SPEEDS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 4];
+        let speedIdx = SPEEDS.indexOf(1);
+        const speedDisp = document.getElementById("speed-display");
+        const btnSlower = document.getElementById("btn-slower");
+        const btnFaster = document.getElementById("btn-faster");
+
+        function setSpeed(idx) {
+            speedIdx = Math.max(0, Math.min(SPEEDS.length - 1, idx));
+            player.playbackRate = SPEEDS[speedIdx];
+            speedDisp.textContent = SPEEDS[speedIdx] + "×";
+            btnSlower.disabled = speedIdx === 0;
+            btnFaster.disabled = speedIdx === SPEEDS.length - 1;
+        }
+
+        btnSlower.addEventListener("click", () => setSpeed(speedIdx - 1));
+        btnFaster.addEventListener("click", () => setSpeed(speedIdx + 1));
+
+        // ---------------------------------------------------------------------------
+        // Read URL params on load (for cross-viewer navigation)
+        // ---------------------------------------------------------------------------
+        function applyURLParams() {
+            const p = new URLSearchParams(window.location.search);
+            const map = { case: "sel-case", var: "sel-var", axis: "sel-axis" };
+            Object.entries(map).forEach(([key, id]) => {
+                const val = p.get(key);
+                if (val) {
+                    const s = document.getElementById(id);
+                    if ([...s.options].some(o => o.value === val)) s.value = val;
+                }
+            });
+            updateVideo();
+        }
+
+        document.getElementById("btn-to-slices").addEventListener("click", () => {
+            const cas = document.getElementById("sel-case").value;
+            const vari = document.getElementById("sel-var").value;
+            const axis = document.getElementById("sel-axis").value;
+            window.location.href = `../slice_viewer/index.html?${new URLSearchParams({ case: cas, var: vari, axis })}`;
+        });
+    </script>
+</body>
+
+</html>

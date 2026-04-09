@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRATA — Mean-Shear DNS Viewer</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0d0d0d url('bg.jpg') center center / cover no-repeat fixed;
+            color: #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            gap: 48px;
+        }
+
+        body::before {
+            content: none;
+        }
+
+        header,
+        .cards {
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.12em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 22px;
+            color: #eee;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        .cards {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        a.card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 270px;
+            height: 220px;
+            background: rgba(10, 10, 10, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            text-decoration: none;
+            color: #ddd;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s, background 0.2s, transform 0.15s;
+        }
+
+        a.card:hover {
+            border-color: #4af;
+            background: rgba(30, 60, 80, 0.75);
+            transform: translateY(-3px);
+        }
+
+        a.card .icon {
+            font-size: 52px;
+            line-height: 1;
+        }
+
+        a.card .label {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        a.card .desc {
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+            padding: 0 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>STRATA</h1>
+        <p>Mean-Shear DNS Viewer</p>
+    </header>
+
+    <div class="cards">
+        <a class="card" href="slice_viewer/index.html">
+            <span class="icon">🖼</span>
+            <span class="label">Slice Viewer</span>
+            <span class="desc">Deep-zoom 2D snapshots<br>pan &amp; zoom</span>
+        </a>
+        <a class="card" href="movie_viewer/index.html">
+            <span class="icon">🎬</span>
+            <span class="label">Volume Viewer</span>
+            <span class="desc">Animated volume scans<br>playback controls</span>
+        </a>
+    </div>
+
+</body>
+
+</html>
