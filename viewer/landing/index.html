@@ -38,21 +38,37 @@
 
         header {
             text-align: center;
+            background: rgba(10, 10, 10, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 14px;
+            padding: 28px 32px;
+            width: 572px;
         }
 
         header h1 {
             font-size: 48px;
             font-weight: 800;
             color: #fff;
-            letter-spacing: 0.12em;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.14em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
         }
 
-        header p {
-            margin-top: 10px;
-            font-size: 22px;
-            color: #eee;
+        header .acronym {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #888;
+            letter-spacing: 0.03em;
+            line-height: 1.5;
+        }
+
+        header .subtitle {
+            margin-top: 14px;
+            font-size: 18px;
+            color: #fff;
             letter-spacing: 0.08em;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
             text-transform: uppercase;
             text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
         }
@@ -72,19 +88,17 @@
             gap: 16px;
             width: 270px;
             height: 220px;
-            background: rgba(10, 10, 10, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(10, 10, 10, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 14px;
             text-decoration: none;
             color: #ddd;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             transition: border-color 0.2s, background 0.2s, transform 0.15s;
         }
 
         a.card:hover {
             border-color: #4af;
-            background: rgba(30, 60, 80, 0.75);
+            background: rgba(20, 50, 70, 0.65);
             transform: translateY(-3px);
         }
 
@@ -112,7 +126,10 @@
 
     <header>
         <h1>STRATA</h1>
-        <p>Mean-Shear DNS Viewer</p>
+        <p class="acronym">Supercomputing for Stratified Turbulence Research:<br>Advancing Theory and Application</p>
+        <p class="subtitle">
+            Mean Shear &mdash; Direct Numerical Simulation<br>Viewer
+        </p>
     </header>
 
     <div class="cards">

@@ -100,6 +100,26 @@
             border-color: #666;
         }
 
+        .btn-home {
+            background: none;
+            border: 1px solid #3a3a3a;
+            border-radius: 5px;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 7px 14px;
+            white-space: nowrap;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-home:hover {
+            color: #4af;
+            border-color: #4af;
+        }
+
         /* ── Video area ── */
         #video-wrap {
             flex: 1;
@@ -238,7 +258,8 @@
 <body>
 
     <div id="toolbar">
-        <h1>DNS Volume Viewer</h1>
+        <a href="../index.html" class="btn-home" title="Home">&#8962; Home</a>
+        <h1>Volumes</h1>
 
         <div class="ctrl">
             <label for="sel-case">Case</label>
