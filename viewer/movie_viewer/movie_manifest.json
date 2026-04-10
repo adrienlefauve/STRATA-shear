@@ -1,0 +1,1436 @@
+{
+  "cases": [
+    "R1P1",
+    "R1P7",
+    "R1P50",
+    "R4P1",
+    "R4P7",
+    "R4P50",
+    "R6P1",
+    "R6P7",
+    "R6P50",
+    "R8P1",
+    "R8P7",
+    "R10P1",
+    "R10P7"
+  ],
+  "variables": [
+    "chi",
+    "ee",
+    "r",
+    "u",
+    "v",
+    "w"
+  ],
+  "axes": [
+    "x",
+    "y",
+    "z"
+  ],
+  "movies": [
+    {
+      "case": "R1P1",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R1P1/R1P1_chi_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R1P1/R1P1_chi_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R1P1/R1P1_chi_z.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R1P1/R1P1_ee_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R1P1/R1P1_ee_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R1P1/R1P1_ee_z.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "r",
+      "axis": "x",
+      "path": "R1P1/R1P1_r_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "r",
+      "axis": "y",
+      "path": "R1P1/R1P1_r_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "r",
+      "axis": "z",
+      "path": "R1P1/R1P1_r_z.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "u",
+      "axis": "x",
+      "path": "R1P1/R1P1_u_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "u",
+      "axis": "y",
+      "path": "R1P1/R1P1_u_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "u",
+      "axis": "z",
+      "path": "R1P1/R1P1_u_z.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "v",
+      "axis": "x",
+      "path": "R1P1/R1P1_v_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "v",
+      "axis": "y",
+      "path": "R1P1/R1P1_v_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "v",
+      "axis": "z",
+      "path": "R1P1/R1P1_v_z.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "w",
+      "axis": "x",
+      "path": "R1P1/R1P1_w_x.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "w",
+      "axis": "y",
+      "path": "R1P1/R1P1_w_y.mp4"
+    },
+    {
+      "case": "R1P1",
+      "variable": "w",
+      "axis": "z",
+      "path": "R1P1/R1P1_w_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R1P7/R1P7_chi_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R1P7/R1P7_chi_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R1P7/R1P7_chi_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R1P7/R1P7_ee_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R1P7/R1P7_ee_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R1P7/R1P7_ee_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "r",
+      "axis": "x",
+      "path": "R1P7/R1P7_r_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "r",
+      "axis": "y",
+      "path": "R1P7/R1P7_r_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "r",
+      "axis": "z",
+      "path": "R1P7/R1P7_r_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "u",
+      "axis": "x",
+      "path": "R1P7/R1P7_u_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "u",
+      "axis": "y",
+      "path": "R1P7/R1P7_u_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "u",
+      "axis": "z",
+      "path": "R1P7/R1P7_u_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "v",
+      "axis": "x",
+      "path": "R1P7/R1P7_v_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "v",
+      "axis": "y",
+      "path": "R1P7/R1P7_v_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "v",
+      "axis": "z",
+      "path": "R1P7/R1P7_v_z.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "w",
+      "axis": "x",
+      "path": "R1P7/R1P7_w_x.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "w",
+      "axis": "y",
+      "path": "R1P7/R1P7_w_y.mp4"
+    },
+    {
+      "case": "R1P7",
+      "variable": "w",
+      "axis": "z",
+      "path": "R1P7/R1P7_w_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R1P50/R1P50_chi_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R1P50/R1P50_chi_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R1P50/R1P50_chi_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R1P50/R1P50_ee_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R1P50/R1P50_ee_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R1P50/R1P50_ee_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "r",
+      "axis": "x",
+      "path": "R1P50/R1P50_r_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "r",
+      "axis": "y",
+      "path": "R1P50/R1P50_r_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "r",
+      "axis": "z",
+      "path": "R1P50/R1P50_r_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "u",
+      "axis": "x",
+      "path": "R1P50/R1P50_u_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "u",
+      "axis": "y",
+      "path": "R1P50/R1P50_u_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "u",
+      "axis": "z",
+      "path": "R1P50/R1P50_u_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "v",
+      "axis": "x",
+      "path": "R1P50/R1P50_v_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "v",
+      "axis": "y",
+      "path": "R1P50/R1P50_v_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "v",
+      "axis": "z",
+      "path": "R1P50/R1P50_v_z.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "w",
+      "axis": "x",
+      "path": "R1P50/R1P50_w_x.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "w",
+      "axis": "y",
+      "path": "R1P50/R1P50_w_y.mp4"
+    },
+    {
+      "case": "R1P50",
+      "variable": "w",
+      "axis": "z",
+      "path": "R1P50/R1P50_w_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R4P1/R4P1_chi_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R4P1/R4P1_chi_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R4P1/R4P1_chi_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R4P1/R4P1_ee_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R4P1/R4P1_ee_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R4P1/R4P1_ee_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "r",
+      "axis": "x",
+      "path": "R4P1/R4P1_r_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "r",
+      "axis": "y",
+      "path": "R4P1/R4P1_r_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "r",
+      "axis": "z",
+      "path": "R4P1/R4P1_r_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "u",
+      "axis": "x",
+      "path": "R4P1/R4P1_u_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "u",
+      "axis": "y",
+      "path": "R4P1/R4P1_u_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "u",
+      "axis": "z",
+      "path": "R4P1/R4P1_u_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "v",
+      "axis": "x",
+      "path": "R4P1/R4P1_v_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "v",
+      "axis": "y",
+      "path": "R4P1/R4P1_v_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "v",
+      "axis": "z",
+      "path": "R4P1/R4P1_v_z.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "w",
+      "axis": "x",
+      "path": "R4P1/R4P1_w_x.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "w",
+      "axis": "y",
+      "path": "R4P1/R4P1_w_y.mp4"
+    },
+    {
+      "case": "R4P1",
+      "variable": "w",
+      "axis": "z",
+      "path": "R4P1/R4P1_w_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R4P7/R4P7_chi_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R4P7/R4P7_chi_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R4P7/R4P7_chi_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R4P7/R4P7_ee_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R4P7/R4P7_ee_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R4P7/R4P7_ee_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "r",
+      "axis": "x",
+      "path": "R4P7/R4P7_r_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "r",
+      "axis": "y",
+      "path": "R4P7/R4P7_r_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "r",
+      "axis": "z",
+      "path": "R4P7/R4P7_r_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "u",
+      "axis": "x",
+      "path": "R4P7/R4P7_u_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "u",
+      "axis": "y",
+      "path": "R4P7/R4P7_u_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "u",
+      "axis": "z",
+      "path": "R4P7/R4P7_u_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "v",
+      "axis": "x",
+      "path": "R4P7/R4P7_v_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "v",
+      "axis": "y",
+      "path": "R4P7/R4P7_v_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "v",
+      "axis": "z",
+      "path": "R4P7/R4P7_v_z.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "w",
+      "axis": "x",
+      "path": "R4P7/R4P7_w_x.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "w",
+      "axis": "y",
+      "path": "R4P7/R4P7_w_y.mp4"
+    },
+    {
+      "case": "R4P7",
+      "variable": "w",
+      "axis": "z",
+      "path": "R4P7/R4P7_w_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R4P50/R4P50_chi_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R4P50/R4P50_chi_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R4P50/R4P50_chi_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R4P50/R4P50_ee_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R4P50/R4P50_ee_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R4P50/R4P50_ee_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "r",
+      "axis": "x",
+      "path": "R4P50/R4P50_r_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "r",
+      "axis": "y",
+      "path": "R4P50/R4P50_r_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "r",
+      "axis": "z",
+      "path": "R4P50/R4P50_r_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "u",
+      "axis": "x",
+      "path": "R4P50/R4P50_u_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "u",
+      "axis": "y",
+      "path": "R4P50/R4P50_u_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "u",
+      "axis": "z",
+      "path": "R4P50/R4P50_u_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "v",
+      "axis": "x",
+      "path": "R4P50/R4P50_v_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "v",
+      "axis": "y",
+      "path": "R4P50/R4P50_v_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "v",
+      "axis": "z",
+      "path": "R4P50/R4P50_v_z.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "w",
+      "axis": "x",
+      "path": "R4P50/R4P50_w_x.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "w",
+      "axis": "y",
+      "path": "R4P50/R4P50_w_y.mp4"
+    },
+    {
+      "case": "R4P50",
+      "variable": "w",
+      "axis": "z",
+      "path": "R4P50/R4P50_w_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R6P1/R6P1_chi_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R6P1/R6P1_chi_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R6P1/R6P1_chi_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R6P1/R6P1_ee_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R6P1/R6P1_ee_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R6P1/R6P1_ee_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "r",
+      "axis": "x",
+      "path": "R6P1/R6P1_r_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "r",
+      "axis": "y",
+      "path": "R6P1/R6P1_r_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "r",
+      "axis": "z",
+      "path": "R6P1/R6P1_r_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "u",
+      "axis": "x",
+      "path": "R6P1/R6P1_u_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "u",
+      "axis": "y",
+      "path": "R6P1/R6P1_u_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "u",
+      "axis": "z",
+      "path": "R6P1/R6P1_u_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "v",
+      "axis": "x",
+      "path": "R6P1/R6P1_v_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "v",
+      "axis": "y",
+      "path": "R6P1/R6P1_v_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "v",
+      "axis": "z",
+      "path": "R6P1/R6P1_v_z.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "w",
+      "axis": "x",
+      "path": "R6P1/R6P1_w_x.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "w",
+      "axis": "y",
+      "path": "R6P1/R6P1_w_y.mp4"
+    },
+    {
+      "case": "R6P1",
+      "variable": "w",
+      "axis": "z",
+      "path": "R6P1/R6P1_w_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R6P7/R6P7_chi_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R6P7/R6P7_chi_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R6P7/R6P7_chi_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R6P7/R6P7_ee_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R6P7/R6P7_ee_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R6P7/R6P7_ee_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "r",
+      "axis": "x",
+      "path": "R6P7/R6P7_r_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "r",
+      "axis": "y",
+      "path": "R6P7/R6P7_r_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "r",
+      "axis": "z",
+      "path": "R6P7/R6P7_r_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "u",
+      "axis": "x",
+      "path": "R6P7/R6P7_u_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "u",
+      "axis": "y",
+      "path": "R6P7/R6P7_u_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "u",
+      "axis": "z",
+      "path": "R6P7/R6P7_u_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "v",
+      "axis": "x",
+      "path": "R6P7/R6P7_v_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "v",
+      "axis": "y",
+      "path": "R6P7/R6P7_v_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "v",
+      "axis": "z",
+      "path": "R6P7/R6P7_v_z.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "w",
+      "axis": "x",
+      "path": "R6P7/R6P7_w_x.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "w",
+      "axis": "y",
+      "path": "R6P7/R6P7_w_y.mp4"
+    },
+    {
+      "case": "R6P7",
+      "variable": "w",
+      "axis": "z",
+      "path": "R6P7/R6P7_w_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R6P50/R6P50_chi_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R6P50/R6P50_chi_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R6P50/R6P50_chi_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R6P50/R6P50_ee_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R6P50/R6P50_ee_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R6P50/R6P50_ee_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "r",
+      "axis": "x",
+      "path": "R6P50/R6P50_r_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "r",
+      "axis": "y",
+      "path": "R6P50/R6P50_r_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "r",
+      "axis": "z",
+      "path": "R6P50/R6P50_r_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "u",
+      "axis": "x",
+      "path": "R6P50/R6P50_u_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "u",
+      "axis": "y",
+      "path": "R6P50/R6P50_u_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "u",
+      "axis": "z",
+      "path": "R6P50/R6P50_u_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "v",
+      "axis": "x",
+      "path": "R6P50/R6P50_v_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "v",
+      "axis": "y",
+      "path": "R6P50/R6P50_v_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "v",
+      "axis": "z",
+      "path": "R6P50/R6P50_v_z.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "w",
+      "axis": "x",
+      "path": "R6P50/R6P50_w_x.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "w",
+      "axis": "y",
+      "path": "R6P50/R6P50_w_y.mp4"
+    },
+    {
+      "case": "R6P50",
+      "variable": "w",
+      "axis": "z",
+      "path": "R6P50/R6P50_w_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R8P1/R8P1_chi_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R8P1/R8P1_chi_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R8P1/R8P1_chi_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R8P1/R8P1_ee_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R8P1/R8P1_ee_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R8P1/R8P1_ee_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "r",
+      "axis": "x",
+      "path": "R8P1/R8P1_r_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "r",
+      "axis": "y",
+      "path": "R8P1/R8P1_r_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "r",
+      "axis": "z",
+      "path": "R8P1/R8P1_r_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "u",
+      "axis": "x",
+      "path": "R8P1/R8P1_u_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "u",
+      "axis": "y",
+      "path": "R8P1/R8P1_u_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "u",
+      "axis": "z",
+      "path": "R8P1/R8P1_u_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "v",
+      "axis": "x",
+      "path": "R8P1/R8P1_v_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "v",
+      "axis": "y",
+      "path": "R8P1/R8P1_v_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "v",
+      "axis": "z",
+      "path": "R8P1/R8P1_v_z.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "w",
+      "axis": "x",
+      "path": "R8P1/R8P1_w_x.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "w",
+      "axis": "y",
+      "path": "R8P1/R8P1_w_y.mp4"
+    },
+    {
+      "case": "R8P1",
+      "variable": "w",
+      "axis": "z",
+      "path": "R8P1/R8P1_w_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R8P7/R8P7_chi_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R8P7/R8P7_chi_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R8P7/R8P7_chi_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R8P7/R8P7_ee_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R8P7/R8P7_ee_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R8P7/R8P7_ee_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "r",
+      "axis": "x",
+      "path": "R8P7/R8P7_r_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "r",
+      "axis": "y",
+      "path": "R8P7/R8P7_r_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "r",
+      "axis": "z",
+      "path": "R8P7/R8P7_r_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "u",
+      "axis": "x",
+      "path": "R8P7/R8P7_u_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "u",
+      "axis": "y",
+      "path": "R8P7/R8P7_u_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "u",
+      "axis": "z",
+      "path": "R8P7/R8P7_u_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "v",
+      "axis": "x",
+      "path": "R8P7/R8P7_v_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "v",
+      "axis": "y",
+      "path": "R8P7/R8P7_v_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "v",
+      "axis": "z",
+      "path": "R8P7/R8P7_v_z.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "w",
+      "axis": "x",
+      "path": "R8P7/R8P7_w_x.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "w",
+      "axis": "y",
+      "path": "R8P7/R8P7_w_y.mp4"
+    },
+    {
+      "case": "R8P7",
+      "variable": "w",
+      "axis": "z",
+      "path": "R8P7/R8P7_w_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R10P1/R10P1_chi_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R10P1/R10P1_chi_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R10P1/R10P1_chi_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R10P1/R10P1_ee_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R10P1/R10P1_ee_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R10P1/R10P1_ee_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "r",
+      "axis": "x",
+      "path": "R10P1/R10P1_r_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "r",
+      "axis": "y",
+      "path": "R10P1/R10P1_r_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "r",
+      "axis": "z",
+      "path": "R10P1/R10P1_r_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "u",
+      "axis": "x",
+      "path": "R10P1/R10P1_u_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "u",
+      "axis": "y",
+      "path": "R10P1/R10P1_u_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "u",
+      "axis": "z",
+      "path": "R10P1/R10P1_u_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "v",
+      "axis": "x",
+      "path": "R10P1/R10P1_v_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "v",
+      "axis": "y",
+      "path": "R10P1/R10P1_v_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "v",
+      "axis": "z",
+      "path": "R10P1/R10P1_v_z.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "w",
+      "axis": "x",
+      "path": "R10P1/R10P1_w_x.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "w",
+      "axis": "y",
+      "path": "R10P1/R10P1_w_y.mp4"
+    },
+    {
+      "case": "R10P1",
+      "variable": "w",
+      "axis": "z",
+      "path": "R10P1/R10P1_w_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "chi",
+      "axis": "x",
+      "path": "R10P7/R10P7_chi_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "chi",
+      "axis": "y",
+      "path": "R10P7/R10P7_chi_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "chi",
+      "axis": "z",
+      "path": "R10P7/R10P7_chi_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "ee",
+      "axis": "x",
+      "path": "R10P7/R10P7_ee_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "ee",
+      "axis": "y",
+      "path": "R10P7/R10P7_ee_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "ee",
+      "axis": "z",
+      "path": "R10P7/R10P7_ee_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "r",
+      "axis": "x",
+      "path": "R10P7/R10P7_r_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "r",
+      "axis": "y",
+      "path": "R10P7/R10P7_r_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "r",
+      "axis": "z",
+      "path": "R10P7/R10P7_r_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "u",
+      "axis": "x",
+      "path": "R10P7/R10P7_u_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "u",
+      "axis": "y",
+      "path": "R10P7/R10P7_u_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "u",
+      "axis": "z",
+      "path": "R10P7/R10P7_u_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "v",
+      "axis": "x",
+      "path": "R10P7/R10P7_v_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "v",
+      "axis": "y",
+      "path": "R10P7/R10P7_v_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "v",
+      "axis": "z",
+      "path": "R10P7/R10P7_v_z.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "w",
+      "axis": "x",
+      "path": "R10P7/R10P7_w_x.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "w",
+      "axis": "y",
+      "path": "R10P7/R10P7_w_y.mp4"
+    },
+    {
+      "case": "R10P7",
+      "variable": "w",
+      "axis": "z",
+      "path": "R10P7/R10P7_w_z.mp4"
+    }
+  ]
+}

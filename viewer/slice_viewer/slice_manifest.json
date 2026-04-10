@@ -1,0 +1,2461 @@
+{
+  "images": [
+    {
+      "case": "R10P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/all_variables_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/all_variables_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/all_variables_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/b_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/b_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/b_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/c_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/c_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/c_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/e_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/e_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/e_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/u_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/u_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/u_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/v_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/v_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/v_z1536.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R10P1/w_x6144.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R10P1/w_y3072.dzi"
+    },
+    {
+      "case": "R10P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R10P1/w_z1536.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/all_variables_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/all_variables_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/all_variables_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/b_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/b_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/b_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/c_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/c_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/c_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/e_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/e_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/e_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/u_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/u_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/u_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/v_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/v_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/v_z3960.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x15840",
+      "slice_label": "yz-plane  (x = 15840)",
+      "dzi": "R10P7/w_x15840.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y7920",
+      "slice_label": "xz-plane  (y = 7920)",
+      "dzi": "R10P7/w_y7920.dzi"
+    },
+    {
+      "case": "R10P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z3960",
+      "slice_label": "xy-plane  (z = 3960)",
+      "dzi": "R10P7/w_z3960.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/all_variables_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/all_variables_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/all_variables_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/b_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/b_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/b_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/c_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/c_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/c_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/e_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/e_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/e_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/u_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/u_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/u_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/v_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/v_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/v_z192.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x768",
+      "slice_label": "yz-plane  (x = 768)",
+      "dzi": "R1P1/w_x768.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y384",
+      "slice_label": "xz-plane  (y = 384)",
+      "dzi": "R1P1/w_y384.dzi"
+    },
+    {
+      "case": "R1P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z192",
+      "slice_label": "xy-plane  (z = 192)",
+      "dzi": "R1P1/w_z192.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/all_variables_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/all_variables_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/all_variables_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/b_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/b_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/b_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/c_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/c_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/c_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/e_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/e_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/e_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/u_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/u_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/u_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/v_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/v_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/v_z1000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x4000",
+      "slice_label": "yz-plane  (x = 4000)",
+      "dzi": "R1P50/w_x4000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y2000",
+      "slice_label": "xz-plane  (y = 2000)",
+      "dzi": "R1P50/w_y2000.dzi"
+    },
+    {
+      "case": "R1P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z1000",
+      "slice_label": "xy-plane  (z = 1000)",
+      "dzi": "R1P50/w_z1000.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/all_variables_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/all_variables_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/all_variables_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/b_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/b_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/b_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/c_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/c_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/c_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/e_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/e_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/e_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/u_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/u_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/u_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/v_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/v_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/v_z384.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R1P7/w_x1536.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R1P7/w_y768.dzi"
+    },
+    {
+      "case": "R1P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R1P7/w_z384.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/all_variables_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/all_variables_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/all_variables_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/b_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/b_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/b_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/c_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/c_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/c_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/e_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/e_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/e_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/u_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/u_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/u_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/v_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/v_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/v_z256.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x1024",
+      "slice_label": "yz-plane  (x = 1024)",
+      "dzi": "R4P1/w_x1024.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y512",
+      "slice_label": "xz-plane  (y = 512)",
+      "dzi": "R4P1/w_y512.dzi"
+    },
+    {
+      "case": "R4P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z256",
+      "slice_label": "xy-plane  (z = 256)",
+      "dzi": "R4P1/w_z256.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/all_variables_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/all_variables_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/all_variables_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/b_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/b_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/b_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/c_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/c_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/c_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/e_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/e_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/e_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/u_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/u_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/u_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/v_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/v_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/v_z2000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x8000",
+      "slice_label": "yz-plane  (x = 8000)",
+      "dzi": "R4P50/w_x8000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y4000",
+      "slice_label": "xz-plane  (y = 4000)",
+      "dzi": "R4P50/w_y4000.dzi"
+    },
+    {
+      "case": "R4P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z2000",
+      "slice_label": "xy-plane  (z = 2000)",
+      "dzi": "R4P50/w_z2000.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/all_variables_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/all_variables_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/all_variables_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/b_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/b_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/b_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/c_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/c_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/c_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/e_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/e_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/e_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/u_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/u_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/u_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/v_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/v_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/v_z640.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x2560",
+      "slice_label": "yz-plane  (x = 2560)",
+      "dzi": "R4P7/w_x2560.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y1280",
+      "slice_label": "xz-plane  (y = 1280)",
+      "dzi": "R4P7/w_y1280.dzi"
+    },
+    {
+      "case": "R4P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z640",
+      "slice_label": "xy-plane  (z = 640)",
+      "dzi": "R4P7/w_z640.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/all_variables_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/all_variables_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/all_variables_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/b_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/b_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/b_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/c_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/c_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/c_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/e_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/e_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/e_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/u_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/u_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/u_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/v_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/v_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/v_z384.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x1536",
+      "slice_label": "yz-plane  (x = 1536)",
+      "dzi": "R6P1/w_x1536.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y768",
+      "slice_label": "xz-plane  (y = 768)",
+      "dzi": "R6P1/w_y768.dzi"
+    },
+    {
+      "case": "R6P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z384",
+      "slice_label": "xy-plane  (z = 384)",
+      "dzi": "R6P1/w_z384.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/all_variables_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/all_variables_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/all_variables_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/b_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/b_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/b_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/c_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/c_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/c_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/e_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/e_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/e_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/u_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/u_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/u_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/v_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/v_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/v_z3000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x12000",
+      "slice_label": "yz-plane  (x = 12000)",
+      "dzi": "R6P50/w_x12000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y6000",
+      "slice_label": "xz-plane  (y = 6000)",
+      "dzi": "R6P50/w_y6000.dzi"
+    },
+    {
+      "case": "R6P50",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z3000",
+      "slice_label": "xy-plane  (z = 3000)",
+      "dzi": "R6P50/w_z3000.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/all_variables_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/all_variables_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/all_variables_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/b_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/b_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/b_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/c_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/c_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/c_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/e_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/e_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/e_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/u_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/u_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/u_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/v_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/v_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/v_z1536.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x6144",
+      "slice_label": "yz-plane  (x = 6144)",
+      "dzi": "R6P7/w_x6144.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y3072",
+      "slice_label": "xz-plane  (y = 3072)",
+      "dzi": "R6P7/w_y3072.dzi"
+    },
+    {
+      "case": "R6P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z1536",
+      "slice_label": "xy-plane  (z = 1536)",
+      "dzi": "R6P7/w_z1536.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/all_variables_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/all_variables_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/all_variables_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/b_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/b_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/b_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/c_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/c_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/c_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/e_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/e_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/e_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/u_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/u_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/u_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/v_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/v_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/v_z1092.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x4368",
+      "slice_label": "yz-plane  (x = 4368)",
+      "dzi": "R8P1/w_x4368.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y2184",
+      "slice_label": "xz-plane  (y = 2184)",
+      "dzi": "R8P1/w_y2184.dzi"
+    },
+    {
+      "case": "R8P1",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z1092",
+      "slice_label": "xy-plane  (z = 1092)",
+      "dzi": "R8P1/w_z1092.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/all_variables_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/all_variables_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "all_variables",
+      "var_label": "All variables (summary)",
+      "var_order": 0,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/all_variables_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/b_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/b_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "b",
+      "var_label": "b \u2014 buoyancy",
+      "var_order": 4,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/b_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/c_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/c_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "c",
+      "var_label": "\u03c7 \u2014 scalar dissipation",
+      "var_order": 6,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/c_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/e_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/e_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "e",
+      "var_label": "\u03b5 \u2014 TKE dissipation",
+      "var_order": 5,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/e_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/u_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/u_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "u",
+      "var_label": "u \u2014 streamwise velocity",
+      "var_order": 1,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/u_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/v_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/v_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "v",
+      "var_label": "v \u2014 spanwise velocity",
+      "var_order": 2,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/v_z2880.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "x11520",
+      "slice_label": "yz-plane  (x = 11520)",
+      "dzi": "R8P7/w_x11520.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "y5760",
+      "slice_label": "xz-plane  (y = 5760)",
+      "dzi": "R8P7/w_y5760.dzi"
+    },
+    {
+      "case": "R8P7",
+      "var": "w",
+      "var_label": "w \u2014 vertical velocity",
+      "var_order": 3,
+      "slice": "z2880",
+      "slice_label": "xy-plane  (z = 2880)",
+      "dzi": "R8P7/w_z2880.dzi"
+    }
+  ]
+}
