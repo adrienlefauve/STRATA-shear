@@ -340,7 +340,10 @@
         document.getElementById("btn-to-movies").addEventListener("click", () => {
             const cas = selectedCase(), vari = selectedVar(), sl = selectedSlice();
             const axis = sl ? sl[0] : "z";
-            window.location.href = `../movie_viewer/index.html?${new URLSearchParams({ case: cas, var: vari, axis })}`;
+            // Translate slice var names → movie var names
+            const TO_MOVIE_VAR = { b: "r", e: "ee", c: "chi" };
+            const movieVar = TO_MOVIE_VAR[vari] || vari;
+            window.location.href = `../movie_viewer/index.html?${new URLSearchParams({ case: cas, var: movieVar, axis })}`;
         });
 
         // ---------------------------------------------------------------------------

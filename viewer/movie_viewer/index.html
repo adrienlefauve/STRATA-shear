@@ -489,7 +489,10 @@
             const cas = document.getElementById("sel-case").value;
             const vari = document.getElementById("sel-var").value;
             const axis = document.getElementById("sel-axis").value;
-            window.location.href = `../slice_viewer/index.html?${new URLSearchParams({ case: cas, var: vari, axis })}`;
+            // Translate movie var names → slice var names
+            const TO_SLICE_VAR = { r: "b", ee: "e", chi: "c" };
+            const sliceVar = TO_SLICE_VAR[vari] || vari;
+            window.location.href = `../slice_viewer/index.html?${new URLSearchParams({ case: cas, var: sliceVar, axis })}`;
         });
     </script>
 </body>
