@@ -21,8 +21,9 @@ A complete web-based interactive visualization system for Direct Numerical Simul
 ### Data pipeline
 1. **HPC (SLURM)** — `export_slices.py` exports NetCDF slices from binary 3D fields
 2. **`plot_slices.py`** — renders NetCDF slices to large PNGs (one per variable/scan position)
-3. **tile_images.py** — tiles PNGs into DZI pyramids, writes `slice_manifest.json`
-4. **`gen_movie_manifest.py`** — scans MP4 cube movies, writes `movie_manifest.json`
+3. **`tile_images.py`** — tiles PNGs into DZI pyramids (libvips `dzsave`)
+4. **`gen_slice_manifest.py`** — scans tile output, writes `slice_manifest.json`
+5. **`gen_movie_manifest.py`** — scans MP4 cube movies, writes `movie_manifest.json`
 5. **rclone** — uploads tiles → `r2:.../viewer/`, movies → `r2:.../volumes/`, HTML → `r2:.../site/`
 
 ---
@@ -40,7 +41,8 @@ adrien/
 ├── export_slices.py              # HPC: NetCDF → binary slices
 ├── plot_slices.py                # NetCDF → PNG snapshots
 └── viewer/
-    ├── tile_images.py            # PNG → DZI tiles + slice_manifest.json
+    ├── tile_images.py            # PNG → DZI tiles (libvips)
+    ├── gen_slice_manifest.py     # Scan tiles → slice_manifest.json
     ├── gen_movie_manifest.py     # Scan MP4s → movie_manifest.json
     ├── landing/index.html        # STRATA landing page
     ├── slice_viewer/index.html   # DNS Slice Viewer (OpenSeadragon)
@@ -91,8 +93,9 @@ cd /Users/adrien/Documents/git/INCITE/adrien/viewer
 python tile_images.py --skip-existing
 ```
 
-**5. Generate movie manifest**
+**5. Generate manifests**
 ```sh
+python gen_slice_manifest.py
 python gen_movie_manifest.py
 ```
 
@@ -142,6 +145,7 @@ rclone copy /tmp/dns-deploy/movie_viewer r2:strata-dns-snapshots/site/movie_view
 python tile_images.py --skip-existing
 
 # Re-generate manifest
+python gen_slice_manifest.py
 cp viewer/slice_viewer/slice_manifest.json /tmp/dns-deploy/slice_viewer/
 
 # Upload only new tiles (rclone skips existing)
@@ -251,7 +255,7 @@ Example movie path: `volumes/R1P1/R1P1_chi_x.mp4`
 ### If you need to re-tile (e.g. new cases on HPC)
 1. Run `plot_slices.py` on HPC to generate new PNGs
 2. Copy PNGs locally
-3. Run `python tile_images.py --skip-existing`
+3. Run `python tile_images.py --skip-existing` then `python gen_slice_manifest.py`
 4. Upload new tiles with rclone (safe to re-run, skips existing)
 5. Regenerate and re-upload `slice_manifest.json`
 
