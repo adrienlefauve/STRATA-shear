@@ -298,12 +298,20 @@
 
     <script>
         // ---------------------------------------------------------------------------
-        // CONFIG — set BASE_URL to the public URL root where MP4s are hosted.
+        // CONFIG — auto-detect online vs offline.
+        //   - Online (Cloudflare R2): MP4s served from R2 public URL.
+        //   - Offline (localhost / file://): MP4s served from /volumes/ on the
+        //     same local web server (e.g. `python3 -m http.server`).
         // Files are expected at: BASE_URL/<case>/<case>_<variable>_<axis>.mp4
-        // Leave as "" when the viewer and movies are co-located (local server).
-        // Example: const BASE_URL = "https://pub-abc123.r2.dev/movies";
         // ---------------------------------------------------------------------------
-        const BASE_URL = "https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/volumes";
+        const REMOTE_MOVIES_URL = "https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/volumes";
+        const BASE_URL = (() => {
+            const host = window.location.hostname;
+            if (host === "" || host === "localhost" || host === "127.0.0.1") {
+                return "/volumes";   // served by local http.server
+            }
+            return REMOTE_MOVIES_URL;
+        })();
 
         // Human-readable variable labels (extend as needed)
         const VAR_ORDER = ["u", "v", "w", "r", "ee", "chi"];

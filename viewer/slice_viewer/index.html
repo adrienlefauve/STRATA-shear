@@ -176,11 +176,19 @@
 
     <script>
         // ---------------------------------------------------------------------------
-        // CONFIG — change BASE_URL when tiles are hosted on a CDN (e.g. Cloudflare R2).
-        // Leave as "" when the viewer and tiles are co-located on the same server.
-        // Example: const BASE_URL = "https://pub-abc123.r2.dev";
+        // CONFIG — auto-detect online vs offline.
+        //   - Online (Cloudflare R2): tiles served from R2 public URL.
+        //   - Offline (localhost / file://): tiles served from /viewer/ on the
+        //     same local web server (e.g. `python3 -m http.server`).
         // ---------------------------------------------------------------------------
-        const BASE_URL = "https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/viewer";
+        const REMOTE_TILES_URL = "https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/viewer";
+        const BASE_URL = (() => {
+            const host = window.location.hostname;
+            if (host === "" || host === "localhost" || host === "127.0.0.1") {
+                return "/viewer";   // served by local http.server next to slice_viewer/
+            }
+            return REMOTE_TILES_URL;
+        })();
 
         // ---------------------------------------------------------------------------
         // State
