@@ -1,0 +1,24 @@
+# strata-shear: Python dependencies pinned to the Andes env that
+# produced the STRATA Constellation deposit.
+
+# Python 3.6.8
+
+# Core
+numpy==1.18.1
+scipy==1.4.1
+pandas==1.0.1
+matplotlib==3.1.3
+Pillow==6.2.0
+h5py==2.10.0
+joblib==0.14.1
+psutil==5.6.7
+openpyxl==3.0.3
+
+# Stage 4 (3D cube movies)
+plotly==5.18.0
+kaleido==0.2.1
+imageio-ffmpeg==0.5.1
+
+# Optional, only for stage 5 (web viewer tile generation, runs locally)
+# pyvips    # requires libvips: brew install vips (macOS) or apt install libvips-dev (Linux)
+# netCDF4   # not needed by default; pipeline uses scipy.io.netcdf_file
