@@ -298,6 +298,9 @@ The browser-based viewer lets people pan and zoom around very large slice PNGs
 (via OpenSeadragon Deep Zoom Image pyramids) and play cube-scan MP4s
 (via HTML5 `<video>`).
 
+The viewer is accessible at:
+https://pub-ae06ec6e266444d2a93dba965f4447b2.r2.dev/site/index.html
+
 Source files live in `viewer/`:
 
 ```
