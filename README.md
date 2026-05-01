@@ -1,4 +1,4 @@
-# strata-shear
+# STRATA-shear
 
 Post-processing and visualisation pipeline for the SHASSST direct numerical simulations
 of statistically stationary, homogeneous, sheared, stably stratified turbulence.
@@ -9,6 +9,10 @@ native-resolution PNG figures, MP4 cube movies, and a browsable web viewer.
 Adrien Lefauve, Miles M. P. Couchman, Stephen M. de Bruyn Kops, 2026
 
 > **Data deposit (Constellation):** *(to be added once the deposit is live)*
+
+See STRATA research group website for further context and datasets
+STRATA - Supercomputing for Stratified Turbulence Research Advancing Theory and Application
+https://stratified-turbulence.github.io/web/
 
 ---
 
