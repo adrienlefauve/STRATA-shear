@@ -25,7 +25,7 @@ once its inputs are available.
 
 | # | Stage | Script(s) | Reads | Produces |
 | - | ----- | --------- | ----- | -------- |
-| 1 | Metadata extraction | `open_param_nc.ipynb` | per-case parameter NetCDFs `<CASE>.nc` | per-case `.xlsx`, aggregated `params.csv` |
+| 1 | Metadata extraction | `inspect_params.ipynb` | per-case parameter NetCDFs `<CASE>.nc` | per-case and aggregated `.xlsx` |
 | 2 | 2D slice extraction | `export_slices.py` (+ `.slurm`) | raw Fortran 3D binaries | NetCDF 2D slices |
 | 3 | 2D slice plotting | `plot_slices.py` (+ `.slurm`), `plot_slices.ipynb` | the NetCDF 2D slices | summary + native-resolution PNGs |
 | 4 | 3D cube movies | `make_cube_movie.py` (+ `.slurm`), `make_cube_image.py` | raw Fortran 3D binaries | per-case JPG frames + MP4 movies |
@@ -33,7 +33,7 @@ once its inputs are available.
 
 `utils.py` holds shared utilities (binary IO, lazy fields, normalisations, plotting helpers).
 
-`params.csv` is the single source of truth for per-case parameters
+`params.csv` is the single source of truth for per-case parameters 
 (`Ri`, `Ek`, `Ep`, `eps`, `Gamma1`, `Nx`, `Lx`, …) and is read by every stage 2–4 script.
 
 ---
@@ -137,19 +137,9 @@ Each simulation case has a parameter NetCDF at
 `<PROJECT_ROOT>/<CASE>/001_Final/<CASE>.nc` containing scalar parameters,
 3D-averaged diagnostics, and 1D spectra.
 
-`open_param_nc.ipynb` opens each `<CASE>.nc`, exports a per-case Excel
-workbook (one sheet per group: scalars, diagnostics, spectra) and aggregates
-the scalars into a single CSV. 
-
-Outputs:
-
-- `<CASE>/001_Final/<CASE>.xlsx` — per-case Excel
-- `<PROJECT_ROOT>/ALL_OUTPUTS/<CASE>.xlsx` — copies in one place
-- `params.csv` — the master parameter table used by stages 2–4
-
-Run it once when the simulation outputs change, then commit the new
-`params.csv`. Note that the CSV may include a few manual sanity-check
-corrections vs. the raw NetCDF values — this is documented in the notebook.
+`inspect_params.ipynb` opens each `<CASE>.nc`, exports a per-case Excel
+workbook (one sheet per group: scalars, diagnostics, spectra) with instantaneous
+and time average values, and an aggregated Excel workbook with all the time averages
 
 ---
 
