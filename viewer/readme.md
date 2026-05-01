@@ -89,7 +89,7 @@ rclone config
 
 **4. Generate tiles from PNGs**
 ```sh
-cd /Users/adrien/Documents/git/INCITE/adrien/viewer
+cd /path/to/strata-shear/viewer   # adjust to where you cloned the repo
 python tile_images.py --skip-existing
 ```
 

@@ -25,13 +25,15 @@ import sys
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# Defaults
+# Defaults (override via local_config.py — see local_config.py.example)
 # ---------------------------------------------------------------------------
-SNAPSHOTS_DEFAULT = Path(
-    "/Users/adrien/Library/CloudStorage/"
-    "Dropbox-Personal/Work/Office/Writings/Papers/"
-    "027_2026_SHASSST/DATA/snapshots"
-)
+try:
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from local_config import SNAPSHOTS as SNAPSHOTS_DEFAULT
+except (ImportError, AttributeError):
+    SNAPSHOTS_DEFAULT = Path(__file__).resolve().parent.parent / "snapshots"
+
 OUT_DEFAULT = Path(__file__).resolve().parent / "slice_viewer"
 
 # ---------------------------------------------------------------------------

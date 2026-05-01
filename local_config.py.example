@@ -1,0 +1,41 @@
+"""
+local_config.py - per-machine path overrides.
+
+HOW TO USE
+----------
+1. Copy this file to `local_config.py` in the same directory:
+
+       cp local_config.py.example local_config.py
+
+2. Edit `local_config.py` to match your filesystem.
+
+3. The scripts in this repo will pick it up automatically. If you don't
+   create `local_config.py`, the scripts fall back to safe placeholder
+   defaults - you'll then need to pass paths via the CLI flags
+   (e.g. `--snapshots`, `--project-root`, `--code-root`).
+
+`local_config.py` is git-ignored, so it never gets committed.
+
+PATHS
+-----
+Set the variables your workflow needs. Anything you leave commented out
+will fall back to a generic default (see each script).
+"""
+
+from pathlib import Path
+
+# Root of the simulation case folders (each contains 001_Final/ etc.)
+# Used by export_slices.py, make_cube_image.py, plot_slices.py.
+# PROJECT_ROOT = Path("/lustre/orion/cfd135/proj-shared/Hsst")
+
+# Directory containing this code (utils.py, params.csv).
+# Used by plot_slices.py.
+# CODE_ROOT = Path(__file__).resolve().parent
+
+# Directory of native-resolution PNG snapshots, organised by case.
+# Used by viewer/tile_images.py and viewer/gen_slice_manifest.py.
+# SNAPSHOTS = Path("/path/to/your/snapshots")
+
+# Directory of cube-scan MP4 movies, organised by case.
+# Used by viewer/gen_movie_manifest.py.
+# MOVIES = Path("/path/to/your/cube-movies")

@@ -44,8 +44,17 @@ import numpy as np
 import pandas as pd
 
 
-DEFAULT_CODE_ROOT = Path("/ccs/home/lefauve/git/INCITE/adrien/")
-DEFAULT_PROJECT_ROOT = Path("/lustre/orion/cfd135/proj-shared/Hsst")
+# Override via local_config.py — see local_config.py.example
+try:
+    from local_config import CODE_ROOT as DEFAULT_CODE_ROOT
+except ImportError:
+    DEFAULT_CODE_ROOT = Path(__file__).resolve().parent
+
+try:
+    from local_config import PROJECT_ROOT as DEFAULT_PROJECT_ROOT
+except ImportError:
+    DEFAULT_PROJECT_ROOT = Path(__file__).resolve().parent / "data"   # placeholder; override in local_config.py
+
 REQUIRED_VARS = ("u", "v", "w", "r", "ee", "chi")
 
 

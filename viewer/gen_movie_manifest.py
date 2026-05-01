@@ -12,8 +12,7 @@ Usage:
   python gen_movie_manifest.py [--movies-dir PATH] [--out-dir PATH]
 
 Defaults:
-  --movies-dir  ~/Library/CloudStorage/Dropbox-Personal/Work/Office/Writings/
-                Papers/027_2026_SHASSST/DATA/cube-movies
+  --movies-dir  ../cube-movies (override via local_config.py)
   --out-dir     ./movie_viewer
 """
 
@@ -23,11 +22,14 @@ import re
 import sys
 from pathlib import Path
 
-DEFAULT_MOVIES_DIR = (
-    Path.home()
-    / "Library/CloudStorage/Dropbox-Personal/Work/Office/Writings"
-    / "Papers/027_2026_SHASSST/DATA/cube-movies"
-)
+# Override via local_config.py — see local_config.py.example
+try:
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from local_config import MOVIES as DEFAULT_MOVIES_DIR
+except (ImportError, AttributeError):
+    DEFAULT_MOVIES_DIR = Path(__file__).resolve().parent.parent / "cube-movies"
+
 DEFAULT_OUT_DIR = Path(__file__).parent / "movie_viewer"
 
 def natural_key(s):

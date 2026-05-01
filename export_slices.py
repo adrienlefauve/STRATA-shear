@@ -82,7 +82,12 @@ import utils
 print("[export_slices] starting", flush=True)
 
 CSV_PATH     = Path("params.csv")
-PROJECT_ROOT = Path("/lustre/orion/cfd135/proj-shared/Hsst")
+
+# Override via local_config.py — see local_config.py.example
+try:
+    from local_config import PROJECT_ROOT
+except ImportError:
+    PROJECT_ROOT = Path(__file__).resolve().parent / "data"   # placeholder; override in local_config.py
 PARAMS_DF    = pd.read_csv(CSV_PATH, dtype={"tStamp": str})
 PARAMS_BY_CASE = {str(row["name"]).strip(): row for _, row in PARAMS_DF.iterrows()}
 
