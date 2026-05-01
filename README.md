@@ -6,8 +6,8 @@ of statistically stationary, homogeneous, sheared, stably stratified turbulence.
 The pipeline turns very large 3D DNS outputs into 2D NetCDF slices, summary and
 native-resolution PNG figures, MP4 cube movies, and a browsable web viewer.
 
-> **Companion paper:** *Statistically stationary, homogeneous, sheared, stably
-> stratified turbulence (SHASSST)*, Lefauve et al., 2026.
+Adrien Lefauve, Miles M. P. Couchman, Stephen M. de Bruyn Kops, 2026
+
 > **Data deposit (Constellation):** *(to be added once the deposit is live)*
 
 ---
@@ -133,7 +133,7 @@ Each simulation case has a parameter NetCDF at
 
 `open_param_nc.ipynb` opens each `<CASE>.nc`, exports a per-case Excel
 workbook (one sheet per group: scalars, diagnostics, spectra) and aggregates
-the scalars into a single CSV.
+the scalars into a single CSV. 
 
 Outputs:
 
@@ -157,7 +157,7 @@ along the planes `xy`, `xz`, `yz`.
 
 We exported **5 evenly-spaced slices per plane** (mid-plane plus four off-axis)
 for every case, except `R10P7` which has only **1 `yz` slice** (the
-non-contiguous Fortran read for a yz slice on the largest grid is prohibitively
+non-contiguous Fortran read for a yz slice on the largest grid is very 
 slow even on a full Andes node).
 
 Per-case output therefore is:
@@ -202,10 +202,10 @@ and writes summary + native-resolution PNGs. `plot_slices.ipynb` is the
 interactive companion (one cell per step) — convenient for tuning a figure
 before kicking off the batch run.
 
-### Normalisations (read from `params.csv`)
+### Normalisations (read from `params.csv`), explained in PHYSICS.pdf
 
 ```
-uN, vN, wN  =  u, v, w  /  sqrt(Ek)                       velocity components
+uN, vN, wN  =  u, v, w  /  sqrt(Ek)                       velocity components (N stands for normalized)
 bN          =  -1000 * Ri * r  /  sqrt(N^2 * Ep)          buoyancy
 epslog      =  log10( ee  /  <eps> )                      TKE dissipation
 chilog      =  log10( chi /  (<eps> * Gamma1) )           scalar dissipation
@@ -218,8 +218,8 @@ chilog      =  log10( chi /  (<eps> * Gamma1) )           scalar dissipation
 | Summary figures (low-res, all 6 variables on one plot) | one per plane, mid-plane index | 3 |
 | Native-resolution figures (1 pixel = 1 grid point) | one per (plane, slice index, variable) | up to 6 vars × number of exported slices |
 
-The R10P7 and 12-case totals depend on which slices you ask for. By default
-the script picks the mid-plane slice per plane.
+The R10P7 and 12-case totals depend on which slices you ask for. 
+By default the script picks the mid-plane slice per plane.
 
 The script caches the slice-discovery scan in
 `<CASE>/001_Final/2D_slices/<CASE>_slices_cache.pkl` so successive runs are
@@ -304,15 +304,15 @@ viewer/
 └── movie_viewer/index.html   # HTML5 video viewer
 ```
 
-See `viewer/readme.md` for:
+See `viewer/README.md` for:
 
 - the full local test recipe (`http://localhost:8000`)
 - the Cloudflare R2 deploy recipe
 - the bucket structure
 - gotchas (range requests, public vs S3 URLs, BASE_URL patching)
 
-The Constellation deposit also includes a self-contained zip that anyone can
-unzip and open locally; see the deposit README for that.
+The Constellation deposit also includes a self-contained zip with the actual images 
+and movies that anyone can unzip and open locally; see the deposit README for that.
 
 ---
 
@@ -322,12 +322,11 @@ unzip and open locally; see the deposit README for that.
 strata-shear/
 ├── README.md                  ← this file
 ├── LICENSE                    ← MIT
-├── CITATION.cff               ← citation metadata
 ├── .gitignore
 ├── local_config.py.example    ← template (copy to local_config.py)
 │
 ├── params.csv                 ← master parameter table
-├── utils.py                   ← shared helpers (~75 KB, well commented)
+├── utils.py                   ← shared helpers (~75 KB, commented)
 │
 ├── open_param_nc.ipynb        ← stage 1
 ├── export_slices.py           ← stage 2
@@ -369,22 +368,19 @@ strata-shear/
 
 ---
 
-## Citation
+## Citation (to be updaded)
 
 ```
 @software{lefauve_strata_shear_2026,
-  author  = {Lefauve, Adrien},
-  title   = {strata-shear: post-processing and visualisation pipeline for SHASSST DNS},
+  author  = {Lefauve, A. and Couchman, M. M. P. and de Bruyn Kops, S. M.},
+  title   = {Strata-shear: post-processing and visualisation pipeline for ...},
   year    = {2026},
   url     = {https://github.com/adrienlefauve/strata-shear},
   license = {MIT}
 }
 ```
 
-See `CITATION.cff` for the machine-readable version.
-
 ---
 
 ## Contact
-
 Adrien Lefauve · Imperial College London · `a.lefauve@imperial.ac.uk`
