@@ -35,10 +35,10 @@ A complete web-based interactive visualization system for Direct Numerical Simul
 
 ---
 
-### Key files (local)
+### Key files (in this repo)
 ```
-adrien/
-├── export_slices.py              # HPC: NetCDF → binary slices
+strata-shear/
+├── export_slices.py              # HPC: binary 3D fields → NetCDF 2D slices
 ├── plot_slices.py                # NetCDF → PNG snapshots
 └── viewer/
     ├── tile_images.py            # PNG → DZI tiles (libvips)
