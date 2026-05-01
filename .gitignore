@@ -1,0 +1,33 @@
+# Local config (per-machine paths, never committed)
+local_config.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Caches written by plot_slices.py
+*_slices_cache.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
